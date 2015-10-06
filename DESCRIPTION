@@ -1,0 +1,18 @@
+Package: SWATH2stats
+Type: Package
+Title: Transform and Filter SWATH Data for Statistical Packages
+Version: 0.99.4
+Date: 2015-09-29
+Author: Peter Blattmann and Moritz Heusel
+Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
+Description: This package is intended to transform SWATH data from the
+        OpenSWATH software into a format readable by other statistics
+        packages while performing filtering, annotation and FDR
+        estimation.
+License: GPL-3
+Imports: data.table, reshape2, grid
+Suggests: testthat, MSstats, aLFQ
+Enhances: imsbInfer
+biocViews: Proteomics, Annotation, ExperimentalDesign, Preprocessing,
+        MassSpectrometry
+NeedsCompilation: no
