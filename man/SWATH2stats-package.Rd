@@ -14,13 +14,13 @@ This package is intended to transform SWATH data from the OpenSWATH
 \tabular{ll}{
 Package: \tab SWATH2stats\cr
 Type: \tab Package\cr
-Version: \tab 0.99.4\cr
-Date: \tab 2015-09-29\cr
+Version: \tab 0.99.5\cr
+Date: \tab 2015-10-07\cr
 License: \tab GPLv3\cr
 }
 }
 \author{
-Peter Blattmann and Moritz Heusel
+Peter Blattmann, Moritz Heusel and Ruedi Aebersold
 
 Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
 }
