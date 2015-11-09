@@ -39,7 +39,7 @@ test_that("data conversion", {
   # test error if transitions and data don't match
   data.max.test1 <- data.max
   data.max.test1$aggr_Peak_Area <- as.character(data.max.test1$aggr_Peak_Area)
-  data.max.test1[1,"aggr_Peak_Area"] <- "188569.000000;81947.000000;77295.000000;50218.000000"
+  data.max.test1[data.max.test1$Run == 6 & data.max.test1$BioReplicate == 3 & data.max.test1$Peptide_Charge == "FIIDPAAVITGR 2","aggr_Peak_Area"] <- "188569.000000;81947.000000;77295.000000;50218.000000"
   expect_error(disaggregate(data.max.test1))
   expect_that(disaggregate(data.max.test1), throws_error("Error in disaggregate(data.max.test1) : \n  The number of transitions annotated and measured do not match in the following transitions:\n 1069078_FIIDPAAVITGR_2, 1069082_FIIDPAAVITGR_2, 1069080_FIIDPAAVITGR_2, 1069071_FIIDPAAVITGR_2, 1069084_FIIDPAAVITGR_2, 1069076_FIIDPAAVITGR_2\n", fixed=TRUE))
 
