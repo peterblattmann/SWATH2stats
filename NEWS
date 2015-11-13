@@ -14,3 +14,11 @@ VERSION 1.1.1
 -------------------------
 Improved the function disaggregate() that also data with different number of transitions per precursor than 6 can be used
 Added tests for disaggregate.R and convert4pythonscript.R
+
+VERSION 1.1.2-4
+-------------------------
+Bug fixes in test_convert.
+
+VERSION 1.1.5
+-------------------------
+Bug fixes for assess_fdr_byrun that was also introduced into version v1.0.2 at the same time. It fixes problems with labelling the runs correctly in some cases.

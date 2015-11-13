@@ -20,7 +20,7 @@ assess_fdr_byrun <- function(data, FFT = 1, output = "pdf_csv", plot = TRUE, fil
   dimnames(fdr_cube) <- list(c("target_assays", "decoy_assays", "false_target_assays", 
         "assay_fdr", "target_peptides", "decoy_peptides", "false_target_peptides", "peptide_fdr",
         "target_proteins", "decoy_proteins", "false_target_proteins", "protein_fdr"),
-        unique(data$run_id), mscore_levels)
+        sort(unique(data$run_id)), mscore_levels)
   
   length_unique <- function(X) {
     length(unique(X))
