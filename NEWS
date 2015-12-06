@@ -22,3 +22,7 @@ Bug fixes in test_convert.
 VERSION 1.1.5
 -------------------------
 Bug fixes for assess_fdr_byrun that was also introduced into version v1.0.2 at the same time. It fixes problems with labelling the runs correctly in some cases.
+
+VERSION 1.1.6
+-------------------------
+Correction of typographical error in Vignette for Wolski et al.
