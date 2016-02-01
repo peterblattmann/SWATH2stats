@@ -150,9 +150,7 @@ Application of the decoy-counting-based FDR assessment functions in interplay wi
 With a first basic function \texttt{assess\_decoy\_rate} the overall number of decoy peptides can be counted in the data:
 
 <<>>=
-data('OpenSWATH_data_FDR', package='SWATH2stats')
-data.FDR<-sample_annotation(OpenSWATH_data_FDR, Study_design)
-assess_decoy_rate(data.FDR)
+assess_decoy_rate(data)
 @
 
 The function \texttt{assess\_fdr\_overall} creates a global assessment of decoy rates (and estimated FDR) on assay, peptide and protein level. Results are reported by default as .csv table and visualized in a .pdf report. Setting the output option to "Rconsole" reports back the results to R. Included in the pdf report are plots showing the estimated global FDR in relation to the m-score threshold. Because false-positive hits accumulate over different runs, the false discovery rate estimated by this function will be higher than if assessed within each run individually.
@@ -160,11 +158,11 @@ The function \texttt{assess\_fdr\_overall} creates a global assessment of decoy 
 <<>>=
 # count decoys and targets on assay, peptide and protein level
 # and report FDR at a range of m_score cutoffs
-assess_fdr_overall(data.FDR, FFT = 0.7, output = "pdf_csv", plot = TRUE,
+assess_fdr_overall(data, FFT = 0.7, output = "pdf_csv", plot = TRUE,
                    filename='assess_fdr_overall_testrun')
 
 # The results can be reported back to R for further calculations
-overall_fdr_table <- assess_fdr_overall(data.FDR, FFT = 0.7,
+overall_fdr_table <- assess_fdr_overall(data, FFT = 0.7,
                                         output = "Rconsole")
 @
 
@@ -181,11 +179,11 @@ The function \texttt{assess\_fdr\_byrun} investigates the decoy rate or FDR in i
 <<>>=
 # count decoys and targets on assay, peptide and protein level per run
 # and report FDR at a range of m_score cutoffs
-assess_fdr_byrun(data.FDR, FFT = 0.7, output = "pdf_csv", plot = TRUE,
+assess_fdr_byrun(data, FFT = 0.7, output = "pdf_csv", plot = TRUE,
                  filename='assess_fdr_byrun_testrun')
 
 # The results can be reported back to R for further calculations
-byrun_fdr_cube <- assess_fdr_byrun(data.FDR, FFT = 0.7,
+byrun_fdr_cube <- assess_fdr_byrun(data, FFT = 0.7,
                                    output = "Rconsole")
 @
 
@@ -205,7 +203,7 @@ The function \texttt{mscore4assayfdr} reports an m-score cutoff to achieve a des
 <<>>=
 # select and return a useful m_score cutoff in order
 # to achieve the desired FDR quality for the entire table
-mscore4assayfdr(data.FDR, FFT = 0.7, fdr_target=0.02)
+mscore4assayfdr(data, FFT = 0.7, fdr_target=0.02)
 @
 
 The function \texttt{mscore4pepfdr} reports an m-score cutoff to achieve a desired overall (global) peptide FDR:
@@ -213,7 +211,7 @@ The function \texttt{mscore4pepfdr} reports an m-score cutoff to achieve a desir
 <<>>=
 # select and return a useful m_score cutoff
 # in order to achieve the desired FDR quality for the entire table
-mscore4pepfdr(data.FDR, FFT = 0.7, fdr_target=0.02)
+mscore4pepfdr(data, FFT = 0.7, fdr_target=0.02)
 @
 
 The function \texttt{mscore4protfdr} reports an m-score cutoff to achieve a desired overall (global) protein FDR. Protein FDR control on peak group quality level is a very strict filter and should be handled with caution.
@@ -223,7 +221,7 @@ Alternatively, a function \texttt{filter\_mscore\_fdr} is described below applyi
 <<>>=
 # select and return a useful m_score cutoff in order
 # to achieve the desired FDR quality for the entire table
-mscore4protfdr(data.FDR, FFT = 0.7, fdr_target=0.02)
+mscore4protfdr(data, FFT = 0.7, fdr_target=0.02)
 @
 
 \section{Filtering the data}
@@ -242,7 +240,7 @@ data.filtered.mscore <- filter_mscore(data.annotated, 0.01)
 The function \texttt{filter\_mscore\_requant} takes into account how many times in the different injection runs a peak group has been confidently (as defined by the m-score threshold) identified. This is useful in large data of many different replicates. For example the data for a certain precursor that has been confidently identified in most of the replicates but does not pass the threshold in one replicate still should be kept for statistical analysis. In order to keep such data, but discard data of precursors that have not been confidently identified in the other replicates, the function \texttt{filter\_mscore\_requant} can be used. Here, precursors passing a m-score threshold of 0.01 in 80 \% of the replicates are selected. The option rm.decoy is set to FALSE to keep the decoys for subsequent FDR assessment.
 
 <<>>=
-data.filtered.mscore <- filter_mscore_requant(data.annotated, 0.01, 0.8,
+data.filtered.mscore <- filter_mscore_freqobs(data.annotated, 0.01, 0.8,
                                               rm.decoy=FALSE)
 @
 
@@ -257,7 +255,7 @@ In order to reach a compromise between a very stringent m-score filter controlli
 
 
 <<>>=
-data.filtered.fdr <- filter_mscore_fdr(data.FDR, FFT=0.7,
+data.filtered.fdr <- filter_mscore_fdr(data, FFT=0.7,
                                    overall_protein_fdr_target = 0.03,
                                    upper_overall_peptide_fdr_limit = 0.05)
 @

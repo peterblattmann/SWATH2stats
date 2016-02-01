@@ -13,22 +13,21 @@ convert4mapDIA(data, RT=FALSE)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-  A data frame containing SWATH data. 
+  A data frame containing SWATH data.
 }
   \item{RT}{
-  Option to export the retention times.  
+  Option to export the retention times.
 }
 
 }
 \value{
 Returns a data frame in the appropriate format for mapDIA.
 }
-\references{
-Teo et al. submitted, mapDIA is available on Sourceforge \url{http://sourceforge.net/projects/mapdia/}
-}
-
 \note{
-The table must not contain any technical replica, the intensity of technical replica is averaged. This function requires the package reshape2. 
+The table must not contain any technical replica, the intensity of technical replica is averaged. This function requires the package reshape2.
+}
+\references{
+Teo, G., et al. (2015). "mapDIA: Preprocessing and statistical analysis of quantitative proteomics data from data independent acquisition mass spectrometry." J Proteomics 129: 108-120.
 }
 \author{
 Peter Blattmann
@@ -37,7 +36,7 @@ Peter Blattmann
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-data.filtered.decoy <- filter_mscore(data, 0.01) 
+data.filtered.decoy <- filter_mscore(data, 0.01)
 raw <- disaggregate(data.filtered.decoy)
 data.mapDIA <- convert4mapDIA(raw, RT=TRUE)
 }

@@ -1,7 +1,7 @@
 \name{plot.fdr_cube}
 \alias{plot.fdr_cube}
 \title{
-Plot functionality for FDR assessment result arrays as produced by e.g. the function assess_fdr_byrun() 
+Plot functionality for FDR assessment result arrays as produced by e.g. the function assess_fdr_byrun()
 }
 \description{
 This function creates standard plots from result arrays as produced by e.g. the function assess_fdr_byrun(), visualizig assay, peptide and protein level FDR for each run at m-score cutoffs 1e-2 and 1e-3. Furthermore, Target and Decoy ID numbers are visualized.
@@ -30,9 +30,9 @@ Plots in Rconsole or report files.
 Moritz Heusel
 }
 \examples{
-data("OpenSWATH_data_FDR", package="SWATH2stats")
+data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
-data <- sample_annotation(OpenSWATH_data_FDR, Study_design) 
+data <- sample_annotation(OpenSWATH_data, Study_design)
 x <- assess_fdr_byrun(data, FFT=0.7, output = "Rconsole", plot = FALSE)
 plot.fdr_cube(x, output = "pdf_csv", filename = "Assess_fdr_byrun_testplot")
 }

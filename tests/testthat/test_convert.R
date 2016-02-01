@@ -6,7 +6,7 @@ test_that("data conversion", {
   data(Study_design, package="SWATH2stats")
 
   data <- sample_annotation(data, Study_design)
-  data.filtered.mscore <- filter_mscore_requant(data, 0.01, 0.8)
+  data.filtered.mscore <- filter_mscore_freqobs(data, 0.01, 0.8)
 
 
   data.proteotypic <- filter_proteotypic_peptides(data.filtered.mscore)

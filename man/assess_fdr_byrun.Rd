@@ -5,7 +5,7 @@ Assess assay, peptide and protein level FDR by run (for each MS_injection separa
 }
 \description{
 This function estimates the assay, peptide and protein FDR by run in an OpenSWATH result table in dependence of a range of m_score cutoffs. The results can be visualized and summarized by the associated method plot.fdr_table().
-It counts target and decoy assays (unique transition_group_id), peptides (unique FullPeptideName) and proteins (unique ProteinName) in the OpenSWATH output table in dependence of m-score cutoff, the useful m_score cutoff range is evaluated for each dataset individually on the fly. 
+It counts target and decoy assays (unique transition_group_id), peptides (unique FullPeptideName) and proteins (unique ProteinName) in the OpenSWATH output table in dependence of m-score cutoff, the useful m_score cutoff range is evaluated for each dataset individually on the fly.
 
 To arrive from decoy counts at an estimation of the false discovery rate (false positives among the targets remaining at a given mscore cutoff) the ratio of false positives to true negatives (decoys) (FFT) must be supplied. It is estimated for each run individually by pyProphet and contained in the pyProphet statistics [Injection_name]_full_stat.csv. As an approximation, the FFTs of multiple runs are averaged and supplied as argument FFT.
 
@@ -42,8 +42,8 @@ Returns an array of target/decoy identification numbers and calculated FDR value
 Moritz Heusel
 }
 \examples{
-data("OpenSWATH_data_FDR", package="SWATH2stats")
+data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
-data <- sample_annotation(OpenSWATH_data_FDR, Study_design) 
+data <- sample_annotation(OpenSWATH_data, Study_design)
 assess_fdr_byrun(data, FFT=0.7, output = "pdf_csv", plot = TRUE, filename="Testoutput_assess_fdr_byrun")
 }

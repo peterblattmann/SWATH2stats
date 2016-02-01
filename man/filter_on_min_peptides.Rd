@@ -29,7 +29,7 @@ Moritz Heusel
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-data.filtered <- filter_mscore_requant(data, 0.01,0.8) 
+data.filtered <- filter_mscore_freqobs(data, 0.01,0.8)
 data.max <- filter_on_max_peptides(data.filtered, 5)
 data.min.max <- filter_on_min_peptides(data.max, 3)
 }

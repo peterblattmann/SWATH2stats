@@ -4,7 +4,7 @@
 Filter annotated OpenSWATH/pyProphet output table to achieve a high FDR quality data matrix with controlled overall protein FDR and quantitative values for all peptides mapping to these high-confidence proteins (up to a desired overall peptide level FDR quality).
 }
 \description{
-This function controls the protein FDR over a multi-run OpenSWATH/pyProphet output table and filters all quantitative values to a desired overall/global peptide FDR level. 
+This function controls the protein FDR over a multi-run OpenSWATH/pyProphet output table and filters all quantitative values to a desired overall/global peptide FDR level.
 
 It first finds a suitable m-score cutoff to minimally achieve a desired global FDR quality on a protein master list based on the function mscore4protfdr.
 It then finds a suitable m-score cutoff to minimally achieve a desired global FDR quality on peptide level based on the function mscore4pepfdr.
@@ -42,9 +42,9 @@ Logical T/F, whether decoy entries should be removed after the analysis. Default
 Moritz Heusel
 }
 \examples{
-data("OpenSWATH_data_FDR", package="SWATH2stats")
+data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
-data <- sample_annotation(OpenSWATH_data_FDR, Study_design) 
-data.fdr.filtered<-filter_mscore_fdr(data, FFT=0.7, overall_protein_fdr_target=0.02, 
+data <- sample_annotation(OpenSWATH_data, Study_design)
+data.fdr.filtered<-filter_mscore_fdr(data, FFT=0.7, overall_protein_fdr_target=0.02,
 upper_overall_peptide_fdr_limit=0.1)
 }

@@ -1,6 +1,6 @@
 \name{filter_mscore}
 \alias{filter_mscore}
-\alias{filter_mscore_requant}
+\alias{filter_mscore_freqobs}
 \alias{filter_mscore_condition}
 \title{
 filter_mscore: Filter openSWATH output table according to mscore
@@ -10,7 +10,7 @@ This function filters the SWATH data according to the m_score value, as well as 
 }
 \usage{
 filter_mscore(data, mscore, rm.decoy=TRUE)
-filter_mscore_requant(data, mscore, percentage=NULL, rm.decoy = TRUE)
+filter_mscore_freqobs(data, mscore, percentage=NULL, rm.decoy = TRUE)
 filter_mscore_condition(data, mscore, n.replica, rm.decoy = TRUE)
 }
 \arguments{
@@ -39,8 +39,8 @@ Peter Blattmann
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-data.filtered <- filter_mscore(data, 0.01) 
-data.filtered <- filter_mscore_requant(data, 0.01, 0.8) 
-data.filtered <- filter_mscore_condition(data, 0.01, 3) 
+data.filtered <- filter_mscore(data, 0.01)
+data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
+data.filtered <- filter_mscore_condition(data, 0.01, 3)
 
 }

@@ -26,3 +26,12 @@ Bug fixes for assess_fdr_byrun that was also introduced into version v1.0.2 at t
 VERSION 1.1.6
 -------------------------
 Correction of typographical error in Vignette for Wolski et al.
+
+VERSION 1.1.7
+-------------------------
+assess_fdr_overall: Correction of transition level column name from "id" to "transition_group_id"
+assess_fdr_byrun: Correction of transition level column name from "id" to "transition_group_id"
+plot.fdr_cube: added na.rm=TRUE to plotting functions
+sample_annotation: Bug fix - it reported upon error different conditions instead of filenames.
+filter_mscore_requant renamed to filter_mscore_freqobs
+added functions: count_analytes, plot_correlation_between_samples, plot_variation, plot_variation_vs_total, transform_MSstats_OpenSWATH.

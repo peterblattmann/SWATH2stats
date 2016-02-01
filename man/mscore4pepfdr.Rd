@@ -11,7 +11,7 @@ data.pepFDR2pc<-filter_mscore(data, mscore4pepfdr(data, fdr_target=0.02))
 
 To arrive from decoy counts at an estimation of the false discovery rate (false positives among the targets remaining at a given mscore cutoff) the ratio of false positives to true negatives (decoys) (FFT) must be supplied. It is estimated for each run individually by pyProphet and contained in the pyProphet statistics [Injection_name]_full_stat.csv. As an approximation, the FFTs of multiple runs are averaged and supplied as argument FFT.
 
-For FDR evaluations on assay and protein level, please refer to functions 
+For FDR evaluations on assay and protein level, please refer to functions
 mscore4assayfdr
 mscore4protfdr
 }
@@ -39,8 +39,8 @@ Returns the m_score cutoff selected to arrive at the desired FDR
 Moritz Heusel
 }
 \examples{
-data("OpenSWATH_data_FDR", package="SWATH2stats")
+data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
-data <- sample_annotation(OpenSWATH_data_FDR, Study_design) 
+data <- sample_annotation(OpenSWATH_data, Study_design)
 mscore4pepfdr(data, FFT=0.7, fdr_target=0.01)
 }

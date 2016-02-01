@@ -16,7 +16,7 @@ convert4aLFQ(data, annotation = TRUE)
 A data frame containing the SWATH data in transition-level format
 }
   \item{annotation}{
-Option to indicate if the data has been annotated, i.e. if the columns Condition, Replicate, Run are present. If option is set to true it will write a new run_id as a string of the combination of these three columns. 
+Option to indicate if the data has been annotated, i.e. if the columns Condition, Replicate, Run are present. If option is set to true it will write a new run_id as a string of the combination of these three columns.
 }
 
 }
@@ -34,7 +34,7 @@ Peter Blattmann
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-data.filtered.decoy <- filter_mscore(data, 0.01) 
+data.filtered.decoy <- filter_mscore(data, 0.01)
 raw <- disaggregate(data.filtered.decoy)
 data.aLFQ <- convert4aLFQ(raw)
 }

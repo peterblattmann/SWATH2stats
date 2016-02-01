@@ -1,7 +1,7 @@
 \name{write_matrix_proteins}
 \alias{write_matrix_proteins}
 \title{
-write_matrix_proteins: Writes out an overview matrix of summed signals per protein identifier (lines) over run_id(columns). 
+write_matrix_proteins: Writes out an overview matrix of summed signals per protein identifier (lines) over run_id(columns).
 }
 \description{
 Writes out an overview matrix on protein level of a supplied (unfiltered or filtered) OpenSWATH results data frame.
@@ -12,13 +12,17 @@ This function does not select consistently quantified or top peptides but sums a
 Peptide selection can be achieved upstream using e.g. the functions filter_mscore_requant(), filter_on_max_peptides() and filter_on_min_peptides().
 }
 \usage{
-write_matrix_proteins(data, filename = "SWATH2stats_overview_matrix_proteinlevel.csv", 
+write_matrix_proteins(data, write.csv = FALSE, filename = "SWATH2stats_overview_matrix_proteinlevel.csv",
 rm.decoy = FALSE)
 }
 \arguments{
   \item{data}{
 A data frame containing annotated OpenSWATH/pyProphet data.
 }
+  \item{write.csv}{
+Option to determine if table should be written automatically into csv file.
+}
+
   \item{filename}{
 File base name of the .csv matrix written out to the working folder
 }

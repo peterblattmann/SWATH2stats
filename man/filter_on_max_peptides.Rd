@@ -5,7 +5,7 @@
 Filter only for the highest intense peptides
 }
 \description{
-In order to reduce the data, the data is filtered only for the proteins with the highest intensity peptides. 
+In order to reduce the data, the data is filtered only for the proteins with the highest intensity peptides.
 }
 \usage{
 filter_on_max_peptides(data, n_peptides)
@@ -30,6 +30,6 @@ Peter Blattmann
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-data.filtered <- filter_mscore_requant(data, 0.01,0.8) 
+data.filtered <- filter_mscore_freqobs(data, 0.01,0.8)
 data.max <- filter_on_max_peptides(data.filtered, 5)
 }
