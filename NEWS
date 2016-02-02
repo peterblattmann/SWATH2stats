@@ -35,3 +35,7 @@ plot.fdr_cube: added na.rm=TRUE to plotting functions
 sample_annotation: Bug fix - it reported upon error different conditions instead of filenames.
 filter_mscore_requant renamed to filter_mscore_freqobs
 added functions: count_analytes, plot_correlation_between_samples, plot_variation, plot_variation_vs_total, transform_MSstats_OpenSWATH.
+
+VERSION 1.1.8
+-------------------------
+add functions that were not updated
