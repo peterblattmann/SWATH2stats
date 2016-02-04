@@ -39,3 +39,9 @@ added functions: count_analytes, plot_correlation_between_samples, plot_variatio
 VERSION 1.1.8
 -------------------------
 add functions that were not updated
+
+VERSION 1.1.9
+-------------------------
+Update vignette
+remove function: filter_all_peptides
+mscore4assayfdr: bug fix
