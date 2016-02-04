@@ -1,8 +1,8 @@
 convert4MSstats <- function(data, replace.values = TRUE, replace.colnames = TRUE, replace.Unimod = TRUE){
 
-  MSstats.columns <- c('ProteinName', 'PeptideSequence', 'PrecursorCharge', 'FragmentIon', 
+  MSstats.columns <- c('ProteinName', 'PeptideSequence', 'PrecursorCharge', 'FragmentIon',
                        'ProductCharge', "IsotopeLabelType", "Intensity", "BioReplicate", "Condition", "Run")
-  
+
   if(isTRUE(replace.colnames)){
     colnames(data) <- gsub("FullPeptideName", "PeptideSequence", colnames(data))
     colnames(data) <- gsub("^Charge$", "PrecursorCharge", colnames(data))
@@ -10,11 +10,15 @@ convert4MSstats <- function(data, replace.values = TRUE, replace.colnames = TRUE
     }
     col.names.missing <- MSstats.columns[!(MSstats.columns %in% colnames(data))]
     if(length(col.names.missing) > 0){
-      message("One or several columns required by MSstats were not in the data and filled with NAs (except IsotopeLabelType is filled with light).
-              Missing columns: ",col.names.missing)
-        
+      message("One or several columns required by MSstats were not in the data.\nMissing columns: ",
+              paste(unlist(col.names.missing), collapse=", "))
+
+      if("IsotopeLabelType" %in% col.names.missing){
+        message("IsotopeLabelType was filled with light.")
+      }
+
       data[, col.names.missing] <- NA
-      
+
       if("IsotopeLabelType" %in% col.names.missing){
         data[, "IsotopeLabelType"] <- "light"
       }
@@ -23,7 +27,7 @@ convert4MSstats <- function(data, replace.values = TRUE, replace.colnames = TRUE
       }
     }
     data <- data[, MSstats.columns]
-    
+
     if(isTRUE(replace.values)){
     # replace negative values to 0 and 0 to NA
     if(sum(data$Intensity < 0, na.rm=TRUE) > 0){
@@ -35,7 +39,7 @@ convert4MSstats <- function(data, replace.values = TRUE, replace.colnames = TRUE
       warning("Intensity values that were 0, were replaced by NA")
     }
     }
-    
+
     if(isTRUE(replace.Unimod)){
       # replace UniMod: to UniMod_
       data$PeptideSequence <- gsub("UniMod:", "UniMod_", data$PeptideSequence)

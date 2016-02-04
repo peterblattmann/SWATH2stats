@@ -2,14 +2,14 @@ plot_variation <- function(data, column.values = "Intensity", Comparison = trans
   if(sum(colnames(data) == "decoy") == 1){
     data <- data[data$decoy == 0,]
   }
-  data.c <- dcast(data, Comparison, value.var = column.values)
+  data.c <- dcast(data, Comparison, value.var = column.values, fun.aggregate = fun.aggregate)
   data.c[data.c == 0] <- NA
 
   data.sd <- apply(data.c[,3:dim(data.c)[2]], 1, function(x) sd(x, na.rm=TRUE))
   data.mean <- apply(data.c[,3:dim(data.c)[2]], 1, function(x) mean(x, na.rm=TRUE))
   data.c$cv <- data.sd/data.mean
-  #mean.cv <- mean(data.c$cv, na.rm=TRUE)
-  #median.cv <- median(data.c$cv, na.rm=TRUE)
+  mean.cv <- mean(data.c$cv, na.rm=TRUE)
+  median.cv <- median(data.c$cv, na.rm=TRUE)
 
   p <- (ggplot(na.omit(data.c), aes_string(x=colnames(data.c)[2], y="cv"))
         + geom_violin(scale="area")
@@ -21,8 +21,24 @@ plot_variation <- function(data, column.values = "Intensity", Comparison = trans
           + geom_violin(scale="area")
           + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
           + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=T), digits=2))), geom="text")
-          + labs(title= "CV across conditions"))
+          + labs(title= "cv across conditions"))
   }
 
   print(p)
+  if("Condition" %in% colnames(data.c)){
+    median <- aggregate(data.c[,"cv"], by=list(data.c$Condition), FUN=function(x)median(x, na.rm=TRUE))
+    colnames(median) <- c("Condition", "median_cv")
+    mean <- aggregate(data.c[,"cv"], by=list(data.c$Condition), FUN=function(x)mean(x, na.rm=TRUE))
+    colnames(mean) <- c("Condition", "mean_cv")
+    mode <- aggregate(data.c[,"cv"], by=list(data.c$Condition), FUN=function(x){d<-density(x, na.rm=TRUE); i <- which.max(d$y); return(d$x[i])})
+    colnames(mode) <- c("Condition", "mode_cv")
+
+    cv_table <- merge(mode, merge(mean, median, by="Condition"), by="Condition")
+
+    return(list(data.c, cv_table))
+
+  }
+  return(data.c)
+
+
 }

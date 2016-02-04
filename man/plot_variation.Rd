@@ -27,7 +27,7 @@ Option to print value of median cv.}
 further arguments passed to method.}
 }
 \value{
-Plots in Rconsole a violin plot with the observed coefficient of variations.
+Returns a list with the data and calculated cv and a table that summarizes the mean, median and mode cv per Condition (if Condition is contained in the comparison). In addition it plots in Rconsole a violin plot with the observed coefficient of variations.
 }
 
 \author{

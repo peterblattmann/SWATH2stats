@@ -22,7 +22,7 @@ The comparison for assessing the variability. Default is to assess the variabili
 further arguments passed to method.}
 }
 \value{
-Plots in Rconsole a correlation heatmap.
+Plots in Rconsole a correlation heatmap and returns the data frame used to do the plotting.
 }
 
 \author{

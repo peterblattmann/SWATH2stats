@@ -119,7 +119,7 @@ Study_design <- read.delim2(file.path(getwd(), annotation.file),
                                  dec='.', sep='\t', header=TRUE)
 @
 
-With the function \texttt{sample\_annotation} the data is annotated with the meta-data contained in the study design table. The next commands can be used to shorten the protein names and remove repetitive and non-unique parts of the Protein name as shown by the example removing some parts of the identifier keeping only the unique SwissProt accession identifier (e.g. sp\_Q9GZL7\_WDR12\_HUMAN --> Q9GZL7).
+With the function \texttt{sample\_annotation} the data is annotated with the meta-data contained in the study design table. The next commands can be used to shorten the protein names and remove repetitive and non-unique parts of the Protein name as shown by the example removing some parts of the identifier keeping only the unique SwissProt accession identifier (example see below).
 
 <<>>=
 # annotate data
@@ -132,6 +132,93 @@ data$ProteinName <- gsub('sp\\|([[:alnum:]]+)\\|[[:alnum:]]*_HUMAN',
                          '\\1', data$ProteinName)
 head(unique(data$ProteinName))
 @
+
+\section{Analyze data}
+In order to analyze the data we provide different functions to assess the variation or correlation between samples or to calculated the summed signal per peptide and protein. This can be used to quickly assess the overall similarity of the injections or see what the signal for a peptide or protein of interest is.
+
+\subsection{Count analytes}
+With the function \texttt{count\_analytes} the number of transitions, peptides and proteins can be counted across the different injections. This can be helpful for assessing if a certain injection produced considerably less identifications and what the mean number of identified transitions, peptides or proteins per sample is.
+
+<<>>=
+count_analytes(data.annotated)
+@
+
+\subsection{Plot correlation between samples}
+With the function \texttt{plot\_correlation\_between\_samples} the Pearson and Spearman correlation is calculated between the different injections and plotted in a heatmap. This can be used to spot injections that show very different signal or also retention times.
+
+<<>>=
+# Plot correlation of intensity
+correlation <- plot_correlation_between_samples(data.annotated, column.values = "Intensity")
+head(correlation)
+
+# Plot correlation of retention times
+correlation <- plot_correlation_between_samples(data.annotated, column.values = "RT")
+
+@
+
+\subsection{Plot variation}
+With the function \texttt{plot\_variation} the coefficient of variation of the signal for the different transitions per condition across replicates is plotted. The coefficient of variation is calculated as the standard deviation divided by the mean of the signal. In order to do different comparisons, the optional parameters can be altered from the default values. For example the coefficient of variation of the summed signal for each peptide can be plotted as shown below. The function uses the cast function from the reshape2 package and the comparison needs to specified accordingly.
+
+<<>>=
+# plot variation of transitions for each condition across replicates
+variation <- plot_variation(data.annotated)
+head(variation[[2]])
+
+# plot variation of summed signal for Peptides for each condition across replicates
+variation <- plot_variation(data.annotated,
+               Comparison = FullPeptideName + Condition ~ BioReplicate,
+               fun.aggregate = sum)
+
+@
+
+\subsection{Plot variation within replicates versus total variation}
+With the function \texttt{plot\_variation\_vs\_total} the coefficient of variation of the signal within replicates can be compared to the variation across all samples. This can serve as an assessment if the variation within technical or biological replicates is indeed smaller than the overall variation. Also for this function the signal for which the variation is plotted and the comparison can be changed by altering the default input options.
+
+<<>>=
+# plot variation of transitions for each condition within replicates
+# compared to total variation
+variation <- plot_variation_vs_total(data.annotated)
+head(variation[[2]])
+@
+
+
+\subsection{Results on protein level}
+SWATH2stats can write a protein-level summary matrix showing the summed signals of protein (unique \texttt{ProteinName} identifiers) over the MS runs (unique \texttt{run\_id}) using the function \texttt{write\_matrix\_proteins}.
+It calculates the sum of all transition intensities per assay, all charge states per peptide, and all peptides for the different protein groups. Note that this function does not select consistently quantified peptides, or a certain number of highest intense peptides, and therefore the summed signal should be used with caution as a direct measure of protein abundance or to compare protein abundance between runs. For other quantitative protein inference strategies, the R package aLFQ can be used (Rosenberger et al. 2014, see below).\\
+A more detailed overview can be generated using the function \texttt{write\_matrix\_peptides}.
+
+Writing the overview matrix of summed intensities per protein entry per MS run:
+
+<<eval=FALSE>>=
+write_matrix_proteins(data,
+                      filename = "SWATH2stats_overview_matrix_proteinlevel",
+                      rm.decoy = FALSE)
+@
+
+\subsection{Results on peptide level}
+With these commands a table is generated that shows the SWATH data on peptide level.
+
+<<>>=
+data.peptide <- data
+data.peptide$aggr_Fragment_Annotation <- NULL
+data.peptide$aggr_Peak_Area <- NULL
+@
+
+<<eval=FALSE>>=
+write.csv(data.peptide, file='peptide_level_output.csv',
+          row.names=FALSE, quote=FALSE)
+@
+
+Alternatively, an overview matrix can be written  which lists the peptide intensity (sum of all transitions per assay and all precursors per peptide) over the MS runs (unique \texttt{run\_id}), using the function \texttt{write\_matrix\_peptides}:
+
+<<eval=FALSE>>=
+write_matrix_peptides(data,
+                      filename = "SWATH2stats_overview_matrix_peptidelevel",
+                      rm.decoy = FALSE)
+@
+
+
+
 
 \section{FDR estimation}
 Mass-spectrometry-based proteomic experiments produce large amounts of data, requiring statistical validation of the obtained results. Large multi-run proteomics studies are prone to the accumulation of false positive identifications and the statistical significance scores must therefore be normalized accordingly(Benjamini and Hochberg, 1995).\\
@@ -285,39 +372,6 @@ data.filtered.max.min <- filter_on_min_peptides(data.filtered.max, 2)
 \section{Conversion of data for other tools}
 In order to use the filtered and annotated data in other programs and packages the data has to be converted into the required format. This chapter describes the different functions within SWATH2stats that can be used to convert the filtered SWATH data into the desired format.
 
-\subsection{Results on protein level}
-SWATH2stats can write a protein-level summary matrix showing the summed signals of Proteins (unique \texttt{ProteinName} identifiers) over the MS runs (unique \texttt{run\_id}) using the function \texttt{write\_matrix\_proteins}.
-It calculates the sum of all transition intensities per assay, all charge states per peptide, and all peptides for the different protein groups. Note that this function does not select consistently quantified peptides, or a certain number of highest intense peptides, and therefore the summed signal should be used with caution as a direct measure of protein abundance or to compare protein abundance between runs. For other quantitative protein inference strategies, the R package aLFQ can be used (Rosenberger et al. 2014, see below).\\
-A more detailed overview can be generated using the function \texttt{write\_matrix\_peptides}.
-
-Writing the overview matrix of summed intensities per protein entry per MS run:
-
-<<eval=FALSE>>=
-write_matrix_proteins(data, filename = "SWATH2stats_overview_matrix_proteinlevel",
-                      rm.decoy = FALSE)
-@
-
-\subsection{Results on peptide level}
-With these commands a table is generated that shows the SWATH data on peptide level.
-
-<<>>=
-data.peptide <- data
-data.peptide$aggr_Fragment_Annotation <- NULL
-data.peptide$aggr_Peak_Area <- NULL
-@
-
-<<eval=FALSE>>=
-write.csv(data.peptide, file='peptide_level_output.csv',
-          row.names=FALSE, quote=FALSE)
-@
-
-Alternatively, an overview matrix can be written  which lists the peptide intensity (sum of all transitions per assay and all precursors per peptide) over the MS runs (unique \texttt{run\_id}), using the function \texttt{write\_matrix\_peptides}:
-
-<<eval=FALSE>>=
-write_matrix_peptides(data,
-                      filename = "SWATH2stats_overview_matrix_peptidelevel",
-                      rm.decoy = FALSE)
-@
 
 \subsection{Results on transition level}
 With the function \texttt{disaggregate} the SWATH data is changed from a table where one row corresponds to one peptide to a table where one row corresponds to one measured transition.

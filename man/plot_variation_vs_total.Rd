@@ -30,7 +30,7 @@ further arguments passed to method.
 }
 }
 \value{
-Plots in Rconsole a violin plot comparing the total variation with the variation within replicates.
+Plots in Rconsole a violin plot comparing the total variation with the variation within replicates. In addition it returns the data frame from which the plotting is done and a table with the calculated mean, median and mode of the cv for the total or replicate data.
 }
 
 \author{

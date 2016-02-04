@@ -39,6 +39,17 @@ plot_variation_vs_total <- function(data, column.values = "Intensity", Compariso
           + labs(title= "Coefficient of variation - total versus within replicates")
           + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=T), digits=2))), geom="text")
     )
-   }
+  }
   print(p)
+
+  median <- aggregate(data.comb[,"cv"], by=list(data.comb$scope), FUN=function(x)median(x, na.rm=TRUE))
+  colnames(median) <- c("scope", "median_cv")
+  mean <- aggregate(data.comb[,"cv"], by=list(data.comb$scope), FUN=function(x)mean(x, na.rm=TRUE))
+  colnames(mean) <- c("scope", "mean_cv")
+  mode <- aggregate(data.comb[,"cv"], by=list(data.comb$scope), FUN=function(x){d<-density(x, na.rm=TRUE); i <- which.max(d$y); return(d$x[i])})
+  colnames(mode) <- c("scope", "mode_cv")
+
+  cv_table <- merge(mode, merge(mean, median, by="scope"), by="scope")
+
+  return(list(data.comb, cv_table))
 }

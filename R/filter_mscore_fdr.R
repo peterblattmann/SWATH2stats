@@ -4,18 +4,18 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
   message("filter_mscore_fdr is filtering the data...", "\n")
   message("-------------------------------------------------------------", "\n")
   message("finding m-score cutoff to achieve desired protein FDR in protein master list..", "\n")
-    # Create master list at strict protein level FDR criterion  
+    # Create master list at strict protein level FDR criterion
   protein_master_list <- unique(subset(data, data$m_score <=
     mscore4protfdr(data, FFT, fdr_target = overall_protein_fdr_target))$ProteinName)
-    
+
   # Pre-Filter data based on upper_overall_peptide_fdr_limit
   message("finding m-score cutoff to achieve desired global peptide FDR..", "\n", "")
     data.f1 <- subset(data, data$m_score <=
     mscore4pepfdr(data, FFT, fdr_target = upper_overall_peptide_fdr_limit))
-  
+
   # Filter prefiltered data down to entries mapping to the protein_master_list
   data.f2 <- subset(data.f1, data.f1$ProteinName %in% protein_master_list)
-  
+
   # count remaining entries
   proteins<-length(protein_master_list)
   proteins.t<-length(unique(data.f2[data.f2$decoy == FALSE, c("ProteinName")]))
@@ -26,9 +26,9 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
   mapping.peptides<-length(unique(data.f2$FullPeptideName))
   mapping.peptides.t<-length(unique(data.f2[data.f2$decoy == FALSE, c("FullPeptideName")]))
   mapping.peptides.d<-length(unique(data.f2[data.f2$decoy == TRUE, c("FullPeptideName")]))
-  
+
   fdr_cube <- assess_fdr_byrun(data.f1, FFT, output = "Rconsole", plot = FALSE)
- 
+
   # print some numbers about the filtering results
   message("-------------------------------------------------------------", "\n")
   message("Proteins selected: ", "\n",
@@ -45,10 +45,10 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
       "Thereof decoy peptides: ", total.peptides.d, "\n")
   message("-------------------------------------------------------------", "\n")
   message("Individual run FDR quality of the peptides selected from:", "\n")
-  message(mean(fdr_cube[8, , 1]))
+  message(signif(mean(fdr_cube[8, , 1]),3))
   message("-----------------------------------------------------------", "\n")
-  
-  
+
+
   # return filtered data with or without decoy entries
   if (rm.decoy == FALSE){
     message("The decoys have NOT been removed from the returned data", "\n")
