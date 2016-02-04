@@ -7,12 +7,12 @@ mscore4assayfdr<- function(data, FFT = NULL, fdr_target = NULL)
   target.assays.highres<-NULL
   decoy.assays.highres<-NULL
   for (i in 1:length(mscore_levels_highres))
-  {  
-    target.assays.highres[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels_highres[i], c("id")]))
-    decoy.assays.highres[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels_highres[i], c("id")]))
+  {
+    target.assays.highres[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels_highres[i], c("transition_group_id")]))
+    decoy.assays.highres[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels_highres[i], c("transition_group_id")]))
   }
   assay.fdr.highres<-(decoy.assays.highres/target.assays.highres)*FFT
-  
+
   # pick mscore cutoff closest to (<=) fdr_target % peptide FDR & report
   mscore_chosen<-mscore_levels_highres[assay.fdr.highres<=fdr_target][1]
   assay_fdr_chosen<-assay.fdr.highres[assay.fdr.highres<=fdr_target][1]
