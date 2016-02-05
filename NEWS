@@ -45,3 +45,7 @@ VERSION 1.1.9
 Update vignette
 remove function: filter_all_peptides
 mscore4assayfdr: bug fix
+
+VERSION 1.1.10
+-------------------------
+test for FDR filtering: bug fix due to fix in mscore4assayfdr

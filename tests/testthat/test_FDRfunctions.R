@@ -20,7 +20,7 @@ test_that("FDR assessment on annotated data", {
   expect_that(round(mean(assess_fdr_byrun(data.FDR, output = "Rconsole")[1,,]),digits = 4), equals(229.3333))
 
   # mscore4(assay,pep,prot)fdr return tests
-  expect_that(signif(mscore4assayfdr(data.FDR, fdr_target = 0.001), digits=5), equals(0.0063096))
+  expect_that(signif(mscore4assayfdr(data.FDR, fdr_target = 0.001), digits=5), equals(0.00017783))
   expect_that(signif(mscore4pepfdr(data.FDR, fdr_target = 0.002), digits=5), equals(0.00017783))
   expect_that(signif(mscore4protfdr(data.FDR, fdr_target = 0.05), digits=5), equals(0.00017783))
 
