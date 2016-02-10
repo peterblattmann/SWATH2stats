@@ -49,3 +49,7 @@ mscore4assayfdr: bug fix
 VERSION 1.1.10
 -------------------------
 test for FDR filtering: bug fix due to fix in mscore4assayfdr
+
+VERSION 1.1.11
+-------------------------
+plot_correlation_between_samples: import cor function from stats package and reorder y axis.

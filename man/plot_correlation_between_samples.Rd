@@ -7,7 +7,7 @@ Plots the correlation between injections.
 This function plots the Pearson's and Spearman correlation between samples. If decoys are present these are removed before plotting.
 }
 \usage{
-plot_correlation_between_samples(data, column.values = "Intensity", Comparison = transition_group_id ~ Condition + BioReplicate, ...)
+plot_correlation_between_samples(data, column.values = "Intensity", Comparison = transition_group_id ~ Condition + BioReplicate, fun.aggregate =NULL, ...)
 }
 \arguments{
   \item{data}{
@@ -18,6 +18,8 @@ Indicates the columns for which the correlation is assessed. This can be the Int
 }
   \item{Comparison}{
 The comparison for assessing the variability. Default is to assess the variability per transition_group_id over the different Condition and Replicates. Comparison is performed using the dcast() function of the reshape2 package.}
+    \item{fun.aggregate}{
+If for the comparison values have to be aggregated one needs to provide the function here.}
   \item{\dots}{
 further arguments passed to method.}
 }

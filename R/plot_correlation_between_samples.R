@@ -1,17 +1,20 @@
 utils::globalVariables(c("Var1", "Var2", "value"))
 
-plot_correlation_between_samples <- function(data, column.values = "Intensity", Comparison = transition_group_id ~ Condition + BioReplicate, ...){
+plot_correlation_between_samples <- function(data, column.values = "Intensity", Comparison = transition_group_id ~ Condition + BioReplicate, fun.aggregate = NULL, ...){
 
   if(sum(colnames(data) == "decoy") == 1){
     data <- data[data$decoy == 0,]
   }
 
-  data.c <- dcast(data, Comparison, value.var = column.values, fun.aggregate=sum)
+  data.c <- dcast(data, Comparison, value.var = column.values, fun.aggregate= fun.aggregate)
 
-  pearson.cor <- cor(data.c[,2:dim(data.c)[2]], use="pairwise.complete.obs", method="pearson")
+  dep.vars <- length(all.vars(Comparison[[2]]))
+  indep.vars <- length(all.vars(Comparison[[3]]))
+
+  pearson.cor <- cor(data.c[,(dep.vars+1):dim(data.c)[2]], use="pairwise.complete.obs", method="pearson")
   pearson.cor[lower.tri(pearson.cor)] <- NA
 
-  spearman.cor <- cor(data.c[,2:dim(data.c)[2]], use="pairwise.complete.obs", method="spearman")
+  spearman.cor <- cor(data.c[,(dep.vars+1):dim(data.c)[2]], use="pairwise.complete.obs", method="spearman")
   spearman.cor[upper.tri(spearman.cor, diag = TRUE)] <- NA
 
   pearson.cor <- melt(pearson.cor)
@@ -29,7 +32,8 @@ plot_correlation_between_samples <- function(data, column.values = "Intensity", 
         + geom_text(aes(fill = data.plot$value, label = round(data.plot$value, digits= 2)))
         + theme(plot.title = element_text(hjust = 0.5, vjust = 1))
         + scale_x_discrete(expand = c(0,0))
-        + scale_y_discrete(expand = c(0,0)))
+        + scale_y_discrete(limits = rev(levels(data.plot$Var1)), expand = c(0,0))
+        )
 
   print(p)
 

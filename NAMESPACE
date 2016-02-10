@@ -28,3 +28,5 @@ importFrom(ggplot2, labs)
 importFrom(ggplot2, stat_summary)
 importFrom(ggplot2, scale_x_discrete)
 importFrom(ggplot2, scale_y_discrete)
+
+importFrom(stats, cor)
