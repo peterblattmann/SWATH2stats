@@ -23,7 +23,7 @@ Option to indicate if negative and 0 values should be replaced with NA.
 Option to indicate if column names should be renamed and columns reduced to the necessary columns for MSstats
 }
   \item{replace.Unimod}{
-Option to indicate if Unimod Identifier should be replaced form ":"" to "_".
+Option to indicate if Unimod Identifier should be replaced from ":" to "_".
 }
 
 }

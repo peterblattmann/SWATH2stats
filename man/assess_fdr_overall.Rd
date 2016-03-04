@@ -13,12 +13,17 @@ Protein FDR control on peak group quality level is a very strict filter and shou
 FDR is calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above
 }
 \usage{
-assess_fdr_overall(data, FFT, output = "pdf_csv", plot = TRUE, filename="FDR_report_overall")
+assess_fdr_overall(data, FFT, n.range = 20, output = "pdf_csv", plot = TRUE, 
+filename="FDR_report_overall")
 }
 \arguments{
   \item{data}{
 Data table that is produced by the OpenSWATH/pyProphet workflow
 }
+  \item{n.range}{
+  Option to set the number of magnitude for which the m_score threshold is decreased (e.g. n.range = 10, m-score from 0.1 until 10^-10)^.
+  }
+
   \item{FFT}{
 Ratio of false positives to true negatives, q-values from [Injection_name]_full_stat.csv in pyProphet stats output. As an approximation, the q-values of multiple runs are averaged and supplied as argument FFT. Numeric from 0 to 1. Defaults to 1, the most conservative value (1 Decoy indicates 1 False target).
 }
@@ -42,5 +47,6 @@ Moritz Heusel
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-assess_fdr_overall(data, FFT=0.7, output = "Rconsole", plot = TRUE, filename="Testoutput_assess_fdr_overall")
+assess_fdr_overall(data, FFT=0.7, output = "Rconsole", plot = TRUE, 
+filename="Testoutput_assess_fdr_overall")
 }

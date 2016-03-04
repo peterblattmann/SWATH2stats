@@ -1,4 +1,4 @@
-sample_annotation <- function(data, sample.annotation, data.type="openSWATH", column.file = "align_origfilename", column.runid = "run_id", change.run.id = TRUE, verbose=FALSE){
+sample_annotation <- function(data, sample.annotation, data.type="openSWATH", column.file = "align_origfilename", change.run.id = TRUE, verbose=FALSE){
   #### annotate sample
   ### needs a txt file with the columns Filename, Condition, BioReplicate, Run. In Filename a unique string contained in File
   ### must be contained.
@@ -27,10 +27,10 @@ sample_annotation <- function(data, sample.annotation, data.type="openSWATH", co
     }
 
     add.colnames <- colnames(data)[!(colnames(data) %in% c('ProteinName', 'FullPeptideName', 'Charge', 'aggr_Fragment_Annotation',
-                                                           'aggr_Peak_Area', 'Condition', "BioReplicate", "Run", column.runid))]
+                                                           'aggr_Peak_Area', 'Condition', "BioReplicate", "Run"))]
 
     data <- data[,c('ProteinName', 'FullPeptideName', 'Charge', 'aggr_Fragment_Annotation',
-                    'aggr_Peak_Area', 'Condition', "BioReplicate", "Run", column.runid, add.colnames)]
+                    'aggr_Peak_Area', 'Condition', "BioReplicate", "Run", add.colnames)]
     if(change.run.id){
       data$run_id <- paste(data$Condition, data$BioReplicate, data$Run, sep="_")
     }

@@ -9,8 +9,9 @@ The peptide quantification is achieved by summing the areas under all 6 transiti
 In order to keep the peptide-to-protein association, the FullPeptideName is joined with the ProteinName.
 }
 \usage{
-write_matrix_peptides(data, write.csv=FALSE, filename = "SWATH2stats_overview_matrix_peptidelevel.csv",
-  rm.decoy = FALSE)
+write_matrix_peptides(data, write.csv=FALSE, 
+filename = "SWATH2stats_overview_matrix_peptidelevel.csv",
+rm.decoy = FALSE)
 }
 \arguments{
   \item{data}{

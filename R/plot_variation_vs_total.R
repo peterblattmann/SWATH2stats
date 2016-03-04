@@ -37,7 +37,7 @@ plot_variation_vs_total <- function(data, column.values = "Intensity", Compariso
           + geom_violin(scale="area") + xlab("")
           + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
           + labs(title= "Coefficient of variation - total versus within replicates")
-          + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=T), digits=2))), geom="text")
+          + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=TRUE), digits=2))), geom="text")
     )
   }
   print(p)

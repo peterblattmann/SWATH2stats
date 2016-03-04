@@ -30,3 +30,6 @@ importFrom(ggplot2, scale_x_discrete)
 importFrom(ggplot2, scale_y_discrete)
 
 importFrom(stats, cor)
+
+S3method(plot, fdr_cube)
+S3method(plot, fdr_table)

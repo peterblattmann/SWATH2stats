@@ -78,7 +78,7 @@ head(Study_design)
 The working directory of the analysis is defined and the file name of the OpenSWATH results file and the study design file are indicated (in this example they should be present in the same folder). Whereas the rest of the script can be kept after having optimized the filtering options, this first part of the script is changed for different data that will be analyzed.
 
 <<eval=FALSE>>=
-n# set working directory
+# set working directory
 setwd('~/Documents/MyWorkingDirectory/')
 
 # Input data file (openSWATH output)
@@ -94,6 +94,16 @@ The SWATH data can be loaded from the previously indicated file into R using the
 # load data
 data <- data.frame(fread(file.name, sep='\t', header=TRUE))
 @
+
+If the file is in a different format the column names have to be renamed accordingly. For this the function \texttt{import\_data} can perform this. For the requirements for each column please consult the manual page.
+
+<<eval=FALSE>>=
+# consult the manual page.
+help(import_data)
+# rename the columns
+data <- import_data(data)
+@
+
 
 The function \texttt{reduce\_openSWATH\_output} can be executed to reduce the number of columns from the OpenSWATH result table. This function reduces the number of columns to the ones necessary for MSstats, mapDIA, aLFQ. However for other packages such as imsbInfer all the columns need to be kept and this function should be omitted.
 The next command shows how specific proteins or peptides can be removed from the data. As an example the iRT peptides (peptides for retention time calibration) were removed.
@@ -311,7 +321,7 @@ The function \texttt{filter\_mscore} removes all measured peak groups that are a
 data.filtered.mscore <- filter_mscore(data.annotated, 0.01)
 @
 
-The function \texttt{filter\_mscore\_freqobs} takes into account how many times in the different injection runs a peak group has been confidently (as defined by the m-score threshold) identified. This is useful in large data of many different replicates. For example the data for a certain precursor that has been confidently identified in most of the replicates but does not pass the threshold in one replicate still should be kept for statistical analysis. The function \texttt{filter\_mscore\_freqobs} can be used to filter for precursors that were observed with a certain m-score threshold and frequency across the samples. In the following example, precursors passing a m-score threshold of 0.01 in 80 \% of the replicates are selected. The option rm.decoy is set to FALSE to keep the decoys for subsequent FDR assessment.
+The function \texttt{filter\_mscore\_freqobs} takes into account how many times in the different injection runs a peak group has been confidently (as defined by the m-score threshold) identified. This is useful in large data of many different replicates. For example the data for a certain precursor that has been confidently identified in most of the replicates but does not pass the threshold in one replicate still should be kept for statistical analysis. The function \texttt{filter\_mscore\_freqobs} can be used to filter for precursors that were observed with a certain m-score threshold and frequency across the samples. In the following example, precursors passing an m-score threshold of 0.01 in 80 \% of the replicates are selected. The option rm.decoy is set to FALSE to keep the decoys for subsequent FDR assessment.
 
 <<>>=
 data.filtered.mscore <- filter_mscore_freqobs(data.annotated, 0.01, 0.8,
@@ -325,7 +335,7 @@ data.filtered.mscore <- filter_mscore_condition(data.annotated, 0.01, 3)
 @
 
 
-In order to reach a compromise between a very stringent m-score filter controlling the global protein FDR, and keeping valid peptide quantifications in the data, we introduce here a two-tiered filtering approach with the function \texttt{filter\_mscore\_fdr}. This uses a similar approach as implemented for extracting quantitative data from multi-run DDA data sets (Fermin et al. 2011). In the first step, a m-score cutoff is identified to reach a desired protein-level FDR. All proteins for which one peakgroup passes this strict m-score cutoff criterion are collected in a protein master list. The original data is then filtered i.) for the proteins present in the master list and ii.) filtered for all peptide quantifications passing an m-score cutoff to achieve a desired global peptide-level FDR. Note that the m-score cutoff to filter the protein list will typically be more stringent than the second m-score cutoff to filter the peptides.
+In order to reach a compromise between a very stringent m-score filter controlling the global protein FDR, and keeping valid peptide quantifications in the data, we introduce here a two-tiered filtering approach with the function \texttt{filter\_mscore\_fdr}. This uses a similar approach as implemented for extracting quantitative data from multi-run DDA data sets (Fermin et al. 2011). In the first step, an m-score cutoff is identified to reach a desired protein-level FDR. All proteins for which one peakgroup passes this strict m-score cutoff criterion are collected in a protein master list. The original data is then filtered i.) for the proteins present in the master list and ii.) filtered for all peptide quantifications passing an m-score cutoff to achieve a desired global peptide-level FDR. Note that the m-score cutoff to filter the protein list will typically be more stringent than the second m-score cutoff to filter the peptides.
 
 
 <<>>=
@@ -375,10 +385,13 @@ write.csv(data.transition, file='transition_level_output.csv',
 \subsubsection{Conversion using a python script}
 For very large SWATH data it is faster to use a custom-made python script to transform the data from a peptide-level format to a transition-level format. With the function \texttt{convert4pythonscript} the necessary columns are selected and the nomenclature for modified peptides is changed. Subsequently the data is written to disk.
 
-<<eval=FALSE>>=
+<<>>=
 data <- convert4pythonscript(data)
-write.table(data, file="input.tsv", sep="\t", row.names=FALSE, quote=FALSE)
 head(data)
+@
+
+<<eval=FALSE>>=
+write.table(data, file="input.tsv", sep="\t", row.names=FALSE, quote=FALSE)
 @
 
 The .tsv table can be transformed into a transition level table using a python script (as example featurealigner2msstats\_withRT.py from msproteomicstools which is available in the scripts folder of the package).

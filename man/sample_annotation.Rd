@@ -7,8 +7,8 @@ sample_annotation: Annotate the SWATH data with the sample information
 For statistical analysis and filtering the measurements need to be annotated with Filename, Condition, BioReplicate, and Run. This functions takes this information from a txt file containing this meta-data.
 }
 \usage{
-sample_annotation(data, sample.annotation, data.type="openSWATH", column.file = "align_origfilename",
-column.runid = "run_id", change.run.id = TRUE, verbose=FALSE)
+sample_annotation(data, sample.annotation, data.type="openSWATH", 
+column.file = "align_origfilename", change.run.id = TRUE, verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -23,10 +23,6 @@ Option to specify the format of the table, if the column names from an OpenSWATH
 \item{column.file}{
 Option to specify the column name where the injection file is specified. Default is set to "align_origfilename".
 }
-\item{column.runid}{
-Option to specify the column name where the run_id is derived from. Default is set to "runid". It needs to be a column that has a different value for each MS-injection.
-}
-
 \item{change.run.id}{
 Option to choose if the run\_id column shall be reassigned to a unique value combining the values of Condition, BioReplicate and Run. (Option only possible if data is of format "OpenSWATH")
 }

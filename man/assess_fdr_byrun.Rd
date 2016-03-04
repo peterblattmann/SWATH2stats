@@ -14,7 +14,8 @@ To assess fdr over the entire dataset, please refer to function assess_fdr_overa
 FDR is calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above
 }
 \usage{
-assess_fdr_byrun(data, FFT, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun")
+assess_fdr_byrun(data, FFT, n.range = 20, output = "pdf_csv", plot = TRUE, 
+filename = "FDR_report_byrun")
 }
 \arguments{
   \item{data}{
@@ -23,6 +24,9 @@ Annotated OpenSWATH/pyProphet output table. Refer to function sample_annotation 
   \item{FFT}{
 Ratio of false positives to true negatives, q-values from [Injection_name]_full_stat.csv in pyProphet stats output. As an approximation, the q-values of multiple runs are averaged and supplied as argument FFT. Numeric from 0 to 1. Defaults to 1, the most conservative value (1 Decoy indicates 1 False target).
 }
+  \item{n.range}{
+  Option to set the number of magnitude for which the m_score threshold is decreased (e.g. n.range = 10, m-score from 0.1 until 10^-10)^.
+  }
   \item{output}{
 Choose output type. "pdf_csv" creates the output as files in the working directory, "Rconsole" triggers delivery of the output to the console enabling further computation or custom plotting / output.
 }
@@ -45,5 +49,6 @@ Moritz Heusel
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)
-assess_fdr_byrun(data, FFT=0.7, output = "pdf_csv", plot = TRUE, filename="Testoutput_assess_fdr_byrun")
+assess_fdr_byrun(data, FFT=0.7, output = "pdf_csv", plot = TRUE, 
+filename="Testoutput_assess_fdr_byrun")
 }

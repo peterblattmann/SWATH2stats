@@ -1,7 +1,6 @@
-assess_fdr_overall <-function(data, FFT = 1, output="pdf_csv", plot=TRUE, filename="FDR_report_overall")
+assess_fdr_overall <-function(data, FFT = 1, n.range = 20, output="pdf_csv", plot=TRUE, filename="FDR_report_overall")
 {
-  .n.intervall <- 20
-  mscore_levels<-10^-seq(.n.intervall)
+  mscore_levels<-10^-seq(n.range)
 
   # create vectors to store count results
   target.assays<-NULL

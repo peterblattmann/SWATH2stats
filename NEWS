@@ -53,3 +53,9 @@ test for FDR filtering: bug fix due to fix in mscore4assayfdr
 VERSION 1.1.11
 -------------------------
 plot_correlation_between_samples: import cor function from stats package and reorder y axis.
+
+VERSION 1.1.12
+-------------------------
+sample_annotation: remove option column.runid.
+assess_fdr_byrun and assess_fdr_overall: add option to set range of plotting with n.range
+SWATH2stats_example_script, Spyogenes data: added Example script and S.pyogenes data

@@ -12,7 +12,8 @@ This function does not select consistently quantified or top peptides but sums a
 Peptide selection can be achieved upstream using e.g. the functions filter_mscore_requant(), filter_on_max_peptides() and filter_on_min_peptides().
 }
 \usage{
-write_matrix_proteins(data, write.csv = FALSE, filename = "SWATH2stats_overview_matrix_proteinlevel.csv",
+write_matrix_proteins(data, write.csv = FALSE, 
+filename = "SWATH2stats_overview_matrix_proteinlevel.csv",
 rm.decoy = FALSE)
 }
 \arguments{

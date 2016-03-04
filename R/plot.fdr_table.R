@@ -40,26 +40,27 @@ legend("topleft", legend=c("all targets", "true targets"), cex=0.5, lty=c(2,1))
 
 # Plot 2: Global m_score adjustment and connectivity to global FDR quality levels
 # as estimated by decoy counting + FFT-correction
-par(mar=c(5, 8, 4, 8) + 0.1, mfrow=c(1,1))
+xlimit <- -1*(length(x$assay.fdr)+1)
 
+par(mar=c(5, 8, 4, 8) + 0.1, mfrow=c(1,1))
 plot(log10(x$mscore_cutoff), x$assay.fdr, axes=FALSE, 
      ylim=c(0,1.1*max(x$assay.fdr, na.rm=TRUE)), 
      main="Global m-score cutoff connectivity to FDR quality", 
-     xlab="", ylab="",type="l",col="black", xlim=c(-21,0))
+     xlab="", ylab="",type="l",col="black", xlim=c(xlimit,0))
 points(log10(x$mscore_cutoff), x$assay.fdr, pch=20,col="black")
 axis(2, ylim=c(0,1.1*max(x$assay.fdr, na.rm=TRUE)),col="black",lwd=2)
 mtext(2,text="Assay FDR",line=2)
 par(new=TRUE)
 plot(log10(x$mscore_cutoff), x$peptide.fdr, axes=FALSE, 
      ylim=c(0,1.1*max(x$peptide.fdr, na.rm=TRUE)), 
-     xlab="", ylab="",type="l", lwd=2, col="red", main="",xlim=c(-21,0), lty=2)
+     xlab="", ylab="",type="l", lwd=2, col="red", main="",xlim=c(xlimit,0), lty=2)
 points(log10(x$mscore_cutoff), x$peptide.fdr, pch=20,col="red")
 axis(2, ylim=c(0,1.1*max(x$peptide.fdr, na.rm=TRUE)),col="red",lwd=2, line =3.5)
 mtext(2,text="Peptide FDR", col="red",line=5.5)
 par(new=TRUE)
 plot(log10(x$mscore_cutoff), x$protein.fdr, axes=FALSE, 
      ylim=c(0,1.1*max(x$protein.fdr, na.rm=TRUE)), col="blue",
-     xlab="", ylab="", type="l",lty=3, main="",xlim=c(-21,0),lwd=2)
+     xlab="", ylab="", type="l",lty=3, main="",xlim=c(xlimit,0),lwd=2)
 points(log10(x$mscore_cutoff), x$protein.fdr, col="blue",pch=20)
 axis(4, ylim=c(0,1.1*max(x$protein.fdr, na.rm=TRUE)), col="blue",lwd=2)
 mtext(4,text="Protein FDR", col="blue",line=2)

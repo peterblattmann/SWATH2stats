@@ -8,7 +8,8 @@ count_analytes: Counts analytes in different injections
 This functions counts the number of different peakgroups, peptides and proteins in different injections
 }
 \usage{
-count_analytes(data, column.levels = c("transition_group_id", "FullPeptideName", "ProteinName"), column.by="run_id", rm.decoy=TRUE)
+count_analytes(data, column.levels = c("transition_group_id", "FullPeptideName",
+"ProteinName"), column.by="run_id", rm.decoy=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

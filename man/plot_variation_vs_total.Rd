@@ -7,7 +7,10 @@ Plots the total variation versus variation within replicates
 This function plots the total variation and the variation within replicates for a given value. If decoys are present these are removed before plotting.
 }
 \usage{
-plot_variation_vs_total(data, column.values = "Intensity", Comparison1 = transition_group_id  ~ BioReplicate + Condition, Comparison2 = transition_group_id + Condition ~ BioReplicate, fun.aggregate = NULL, label=TRUE, ...)
+plot_variation_vs_total(data, column.values = "Intensity", 
+Comparison1 = transition_group_id  ~ BioReplicate + Condition, 
+Comparison2 = transition_group_id + Condition ~ BioReplicate, 
+fun.aggregate = NULL, label=TRUE, ...)
 }
 \arguments{
   \item{data}{

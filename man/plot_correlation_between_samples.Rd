@@ -7,7 +7,9 @@ Plots the correlation between injections.
 This function plots the Pearson's and Spearman correlation between samples. If decoys are present these are removed before plotting.
 }
 \usage{
-plot_correlation_between_samples(data, column.values = "Intensity", Comparison = transition_group_id ~ Condition + BioReplicate, fun.aggregate =NULL, ...)
+plot_correlation_between_samples(data, column.values = "Intensity", 
+Comparison = transition_group_id ~ Condition + BioReplicate, 
+fun.aggregate =NULL, ...)
 }
 \arguments{
   \item{data}{

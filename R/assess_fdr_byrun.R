@@ -1,12 +1,11 @@
-assess_fdr_byrun <- function(data, FFT = 1, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun")
+assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun")
 {
   # create m_score intervals to be tested
-  .n.intervall <- 30
-  test_levels <- 10^-seq(1:.n.intervall)
+  test_levels <- 10^-seq(1:n.range)
 
   ## Identify the minimal m-score cutoff at which all runs still contain decoys
   decoy_count_lengths <- NULL
-  for (i in seq(1:.n.intervall)) {
+  for (i in seq(1:n.range)) {
     decoy_count_lengths[i] <- length(by(data[data$decoy == TRUE & data$m_score <= test_levels[i],
         c("transition_group_id")], data[data$decoy == TRUE & data$m_score <= test_levels[i], c("run_id")], length))
   }

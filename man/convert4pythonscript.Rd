@@ -20,7 +20,7 @@ Option to indicate if Unimod Identifier should be replaced form ":"" to "_".
 }
 }
 \details{
-The necessary columns are selected and the run column is renamed to align_origfilename for the script.
+The necessary columns are selected and the run column is renamed to align_origfilename for the script. The intensities are taken from the column aggr_Peak_Area and therefore the Intensity column is not exported. 
 
 }
 \value{
