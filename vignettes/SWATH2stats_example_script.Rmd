@@ -4,7 +4,7 @@ output:
   pdf_document: 
     keep_tex: yes
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{SWATH2stats example script}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -12,7 +12,7 @@ vignette: >
 Example R code showing the usage of the SWATH2stats package. The data processed is the publicly available dataset of *S.pyogenes* (Röst et al. 2014) (http://www.peptideatlas.org/PASS/PASS00289). The results file 'rawOpenSwathResults\_1pcnt\_only.tsv' can be found on PeptideAtlas (ftp://PASS00289@ftp.peptideatlas.org/../Spyogenes/results/).
 This is a R Markdown file, showing the result of processing this data. The lines shaded in grey represent the R code executed during this analysis.
 
-The stable release package SWATH2stats can be directly installed from Bioconductor using the commands below. This file here was generated using the current development release SWATH2stats v.1.1.11 that can be downloaded from http://bioconductor.org/packages/devel/bioc/html/SWATH2stats.html.
+The stable release package SWATH2stats can be directly installed from Bioconductor using the commands below. This file here was generated using the current development release SWATH2stats v.1.1.13 that can be downloaded from http://bioconductor.org/packages/devel/bioc/html/SWATH2stats.html.
 
 
 ```{r, eval=FALSE}

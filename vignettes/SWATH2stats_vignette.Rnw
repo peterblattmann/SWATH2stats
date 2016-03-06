@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{Using the SWATH2stats package}
+%\VignetteIndexEntry{SWATH2stats package Vignette}
 %\VignettePackage{SWATH2stats}
 \documentclass[a4paper]{article}
 \usepackage{authblk}
