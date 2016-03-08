@@ -12,7 +12,7 @@ vignette: >
 Example R code showing the usage of the SWATH2stats package. The data processed is the publicly available dataset of *S.pyogenes* (Röst et al. 2014) (http://www.peptideatlas.org/PASS/PASS00289). The results file 'rawOpenSwathResults\_1pcnt\_only.tsv' can be found on PeptideAtlas (ftp://PASS00289@ftp.peptideatlas.org/../Spyogenes/results/).
 This is a R Markdown file, showing the result of processing this data. The lines shaded in grey represent the R code executed during this analysis.
 
-The stable release package SWATH2stats can be directly installed from Bioconductor using the commands below. This file here was generated using the current development release SWATH2stats v.1.1.13 that can be downloaded from http://bioconductor.org/packages/devel/bioc/html/SWATH2stats.html.
+The stable release package SWATH2stats can be directly installed from Bioconductor using the commands below. This file here was generated using the current development release SWATH2stats v.1.1.14 that can be downloaded from http://bioconductor.org/packages/devel/bioc/html/SWATH2stats.html.
 
 
 ```{r, eval=FALSE}
@@ -52,43 +52,50 @@ The SWATH-MS data is annotated using the study design table.
 ```{r}
 data.annotated <- sample_annotation(data, Study_design)
 ```
+
+Remove the decoy peptides for subsequent first inspection of the data.
+```{r}
+data.annotated.nodecoy <- subset(data.annotated, decoy==FALSE)
+```
+
+
 \newpage
 
 # Part 2: Analyze correlation, variation and signal
 Count the different analytes for the different injections.
 ```{r}
-count_analytes(data.annotated)
+count_analytes(data.annotated.nodecoy)
 ```
 
 Plot the correlation of the signal intensity.
 ```{r, fig.height=2.5, fig.width = 6}
-correlation <- plot_correlation_between_samples(data.annotated, column.values = 'Intensity')
+correlation <- plot_correlation_between_samples(data.annotated.nodecoy, column.values = 'Intensity')
 ```
 
-Plot the correlation of the delat_rt, which is the deviation of the retention time from the expected retention time.
+Plot the correlation of the delta_rt, which is the deviation of the retention time from the expected retention time.
 ```{r, fig.height=2.5, fig.width = 6}
-correlation <- plot_correlation_between_samples(data.annotated, column.values = 'delta_rt')
+correlation <- plot_correlation_between_samples(data.annotated.nodecoy, column.values = 'delta_rt')
 ```
 \newpage 
 
 
 Plot the variation of the signal across replicates.
 ```{r, fig.height=2.5, fig.width = 5}
-variation <- plot_variation(data.annotated)
+variation <- plot_variation(data.annotated.nodecoy)
 variation[[2]]
 ```
 
 Plot the total variation versus variation within replicates.
 ```{r, fig.height=2.5, fig.width = 5}
-variation_total <- plot_variation_vs_total(data.annotated)
+variation_total <- plot_variation_vs_total(data.annotated.nodecoy)
 variation_total[[2]]
 ```
 
 Calculate the summed signal per peptide and protein across samples.
 ```{r}
-peptide_signal <- write_matrix_peptides(data.annotated)
-protein_signal <- write_matrix_proteins(data.annotated)
-tail(protein_signal)
+peptide_signal <- write_matrix_peptides(data.annotated.nodecoy)
+protein_signal <- write_matrix_proteins(data.annotated.nodecoy)
+head(protein_signal)
 ```
 \newpage
 

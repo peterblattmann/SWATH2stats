@@ -1,3 +1,5 @@
+utils::globalVariables(c("write.csv"))
+
 assess_fdr_overall <-function(data, FFT = 1, n.range = 20, output="pdf_csv", plot=TRUE, filename="FDR_report_overall")
 {
   mscore_levels<-10^-seq(n.range)

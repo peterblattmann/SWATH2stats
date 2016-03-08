@@ -1,3 +1,5 @@
+utils::globalVariables(c("aggregate"))
+
 write_matrix_proteins<- function(data, write.csv = FALSE, filename = "SWATH2stats_overview_matrix_proteinlevel.csv", rm.decoy = FALSE)
 {
   if(rm.decoy == TRUE){

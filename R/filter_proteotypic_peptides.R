@@ -1,3 +1,5 @@
+utils::globalVariables(c("head"))
+
 filter_proteotypic_peptides <- function(data){
   
   data.proteins <- gsub("^[[:digit:]]\\/", "", data$ProteinName)

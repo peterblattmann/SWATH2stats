@@ -65,3 +65,8 @@ VERSION 1.1.13
 assess_fdr_byrun, assess_fdr_overall, filter_mscore_fdr: add sentence to manual page about FFT
 DESCRIPTION: add knitr to Suggests and VignetteBuilder, add R>=2.10.0 to Depends 
 vignettes: Add/change title
+
+VERSION 1.1.14
+-------------------------
+import_data: minor changes in documentation
+defining several functions at the beginning of function script

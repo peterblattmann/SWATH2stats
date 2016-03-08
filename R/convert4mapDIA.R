@@ -1,3 +1,5 @@
+utils::globalVariables(c("aggregate", "head"))
+
 convert4mapDIA <- function(data, RT=FALSE){
 
   mDIA.columns <- c('ProteinName', 'PeptideSequence', 'FragmentIon',

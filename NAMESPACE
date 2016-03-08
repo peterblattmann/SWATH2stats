@@ -33,3 +33,8 @@ importFrom(stats, cor)
 
 S3method(plot, fdr_cube)
 S3method(plot, fdr_table)
+
+importFrom(grDevices, dev.off, pdf)
+importFrom(graphics, abline, axis, barplot, grid, legend, lines, mtext, par, plot, points)
+importFrom(stats, aggregate, density, median, na.omit, sd)
+importFrom(utils, head, select.list, write.csv)

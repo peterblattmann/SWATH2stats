@@ -1,3 +1,5 @@
+utils::globalVariables(c("write.csv"))
+
 assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun")
 {
   # create m_score intervals to be tested

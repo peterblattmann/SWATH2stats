@@ -1,3 +1,5 @@
+utils::globalVariables(c("aggregate"))
+
 count_analytes <- function(data, column.levels = c("transition_group_id", "FullPeptideName", "ProteinName"), column.by="run_id", rm.decoy=TRUE){
   if(sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)){
     #data <- subset(data, decoy == 0)

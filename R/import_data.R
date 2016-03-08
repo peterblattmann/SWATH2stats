@@ -1,3 +1,5 @@
+utils::globalVariables(c("select.list"))
+
 import_data <- function(data){
   colnames_OpenSWATH <- c('ProteinName', 'FullPeptideName', 'Charge', 'Sequence', 'aggr_Fragment_Annotation',
                           'aggr_Peak_Area', "transition_group_id", "decoy", "m_score", "RT", "align_origfilename", 
@@ -10,7 +12,7 @@ Explanation of the OpenSWATH columns can be found in the manual page.\n"
   
   # Dialogue to map columns
   for(i in colnames(data)){
-    value <- select.list(colnames_OpenSWATH, title = paste("Select column that", i, "corresponds to the column."))
+    value <- select.list(colnames_OpenSWATH, title = paste("Select a column from the OpenSWATH output that the column ", i, "corresponds to."))
     if(value != "not applicable"){
       colnames(data) <- gsub(i, value, colnames(data))
       message("Column name ", i, " was substituted by ", value, "\n")

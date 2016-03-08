@@ -1,4 +1,4 @@
-utils::globalVariables(c("PROTEIN", "PEPTIDE", "Intensity", ".SD"))
+utils::globalVariables(c("PROTEIN", "PEPTIDE", "Intensity", ".SD", "head"))
 
 filter_on_max_peptides <- function(data, n_peptides){
 

@@ -28,7 +28,7 @@ plot_correlation_between_samples <- function(data, column.values = "Intensity", 
   p <- (ggplot(data.plot, aes(x=Var2, y=Var1, fill=value)) + geom_tile()
         + scale_fill_gradient(low = "white", high="red", name="Correlation\n[R or rho]")
         + xlab("") + ylab("")
-        + labs(title="Correlation between samples:\nPearson (upper triangle) and Spearman correlation (lower triangle)")
+        + labs(title=paste(column.values, "correlation between samples:\nPearson (upper triangle) and Spearman correlation (lower triangle)"))
         + geom_text(aes(fill = data.plot$value, label = round(data.plot$value, digits= 2)))
         + theme(plot.title = element_text(hjust = 0.5, vjust = 1))
         + scale_x_discrete(expand = c(0,0))

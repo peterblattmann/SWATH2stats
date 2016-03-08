@@ -1,3 +1,5 @@
+utils::globalVariables(c("aggregate", "median"))
+
 convert4aLFQ <- function(data, annotation=TRUE){
 
   if(annotation==TRUE){

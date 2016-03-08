@@ -1,3 +1,5 @@
+utils::globalVariables(c("par", "pdf", "barplot", "mtext", "dev.off"))
+
 plot.fdr_cube <- function(x, output = "Rconsole", filename = "FDR_report_byrun", ...){
   # write pdf reports
   run_ids<-unlist(dimnames(x)[2])

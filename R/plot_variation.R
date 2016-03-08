@@ -1,3 +1,5 @@
+utils::globalVariables(c("sd", "na.omit", "aggregate", "density"))
+
 plot_variation <- function(data, column.values = "Intensity", Comparison = transition_group_id + Condition ~ BioReplicate, fun.aggregate = NULL, label=TRUE,...){
   if(sum(colnames(data) == "decoy") == 1){
     data <- data[data$decoy == 0,]
@@ -21,7 +23,7 @@ plot_variation <- function(data, column.values = "Intensity", Comparison = trans
           + geom_violin(scale="area")
           + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
           + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=TRUE), digits=2))), geom="text")
-          + labs(title= "cv across conditions"))
+          + labs(title= paste(column.values, "cv across conditions")))
   }
 
   print(p)
