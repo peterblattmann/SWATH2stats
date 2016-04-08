@@ -70,3 +70,7 @@ VERSION 1.1.14
 -------------------------
 import_data: minor changes in documentation
 defining several functions at the beginning of function script
+
+Version 1.1.15
+-------------------------
+Add Citation of PLoS ONE publication to package
