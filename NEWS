@@ -74,3 +74,7 @@ defining several functions at the beginning of function script
 Version 1.1.15
 -------------------------
 Add Citation of PLoS ONE publication to package
+
+Version 1.1.16
+-------------------------
+Error fix in test_convert.R
