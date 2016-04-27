@@ -1,80 +1,155 @@
-VERSION 0.99.5
+CHANGES IN Version 1.1.17
 -------------------------
-Package accepted to Bioconductor
+DOCUMENTATION
 
-VERSION 1.0.0
--------------------------
-First stable release version of SWATH2stats
+ o updated NEWS file
 
-VERSION 1.1.0
--------------------------
-Development version of SWATH2stats
 
-VERSION 1.1.1
+CHANGES IN Version 1.1.16
 -------------------------
-Improved the function disaggregate() that also data with different number of transitions per precursor than 6 can be used
-Added tests for disaggregate.R and convert4pythonscript.R
+BUG FIXES
 
-VERSION 1.1.2-4
--------------------------
-Bug fixes in test_convert.
+ o Error fix in test_convert.R
 
-VERSION 1.1.5
--------------------------
-Bug fixes for assess_fdr_byrun that was also introduced into version v1.0.2 at the same time. It fixes problems with labelling the runs correctly in some cases.
 
-VERSION 1.1.6
+CHANGES IN Version 1.1.15
 -------------------------
-Correction of typographical error in Vignette for Wolski et al.
+DOCUMENTATION
 
-VERSION 1.1.7
--------------------------
-assess_fdr_overall: Correction of transition level column name from "id" to "transition_group_id"
-assess_fdr_byrun: Correction of transition level column name from "id" to "transition_group_id"
-plot.fdr_cube: added na.rm=TRUE to plotting functions
-sample_annotation: Bug fix - it reported upon error different conditions instead of filenames.
-filter_mscore_requant renamed to filter_mscore_freqobs
-added functions: count_analytes, plot_correlation_between_samples, plot_variation, plot_variation_vs_total, transform_MSstats_OpenSWATH.
+ o Add Citation of PLoS ONE publication to package
 
-VERSION 1.1.8
--------------------------
-add functions that were not updated
 
-VERSION 1.1.9
+CHANGES IN VERSION 1.1.14
 -------------------------
-Update vignette
-remove function: filter_all_peptides
-mscore4assayfdr: bug fix
+DOCUMENTATION
 
-VERSION 1.1.10
--------------------------
-test for FDR filtering: bug fix due to fix in mscore4assayfdr
+ o import_data: minor changes in documentation
+ o defining several functions at the beginning of function script
 
-VERSION 1.1.11
--------------------------
-plot_correlation_between_samples: import cor function from stats package and reorder y axis.
 
-VERSION 1.1.12
+CHANGES IN VERSION 1.1.13
 -------------------------
-sample_annotation: remove option column.runid.
-assess_fdr_byrun and assess_fdr_overall: add option to set range of plotting with n.range
-SWATH2stats_example_script, Spyogenes data: added Example script and S.pyogenes data
+DOCUMENTATION
 
-VERSION 1.1.13
--------------------------
-assess_fdr_byrun, assess_fdr_overall, filter_mscore_fdr: add sentence to manual page about FFT
-DESCRIPTION: add knitr to Suggests and VignetteBuilder, add R>=2.10.0 to Depends 
-vignettes: Add/change title
+ o assess_fdr_byrun, assess_fdr_overall, filter_mscore_fdr: add sentence to manual page about FFT
+ o vignettes: Add/change title
+ 
+BUG FIXES
 
-VERSION 1.1.14
--------------------------
-import_data: minor changes in documentation
-defining several functions at the beginning of function script
+ o DESCRIPTION: add knitr to Suggests and VignetteBuilder, add R>=2.10.0 to Depends 
 
-Version 1.1.15
--------------------------
-Add Citation of PLoS ONE publication to package
 
-Version 1.1.16
+CHANGES IN VERSION 1.1.12
 -------------------------
-Error fix in test_convert.R
+NEW FEATURES
+
+ o sample_annotation: remove option column.runid.
+ o assess_fdr_byrun and assess_fdr_overall: add option to set range of plotting with n.range
+
+DOCUMENTATION
+
+ o SWATH2stats_example_script, Spyogenes data: added Example script and S.pyogenes data
+
+
+CHANGES IN VERSION 1.1.11
+-------------------------
+NEW FEATURES
+
+ o plot_correlation_between_samples: import cor function from stats package and reorder y axis.
+
+
+CHANGES IN VERSION 1.1.10
+-------------------------
+BUG FIXES
+
+ o test for FDR filtering: bug fix due to fix in mscore4assayfdr
+
+
+CHANGES IN VERSION 1.1.9
+-------------------------
+DOCUMENTATION
+
+ o Update vignette
+
+DEPRECATED AND DEFUNCT
+
+ o remove function: filter_all_peptides
+
+BUG FIXES
+
+ o mscore4assayfdr: bug fix
+
+
+CHANGES IN VERSION 1.1.8
+-------------------------
+BUG FIXES
+
+ o add functions that were not updated
+
+
+CHANGES IN VERSION 1.1.7
+-------------------------
+NEW FEATURES
+
+ o added functions: count_analytes, plot_correlation_between_samples, plot_variation, plot_variation_vs_total, transform_MSstats_OpenSWATH.
+ o filter_mscore_requant renamed to filter_mscore_freqobs
+
+
+BUG FIXES
+
+ o sample_annotation: Bug fix - it reported upon error different conditions instead of filenames.
+ o assess_fdr_overall: Correction of transition level column name from "id" to "transition_group_id"
+ o assess_fdr_byrun: Correction of transition level column name from "id" to "transition_group_id"
+ o plot.fdr_cube: added na.rm=TRUE to plotting functions
+
+
+CHANGES IN VERSION 1.1.6
+-------------------------
+BUG FIXES
+
+ o Correction of typographical error in Vignette for Wolski et al.
+
+
+CHANGES IN VERSION 1.1.5
+-------------------------
+BUG FIXES
+
+ o Bug fixes for assess_fdr_byrun that was also introduced into version v1.0.2 at the same time. It fixes problems with labelling the runs correctly in some cases.
+
+
+CHANGES IN VERSION 1.1.4
+-------------------------
+BUG FIXES
+
+ o Bug fixes in test_convert.
+
+
+CHANGES IN VERSION 1.1.1
+-------------------------
+NEW FEATURES
+
+ o Improved the function disaggregate() that also data with different number of transitions per precursor than 6 can be used
+ o Added tests for disaggregate.R and convert4pythonscript.R
+
+
+CHANGES IN VERSION 1.1.0
+-------------------------
+NEW FEATURES
+
+ o Development version of SWATH2stats in BioC 3.3
+
+
+CHANGES IN VERSION 1.0.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.2 release
+
+
+CHANGES IN VERSION 0.99.5
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats package accepted to Bioconductor
+ 
+
