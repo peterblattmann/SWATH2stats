@@ -20,6 +20,17 @@ test_that("load data and annotate", {
 
   expect_true(length(grep(filename.design, filename.data))>0)
   expect_error(length(grep(filename.design2, filename.data))>0)
+  
+  Study_design2 <- Study_design
+  Study_design2$Filename <- gsub("(peterb_L[[:digit:]]{6}).*", "\\1", Study_design2$Filename)
+  
+  # error that it has different number of file names
+  expect_error(sample_annotation(data, Study_design2))
+  
+  # error that the strings in Filename are not unique
+  Study_design3 <- Study_design
+  Study_design3$Filename <- gsub("peterb_L150514_001_SW", "peterb_L150514", Study_design3$Filename)
 
+  expect_error(sample_annotation(data, Study_design3))
 })
 

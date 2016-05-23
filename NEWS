@@ -1,3 +1,30 @@
+CHANGES IN VERSION 1.3.3
+-------------------------
+BUG FIXES
+
+ o Add fail-safe functionality to sample_annotation function for non-unique file names.
+
+CHANGES IN VERSION 1.3.0
+-------------------------
+NEW FEATURES
+
+ o Development version of SWATH2stats in BioC 3.4
+
+
+CHANGES IN VERSION 1.2.3
+-------------------------
+BUG FIXES
+
+ o Add fail-safe functionality to sample_annotation function for non-unique file names.
+
+
+CHANGES IN VERSION 1.2.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.3 release
+
+
 CHANGES IN Version 1.1.17
 -------------------------
 DOCUMENTATION
