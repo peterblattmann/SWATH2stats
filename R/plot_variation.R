@@ -13,13 +13,17 @@ plot_variation <- function(data, column.values = "Intensity", Comparison = trans
   mean.cv <- mean(data.c$cv, na.rm=TRUE)
   median.cv <- median(data.c$cv, na.rm=TRUE)
 
-  p <- (ggplot(na.omit(data.c), aes_string(x=colnames(data.c)[2], y="cv"))
+  data.cv <- data.c[,c(colnames(data.c)[2], "cv")]
+  
+  if(!isTRUE(label)){
+    p <- (ggplot(na.omit(data.cv), aes_string(x=colnames(data.cv)[1], y="cv"))
         + geom_violin(scale="area")
         + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
-        + labs(title= "CV across conditions"))
+        + labs(title= "cv across conditions"))
+  }
 
   if(isTRUE(label)){
-    p <- (ggplot(na.omit(data.c), aes_string(x=colnames(data.c)[2], y="cv"))
+    p <- (ggplot(na.omit(data.cv), aes_string(x=colnames(data.cv)[1], y="cv"))
           + geom_violin(scale="area")
           + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
           + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=TRUE), digits=2))), geom="text")

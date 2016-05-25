@@ -9,7 +9,7 @@ This function plots the Pearson's and Spearman correlation between samples. If d
 \usage{
 plot_correlation_between_samples(data, column.values = "Intensity", 
 Comparison = transition_group_id ~ Condition + BioReplicate, 
-fun.aggregate =NULL, ...)
+fun.aggregate =NULL, label=TRUE, ...)
 }
 \arguments{
   \item{data}{
@@ -22,6 +22,8 @@ Indicates the columns for which the correlation is assessed. This can be the Int
 The comparison for assessing the variability. Default is to assess the variability per transition_group_id over the different Condition and Replicates. Comparison is performed using the dcast() function of the reshape2 package.}
     \item{fun.aggregate}{
 If for the comparison values have to be aggregated one needs to provide the function here.}
+    \item{label}{
+Option to print correlation value in the plot.}
   \item{\dots}{
 further arguments passed to method.}
 }

@@ -59,8 +59,12 @@ test_that("data conversion", {
 
   data.aLFQ <- convert4aLFQ(raw)
   expect_that(dim(data.aLFQ), equals(c(1800,8)))
-
-
+  
+  # test if warning is displayed when there are several values for a data point
+  raw2 <- raw
+  raw2$Intensity <- raw$Intensity + 20
+  raw2 <- rbind(raw[raw$FragmentIon == "1069078_FIIDPAAVITGR_2" & raw$Condition %in% c("Hela_Treatment"),], raw2)
+  expect_warning(convert4mapDIA(raw2, RT = TRUE))
 
 })
 
