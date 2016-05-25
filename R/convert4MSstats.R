@@ -10,7 +10,7 @@ convert4MSstats <- function(data, replace.values = TRUE, replace.colnames = TRUE
     }
     col.names.missing <- MSstats.columns[!(MSstats.columns %in% colnames(data))]
     if(length(col.names.missing) > 0){
-      message("One or several columns required by MSstats were not in the data.\nMissing columns: ",
+      message("One or several columns required by MSstats were not in the data. The columns were created and filled with NAs.\nMissing columns: ",
               paste(unlist(col.names.missing), collapse=", "))
 
       if("IsotopeLabelType" %in% col.names.missing){
