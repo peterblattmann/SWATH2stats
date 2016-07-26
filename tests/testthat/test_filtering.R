@@ -40,3 +40,18 @@ test_that("filtering", {
   shows_message("been removed from the returned data"))
 })
 
+test_that("count_analytes", {
+  data(OpenSWATH_data, package="SWATH2stats")
+  data <- OpenSWATH_data
+  
+  analysis <- count_analytes(data)
+  expect_that(analysis[analysis$run_id == "0_210","FullPeptideName"], equals(261))
+  expect_that(analysis[analysis$run_id == "0_221","FullPeptideName"], equals(271))
+  
+  analysis2 <- count_analytes(data[data$m_score < 1e-4,])
+  expect_that(analysis[analysis$run_id == "0_177","transition_group_id"], equals(236))
+  expect_that(analysis[analysis$run_id == "0_29","ProteinName"], equals(9))
+})
+
+
+
