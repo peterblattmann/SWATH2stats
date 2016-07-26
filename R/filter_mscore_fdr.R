@@ -34,7 +34,6 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
   mapping.peptides.t<-length(unique(data.f2[data.f2$decoy == FALSE, c("FullPeptideName")]))
   mapping.peptides.d<-length(unique(data.f2[data.f2$decoy == TRUE, c("FullPeptideName")]))
 
-  fdr_cube <- assess_fdr_byrun(data.f1, FFT, output = "Rconsole", plot = FALSE)
 
   # print some numbers about the filtering results
   message("-------------------------------------------------------------", "\n")
@@ -56,6 +55,7 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
   n.run_id <- length(unique(data.f1$run_id)) 
   n.run_id_decoy <- length(unique(data.f1[data.f1$decoy == TRUE & data.f1$m_score <= 0.01,]$run_id))
   if(n.run_id == n.run_id_decoy){
+
     fdr_cube <- assess_fdr_byrun(data.f1, FFT, output = "Rconsole", 
                                  plot = FALSE)
     
