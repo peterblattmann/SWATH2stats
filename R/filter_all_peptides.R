@@ -7,7 +7,7 @@ filter_all_peptides <- function(data){
   data.proteins <- unique(data.proteins)
   
   message("Number of proteins detected: ", length(data.proteins), "\n",
-          "Protein identifiers: ", head(data.proteins))
+          "Protein identifiers: ", paste(head(data.proteins), collapse=", "))
     
   # Delete non-unique features (unique features have "1/" in front of protein name)
   data$ProteinName <- gsub("^1\\/", "", data$ProteinName)

@@ -1,3 +1,14 @@
+CHANGES IN VERSION 1.3.6 
+-------------------------
+NEW FEATURES
+
+ o filter_all_peptides: Improvement in display of protein Names using collapse
+
+DOCUMENTATION
+
+ o Vignette: make MSstats and aLFQ eval=FALSE to prevent error when these are not build properly 
+ 
+ 
 CHANGES IN VERSION 1.3.5
 -------------------------
 NEW FEATURES

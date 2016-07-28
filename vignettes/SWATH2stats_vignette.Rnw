@@ -408,7 +408,7 @@ data.transition <- data.frame(fread('output.csv',
 \subsection{MSstats}
 In order to use the data in the R Bioconductor package \texttt{MSstats}, the transition-level data needs to be converted using the function \texttt{convert4MSstats}. Afterwards the data can directly be processed using the \texttt{MSstats} package as shown here by application of the function \texttt{dataProcess} from the MSstats package.
 
-<<>>=
+<<eval=FALSE>>=
 MSstats.input <- convert4MSstats(data.transition)
 
 library(MSstats)
@@ -419,7 +419,7 @@ quantData <- dataProcess(MSstats.input)
 The package \texttt{aLFQ} can read the original OpenSWATH output. Alternatively the  \texttt{aLFQ} package can also be applied to the filtered and annotated data from the  \texttt{SWATH2stats} package.
 To convert the data after filtering to the format for aLFQ, the function \texttt{convert4aLFQ} is applied to the transition-level data.
 
-<<>>=
+<<eval=FALSE>>=
 aLFQ.input <- convert4aLFQ(data.transition)
 
 library(aLFQ)
