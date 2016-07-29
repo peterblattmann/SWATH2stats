@@ -49,8 +49,8 @@ test_that("count_analytes", {
   expect_that(analysis[analysis$run_id == "0_221","FullPeptideName"], equals(271))
   
   analysis2 <- count_analytes(data[data$m_score < 1e-4,])
-  expect_that(analysis[analysis$run_id == "0_177","transition_group_id"], equals(236))
-  expect_that(analysis[analysis$run_id == "0_29","ProteinName"], equals(9))
+  expect_that(analysis[analysis$run_id == "0_177","transition_group_id"], equals(388))
+  expect_that(analysis[analysis$run_id == "0_29","ProteinName"], equals(10))
 })
 
 

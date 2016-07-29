@@ -14,8 +14,8 @@ This package is intended to transform SWATH data from the OpenSWATH
 \tabular{ll}{
 Package: \tab SWATH2stats\cr
 Type: \tab Package\cr
-Version: \tab 1.3.6\cr
-Date: \tab 2016-06-28\cr
+Version: \tab 1.3.7\cr
+Date: \tab 2016-06-29\cr
 License: \tab GPLv3\cr
 }
 }
