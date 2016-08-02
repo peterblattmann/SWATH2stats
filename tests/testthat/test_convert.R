@@ -64,7 +64,29 @@ test_that("data conversion", {
   raw2 <- raw
   raw2$Intensity <- raw$Intensity + 20
   raw2 <- rbind(raw[raw$FragmentIon == "1069078_FIIDPAAVITGR_2" & raw$Condition %in% c("Hela_Treatment"),], raw2)
-  expect_warning(convert4mapDIA(raw2, RT = TRUE))
+  expect_warning(convert4mapDIA(raw2, RT = TRUE), "Data contains several intensity values per condition")
+
+  # test if warning is displayed when column is missing
+  raw2 <- raw
+  raw2$RT <- NULL
+  expect_warning(convert4mapDIA(raw2, RT = TRUE), 
+                 "One or several columns required by mDIA were not in the data and filled with NAs")
+  
+  # test if extraction of Precursor charge works
+  raw2 <- raw
+  raw2$PrecursorCharge <- NULL
+  expect_message(convert4MSstats(raw2), 
+                 "Missing columns: PrecursorCharge")
+  data.MSstats <- convert4MSstats(raw2)
+  expect_true(all.equal(data.MSstats[,"PrecursorCharge"], gsub(".*_([[:digit:]])$", "\\1", data.MSstats[, "FragmentIon"])))
+  
+  # test if negative values are replaced by NA
+  raw2 <- raw
+  raw2[raw2$FragmentIon == "1069078_FIIDPAAVITGR_2" & raw2$Run == 3, "Intensity"] <- -100
+  data.MSstats <- convert4MSstats(raw2)
+  expect_warning(convert4MSstats(raw2), 
+                 "Negative intensity values were replaced by NA")
+  expect_true(is.na(data.MSstats[data.MSstats$FragmentIon == "1069078_FIIDPAAVITGR_2" & data.MSstats$Run == 3, "Intensity"]))
 
 })
 

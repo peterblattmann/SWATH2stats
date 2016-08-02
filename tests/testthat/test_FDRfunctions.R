@@ -8,8 +8,10 @@ test_that("FDR assessment on annotated data", {
   # assess_fdr_overall output test
   expect_message(assess_fdr_overall(data.FDR), ".csv")
   expect_message(assess_fdr_overall(data.FDR), ".pdf")
-
-  # assess_fdr_byrun otput test
+  expect_that(length(assess_fdr_overall(data.FDR)), equals(0))
+  expect_that(length(assess_fdr_overall(data.FDR, output = "Rconsole")), equals(13))
+  
+  # assess_fdr_byrun output test
   expect_message(assess_fdr_byrun(data.FDR), ".csv")
   expect_message(assess_fdr_byrun(data.FDR), ".pdf")
   expect_message(assess_fdr_byrun(data.FDR), "assay")

@@ -10,6 +10,9 @@ test_that("correlation plot", {
   expect_that(correlations[correlations$Var1 == "Hela_Control_1" & correlations$Var2 == "Hela_Control_1","value"], equals(1))
   expect_that(correlations[correlations$Var1 == "Hela_Treatment_1" & correlations$Var2 == "Hela_Treatment_1","value"], equals(1))
   
+  correlations <- plot_correlation_between_samples(data.FDR, label = TRUE)
+  expect_that(correlations[correlations$Var1 == "Hela_Control_1" & correlations$Var2 == "Hela_Control_1","value"], equals(1))
+  
   
   data1 <- data.FDR[data.FDR$Condition == "Hela_Control" & data.FDR$BioReplicate == 1 & data.FDR$decoy == 0, c("transition_group_id", "Intensity")]
   data2 <- data.FDR[data.FDR$Condition == "Hela_Treatment" & data.FDR$BioReplicate == 1 & data.FDR$decoy == 0, c("transition_group_id", "Intensity")]
@@ -28,7 +31,7 @@ test_that("variation plot", {
   data(Study_design, package="SWATH2stats")
   data.FDR<-sample_annotation(OpenSWATH_data, Study_design)
   
-  
+  variation <- plot_variation(data.FDR, label=TRUE)
   variation <- plot_variation(data.FDR)
   variation.data <- variation[[1]]
   

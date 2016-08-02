@@ -28,8 +28,6 @@ Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek O. MSstats: an
 Peter Blattmann
 }
 \examples{
-MSstats_data <- data.frame(ProteinName = "Protein1", PeptideSequence = "Peptide1", 
-PrecursorCharge = 1, FragmentIon = "y4",ProductCharge = 2, IsotopeLabelType = "L",
-Condition = "Cond1", BioReplicate = 1, Run = 1, Intensity = 1254)
+data("MSstats_data", package="SWATH2stats")
 transform_MSstats_OpenSWATH(MSstats_data)
 }

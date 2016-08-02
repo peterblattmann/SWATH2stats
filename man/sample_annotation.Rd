@@ -7,7 +7,7 @@ sample_annotation: Annotate the SWATH data with the sample information
 For statistical analysis and filtering the measurements need to be annotated with Filename, Condition, BioReplicate, and Run. This functions takes this information from a txt file containing this meta-data.
 }
 \usage{
-sample_annotation(data, sample.annotation, data.type="openSWATH", 
+sample_annotation(data, sample.annotation, data.type="OpenSWATH", 
 column.file = "align_origfilename", change.run.id = TRUE, verbose=FALSE)
 }
 \arguments{

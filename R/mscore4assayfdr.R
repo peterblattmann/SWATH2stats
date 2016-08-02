@@ -1,7 +1,5 @@
-mscore4assayfdr<- function(data, FFT = NULL, fdr_target = NULL)
+mscore4assayfdr<- function(data, FFT = 1, fdr_target = 0.01)
   {
-  if(is.null(fdr_target)){fdr_target <- 0.01}
-  if (is.null(FFT)) {FFT <- 1 }
   # generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
   mscore_levels_highres=10^-(c(seq(2, 20, 0.05)))
   target.assays.highres<-NULL

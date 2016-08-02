@@ -34,3 +34,16 @@ test_that("load data and annotate", {
   expect_error(sample_annotation(data, Study_design3))
 })
 
+test_that("load MSstats data and annotate", {
+  data(MSstats_data, package="SWATH2stats")
+  data(Study_design, package="SWATH2stats")
+  
+  MSstats_data2 <- MSstats_data
+  MSstats_data2$mscore <- 0.01
+  expect_message(transform_MSstats_OpenSWATH(MSstats_data), "No column 'mscore' present")
+  expect_message(transform_MSstats_OpenSWATH(MSstats_data2), "Additional columns present in the data: FileName, mscore")
+  
+  expect_warning(sample_annotation(MSstats_data[,c(1:6,9:11)], Study_design, data.type = "MSstats", column.file = "FileName"),
+                 "The number of sample annotation condition and filenames in data are not balanced")
+})
+

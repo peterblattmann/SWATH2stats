@@ -16,7 +16,7 @@ mscore4pepfdr
 mscore4protfdr
 }
 \usage{
-mscore4assayfdr(data, FFT, fdr_target)
+mscore4assayfdr(data, FFT = 1, fdr_target = 0.01)
 }
 \arguments{
   \item{data}{
