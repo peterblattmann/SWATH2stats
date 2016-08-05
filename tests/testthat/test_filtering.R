@@ -12,8 +12,9 @@ test_that("filtering", {
   data2$ProteinName <- NULL
   expect_warning(reduce_OpenSWATH_output(data2),"These columns are missing from the data:ProteinName")
   
+  # sample_annotation
   data <- sample_annotation(data, Study_design)
-
+  
   ## assess_decoy_rate
   assess_decoy_rate(data)
   expect_that(assess_decoy_rate(data), shows_message("Number of non-decoy peptides: 273"))
@@ -45,6 +46,8 @@ test_that("filtering", {
   expect_that(filter_mscore_freqobs(data, 0.01, 0.8), shows_message("Fraction of peptides selected: 0.42"))
   expect_that(filter_mscore_freqobs(data, 0.01, 0.8), shows_message("Dimension difference: 1323, 0"))
 
+  expect_message(filter_mscore_freqobs(data, 0.01), "Treshold, peptides need to have been quantified in more conditions than: 0")
+  
   # filter mscore_conditions
   data.filtered.mscore <- filter_mscore_condition(data, 0.01, 3)
   expect_that(filter_mscore_condition(data, 0.01, 3), shows_message("Fraction of peptides selected: 0.47"))
@@ -53,6 +56,16 @@ test_that("filtering", {
   # filter on_fdr
   expect_that(filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05),
   shows_message("been removed from the returned data"))
+  
+  # test if remove decoy works
+  data2 <- filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm.decoy=FALSE)
+  data3 <- filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm.decoy=TRUE)
+  
+  expect_message(filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm.decoy=FALSE),
+                 "The decoys have NOT been removed from the returned data")
+  expect_true(length(grep("DECOY", data2$ProteinName)) > 1)
+  expect_false(length(grep("DECOY", data3$ProteinName)) > 1)
+  
   
   # test that error is returned if lowest m_score is from decoy
   data2 <- data

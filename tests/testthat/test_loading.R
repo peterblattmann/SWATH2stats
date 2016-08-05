@@ -32,6 +32,12 @@ test_that("load data and annotate", {
   Study_design3$Filename <- gsub("peterb_L150514_001_SW", "peterb_L150514", Study_design3$Filename)
 
   expect_error(sample_annotation(data, Study_design3))
+  
+  data <- sample_annotation(data, Study_design, verbose = TRUE)
+  expect_message(sample_annotation(data, Study_design, verbose = TRUE), "peterb_J131223_043")
+  expect_error(sample_annotation(data, Study_design, column.file = "Files"), "Column for filename is not present in data file")
+  
+  
 })
 
 test_that("load MSstats data and annotate", {
@@ -45,5 +51,8 @@ test_that("load MSstats data and annotate", {
   
   expect_warning(sample_annotation(MSstats_data[,c(1:6,9:11)], Study_design, data.type = "MSstats", column.file = "FileName"),
                  "The number of sample annotation condition and filenames in data are not balanced")
+  
+  MSstats_data2$FragmentIon <- NULL
+  expect_error(transform_MSstats_OpenSWATH(MSstats_data2), "The data frame doesn't contain all required columns.")
 })
 

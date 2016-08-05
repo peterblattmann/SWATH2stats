@@ -3,7 +3,7 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
   ### needs a txt file with the columns Filename, Condition, BioReplicate, Run. In Filename a unique string contained in File
   ### must be contained.
   if(!(column.file %in% colnames(data))){
-    warning("Warning: column for filename is not present in data file")
+    stop("Column for filename is not present in data file")
   }
   if(nlevels(factor(sample.annotation$Filename)) != nlevels(factor(data[,column.file]))){
     warning("The number of sample annotation condition and filenames in data are not balanced.", "\n",
@@ -22,7 +22,7 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
      
     for(i in levels(factor(sample.annotation$Filename))){
       if(verbose){
-        print(i)
+        message(i)
       }
       
       coord <- grep(i, data[,column.file])

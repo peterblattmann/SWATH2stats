@@ -60,6 +60,8 @@ test_that("data conversion", {
   data.aLFQ <- convert4aLFQ(raw)
   expect_that(dim(data.aLFQ), equals(c(1800,8)))
   
+  expect_warning(convert4aLFQ(raw[c(1:6),]), "The aLFQ package should only be used with transition-level data.")
+  
   # test if warning is displayed when there are several values for a data point
   raw2 <- raw
   raw2$Intensity <- raw$Intensity + 20

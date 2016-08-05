@@ -25,7 +25,8 @@ convert4aLFQ <- function(data, annotation=TRUE){
   
   data.agg <- aggregate(data[,c("transition_id")], by=list(data$peptide_id, data$run_id), length)
   if(median(data.agg$x) == 1){
-    warning("The aLFQ package should only be used with transition-level data.")
+    warning("The aLFQ package should only be used with transition-level data. 
+            The data only contains one transition per peptide.")
   }
   return(data)
 }
