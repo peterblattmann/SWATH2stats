@@ -2,6 +2,9 @@ utils::globalVariables(c("head"))
 
 filter_proteotypic_peptides <- function(data){
   
+  data <- unifyProteinGroupLabels(data)
+  data <- removeDecoyProteins(data)
+  
   data.proteins <- gsub("^[[:digit:]]\\/", "", data$ProteinName)
   data.proteins <- unlist(strsplit(as.character(data.proteins), "\\/"))
   data.proteins <- unique(data.proteins)

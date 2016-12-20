@@ -89,6 +89,29 @@ test_that("data conversion", {
   expect_warning(convert4MSstats(raw2), 
                  "Negative intensity values were replaced by NA")
   expect_true(is.na(data.MSstats[data.MSstats$FragmentIon == "1069078_FIIDPAAVITGR_2" & data.MSstats$Run == 3, "Intensity"]))
+  
 
 })
 
+
+test_that("non-proteotypic peptides", {
+  data(OpenSWATH_data, package="SWATH2stats")
+  data <- OpenSWATH_data
+  data$ProteinName <- gsub("1/Protein6", "2/Protein6/DECOY_ProteinX", data$ProteinName)
+  data$ProteinName <- gsub("1/Protein5", "2/DECOY_ProteinX/Protein6", data$ProteinName)
+  
+  expect_true(sum(data$ProteinName == "2/Protein6/DECOY_ProteinX")>1)
+  expect_true(sum(data$ProteinName == "2/DECOY_ProteinX/Protein6")>1)
+  
+  data <- unifyProteinGroupLabels(data)
+  
+  expect_false(sum(data$ProteinName == "2/Protein6/DECOY_ProteinX")>1)
+  expect_true(sum(data$ProteinName == "2/DECOY_ProteinX/Protein6")>1)
+  expect_false(sum(data$ProteinName == "1/Protein6")>1)
+  
+  data <- removeDecoyProteins(data)
+  
+  expect_false(sum(data$ProteinName == "2/Protein6/DECOY_ProteinX")>1)
+  expect_false(sum(data$ProteinName == "2/DECOY_ProteinX/Protein6")>1)
+  expect_true(sum(data$ProteinName == "1/Protein6")>1)
+})
