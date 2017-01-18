@@ -2,6 +2,10 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
   #### annotate sample
   ### needs a txt file with the columns Filename, Condition, BioReplicate, Run. In Filename a unique string contained in File
   ### must be contained.
+  if(!isTRUE(class(data) == "data.frame")){
+    stop("Input data is not a data.frame")
+  }
+  
   if(!(column.file %in% colnames(data))){
     stop("Column for filename is not present in data file")
   }

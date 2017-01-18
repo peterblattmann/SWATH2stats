@@ -8,6 +8,9 @@ test_that("data conversion", {
   data <- sample_annotation(data, Study_design)
   data.filtered.mscore <- filter_mscore_freqobs(data, 0.01, 0.8)
 
+  # test if gives warning when data is in data.table format
+  data2 <- data.table(data)
+  expect_error(sample_annotation(data2, Study_design))
 
   data.proteotypic <- filter_proteotypic_peptides(data.filtered.mscore)
   expect_that(filter_proteotypic_peptides(data.filtered.mscore), shows_message("Number of proteins detected: 11"))

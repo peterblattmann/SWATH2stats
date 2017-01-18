@@ -6,9 +6,11 @@ plot_variation <- function(data, column.values = "Intensity", Comparison = trans
   }
   data.c <- dcast(data, Comparison, value.var = column.values, fun.aggregate = fun.aggregate)
   data.c[data.c == 0] <- NA
-
-  data.sd <- apply(data.c[,3:dim(data.c)[2]], 1, function(x) sd(x, na.rm=TRUE))
-  data.mean <- apply(data.c[,3:dim(data.c)[2]], 1, function(x) mean(x, na.rm=TRUE))
+  
+  n_vars <- length(all.vars(Comparison))
+  
+  data.sd <- apply(data.c[,n_vars:dim(data.c)[2]], 1, function(x) sd(x, na.rm=TRUE))
+  data.mean <- apply(data.c[,n_vars:dim(data.c)[2]], 1, function(x) mean(x, na.rm=TRUE))
   data.c$cv <- data.sd/data.mean
   mean.cv <- mean(data.c$cv, na.rm=TRUE)
   median.cv <- median(data.c$cv, na.rm=TRUE)

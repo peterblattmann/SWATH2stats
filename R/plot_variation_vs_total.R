@@ -14,9 +14,10 @@ plot_variation_vs_total <- function(data, column.values = "Intensity", Compariso
 
   data2.c <- dcast(data, Comparison2, value.var = column.values, fun.aggregate = fun.aggregate)
   data2.c[data2.c == 0] <- NA
-
-  data2.sd <- apply(data2.c[,3:dim(data2.c)[2]], 1, function(x) sd(x, na.rm=TRUE))
-  data2.mean <- apply(data2.c[,3:dim(data2.c)[2]], 1, function(x) mean(x, na.rm=TRUE))
+  n_vars2 <- length(all.vars(Comparison2))
+  
+  data2.sd <- apply(data2.c[,n_vars2:dim(data2.c)[2]], 1, function(x) sd(x, na.rm=TRUE))
+  data2.mean <- apply(data2.c[,n_vars2:dim(data2.c)[2]], 1, function(x) mean(x, na.rm=TRUE))
   data2.c$cv <- data2.sd/data2.mean
   mean2.cv <- mean(data2.c$cv , na.rm=TRUE)
   median2.cv <- median(data2.c$cv , na.rm=TRUE)
