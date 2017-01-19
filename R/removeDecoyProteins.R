@@ -1,9 +1,10 @@
 removeDecoyProteins <- function(data){
-  identifiers <- data[grep("^[2-9][0-9]*[0-9]*/.*DECOY.*", data$ProteinName),"ProteinName"]
+  ids <- grep("^[1-9][0-9]*[0-9]*/.*DECOY.*", data$ProteinName)
+  identifiers <- data[ids,"ProteinName"]
   identifiers_split <- strsplit(as.character(identifiers), "/")
   identifiers_split_removed <- lapply(identifiers_split, rmDecoyProt)
   identifiers_removed <- sapply(identifiers_split_removed, function(x){paste(x, collapse="/")})
-  data[grep("^[2-9][0-9]*[0-9]*/.*DECOY.*", data$ProteinName),"ProteinName"] <- identifiers_removed
+  data[ids,"ProteinName"] <- identifiers_removed
   return(data)
 }
 
