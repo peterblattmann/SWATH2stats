@@ -22,8 +22,9 @@ convert4mapDIA <- function(data, RT=FALSE){
   if(sum(data.red.wide.test[,4:dim(data.red.wide.test)[2]] > 1)>0){
     col.names.repl <- apply(data.red.wide.test[,4:dim(data.red.wide.test)[2]], 2, function(x) sum(x > 1))
     col.names.repl <- names(col.names.repl[col.names.repl > 0])
-    row.names.repl <- data.red.wide.test[apply(data.red.wide.test[,4:dim(data.red.wide.test)[2]], 1, function(x) sum(x > 1)), "FragmentIon"]
-    
+    row.names.repl <- apply(data.red.wide.test[,4:dim(data.red.wide.test)[2]], 1, function(x) sum(x > 1))
+    row.names.repl <- data.red.wide.test[row.names.repl > 0, "FragmentIon"]
+
     warning("Data contains several intensity values per condition\n\n",
             "in the following columns: ", paste(col.names.repl, collapse=", "),"\n\n",
             "and in the following rows: ", paste(row.names.repl, collapse=", "))

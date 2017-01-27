@@ -1,3 +1,13 @@
+CHANGES IN VERSION 1.5.5
+-------------------------
+NEW FEATURES
+
+ o sample_annotation: added "fixed" option to grep function to increase speed.
+
+BUG FIXES
+
+ o convert4mapDIA: diagnostic output in case there were several values was not displaying correct rows.
+
 CHANGES IN VERSION 1.5.4
 -------------------------
 BUG FIXES

@@ -29,7 +29,7 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
         message(i)
       }
       
-      coord <- grep(i, data[,column.file])
+      coord <- grep(i, data[,column.file], fixed=TRUE)
 
       if(length(coord) == 0){
         warning("No measurement value found for this sample in the data file: ", print(i))
