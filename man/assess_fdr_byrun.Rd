@@ -15,7 +15,7 @@ FDR is calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above
 }
 \usage{
 assess_fdr_byrun(data, FFT, n.range = 20, output = "pdf_csv", plot = TRUE, 
-filename = "FDR_report_byrun")
+filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001))
 }
 \arguments{
   \item{data}{
@@ -35,6 +35,9 @@ Logical, whether or not to create plots from the results (using the associated m
 }
   \item{filename}{
 Optional, modifying the basename of the result files if applicable.
+}
+\item{output_mscore_levels}{
+Define m-score levels to plot and write the estimated FDR results. 
 }
 }
 \value{

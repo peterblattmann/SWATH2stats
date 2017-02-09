@@ -1,6 +1,6 @@
 utils::globalVariables(c("write.csv"))
 
-assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun")
+assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001))
 {
   # create m_score intervals to be tested
   test_levels <- 10^-seq(1:n.range)
@@ -13,8 +13,12 @@ assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", pl
   }
 
   mscore_limit <- length(decoy_count_lengths[decoy_count_lengths == length(unique(data$run_id))])
+  if(mscore_limit < 2){
+    mscore_limit <- 2
+  }
 
   mscore_levels <- 10^-c(seq(2, mscore_limit))
+  output_mscore_levels <- output_mscore_levels[output_mscore_levels %in% mscore_levels]
 
   fdr_cube <- array(NA, dim = c(12, length(unique(data$run_id)), length(mscore_levels)))
 
@@ -68,17 +72,21 @@ assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", pl
   if(output == "pdf_csv"){
     message("Individual run FDR qualities can be retrieved from ", paste(filename, ".csv"), "\n", sep="")
     # Write csv reports for mscore 1e-2 and 1e-3
-    write.csv(fdr_cube[, , 1], file = paste(filename, "table_mscore_1e-2.csv", sep = "_"))
-    write.csv(fdr_cube[, , 2], file = paste(filename, "table_mscore_1e-3.csv", sep = "_"))
+    
+    for(i in output_mscore_levels){
+      k.mscore <- which(dimnames(fdr_cube)[[3]] == i)
+      k.mscore.label <- as.numeric(dimnames(fdr_cube)[[3]][k.mscore])
+      write.csv(fdr_cube[, , k.mscore], file = paste(filename, "table_mscore_", 
+                                                     format(k.mscore.label, scientific= TRUE), ".csv", sep = ""))
+    }
     message(filename, ".csv reports written to working folder", "\n")
   }
-
 
   fdr_cube2 <- fdr_cube
   class(fdr_cube2) <- "fdr_cube"
 
   if(isTRUE(plot)){
-    plot.fdr_cube(fdr_cube2, output = output, filename = filename)
+    plot.fdr_cube(fdr_cube2, output = output, filename = filename, plot_mscore_levels = output_mscore_levels)
   }
 
   if(output == "Rconsole"){
