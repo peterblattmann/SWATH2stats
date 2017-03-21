@@ -1,4 +1,7 @@
 filter_on_min_peptides <- function(data, n_peptides){
+  data <- unifyProteinGroupLabels(data)
+  data <- removeDecoyProteins(data)
+  
   data.prot.pep <- unique(data[,c("ProteinName", "FullPeptideName")])
 
   data.prot.pep.n <- tapply(data.prot.pep$FullPeptideName, data.prot.pep$ProteinName, length)
