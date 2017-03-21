@@ -22,7 +22,7 @@ filter_on_max_peptides <- function(data, n_peptides){
   setkey(data.peptides.int, PROTEIN)
   data.peptides.int <- data.peptides.int[order(data.peptides.int$SUM.INTENSITY, decreasing=TRUE), ]
 
-  peptides.sel <- data.peptides.int[, head(.SD, n_peptides), by=PROTEIN]
+  peptides.sel <- unique(data.peptides.int[, head(.SD, n_peptides), by=PROTEIN])
 
   data.filtered <- data.frame(data[PEPTIDE %in% peptides.sel$PEPTIDE,])
 

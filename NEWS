@@ -5,6 +5,10 @@ NEW FEATURES
  o filter_on_max_peptides: add removeDecoyProteins and unifyProteinGroupLabels to function
  o filter_on_min_peptides: add removeDecoyProteins and unifyProteinGroupLabels to function
 
+BUG FIXES
+
+ o filter_on_max_peptides: unique selected peptides to prevent duplication of rows
+
 
 CHANGES IN VERSION 1.5.7
 -------------------------
