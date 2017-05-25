@@ -8,7 +8,7 @@ Filter only for the highest intense peptides
 In order to reduce the data, the data is filtered only for the proteins with the highest intensity peptides.
 }
 \usage{
-filter_on_max_peptides(data, n_peptides)
+filter_on_max_peptides(data, n_peptides, rm.decoy = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +17,9 @@ A data frame containing SWATH data with the column names: ProteinNames, PeptideS
 }
   \item{n_peptides}{
 Maximum number of highest intense peptides to filter the data on.
+}
+  \item{rm.decoy}{
+Option to remove the decoys during filtering.
 }
 
 }

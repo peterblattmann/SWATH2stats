@@ -1,8 +1,10 @@
 utils::globalVariables(c("PROTEIN", "PEPTIDE", "Intensity", ".SD", "head"))
 
-filter_on_max_peptides <- function(data, n_peptides){
+filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE){
   data <- unifyProteinGroupLabels(data)
-  data <- removeDecoyProteins(data)
+  if(isTRUE(rm.decoy)){
+    data <- removeDecoyProteins(data)
+  }
   
   data<- data.table(data)
   if(length(grep("ProteinName", colnames(data))) > 0){

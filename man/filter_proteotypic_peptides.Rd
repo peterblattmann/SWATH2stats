@@ -8,13 +8,17 @@ Filter for proteins that are supported by proteotypic peptides.
 Peptides can match to several proteins. With this function proteotypic peptides, peptides that are only contained in one protein are selected. Additionally the number of proteins are counted and printed.
 }
 \usage{
-filter_proteotypic_peptides(data)
+filter_proteotypic_peptides(data, rm.decoy = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
 A data frame containing SWATH data.
 }
+  \item{rm.decoy}{
+Option to remove the decoys during filtering.
+}
+
 }
 \value{Returns a data frame with only the data supported by proteotypic peptides.}
 

@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.7.2
+-------------------------
+NEW FEATURES
+
+ o add option to no not remove decoys to filter_proteotypic_peptides(), 
+   filter_on_max_peptides(), and filter_on_min_peptides()
+
 CHANGES IN VERSION 1.7.1
 -------------------------
 NEW FEATURES

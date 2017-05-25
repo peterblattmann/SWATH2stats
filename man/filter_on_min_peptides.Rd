@@ -9,7 +9,7 @@ This function removes entries mapping to proteins that are identified by less th
 Removing single-hit proteins from an analysis can significantly increase the sensitivity under strict protein fdr criteria, as evaluated by e.g. assess_fdr_overall.
 }
 \usage{
-filter_on_min_peptides(data, n_peptides)
+filter_on_min_peptides(data, n_peptides, rm.decoy = TRUE)
 }
 \arguments{
   \item{data}{
@@ -18,6 +18,10 @@ Data table that is produced by the openSWATH/iPortal workflow.
   \item{n_peptides}{
 Number of minimal number of peptide IDs associated with a protein ID in order to be kept in the dataset.
 }
+  \item{rm.decoy}{
+Option to remove the decoys during filtering.
+}
+
 }
 \value{
 Returns the filtered data frame with only peptides that map to proteins with >= n_peptides peptides.
