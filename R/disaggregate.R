@@ -1,4 +1,4 @@
-disaggregate <- function(data){
+disaggregate <- function(data, all.columns = FALSE){
 
   # sanity test on the number of transitions per precursor
   n.transitions <- lapply(as.character(data$aggr_Fragment_Annotation), function(x)strsplit(x,";"))
@@ -42,11 +42,15 @@ disaggregate <- function(data){
 
   data.new.m3 <- data.new.m2[gsub("Split_FragAnnot_", "", data.new.m2[,"FragAnnot_N"]) == gsub("Split_PeakArea_", "", data.new.m2[,"Area_N"]),]
 
-  cols <- colnames(data.new.m3)[colnames(data.new.m3) %in% c('ProteinName', 'FullPeptideName', "PeptideSequence", 'Sequence',
+  if(!isTRUE(all.columns)){
+    cols <- colnames(data.new.m3)[colnames(data.new.m3) %in% c('ProteinName', 'FullPeptideName', "PeptideSequence", 'Sequence',
                                                              'Charge', "PrecursorCharge",'Fragment', "FragmentIon",
                                                              'Area', 'Condition', "BioReplicate", "Run", "RT")]
-
-  data.new.merged <- data.new.m3[,cols]
+    data.new.merged <- data.new.m3[,cols]
+  }
+  if(isTRUE(all.columns)){
+    data.new.merged <- data.new.m3
+  }
 
   colnames(data.new.merged) <- gsub("FullPeptideName", "PeptideSequence", colnames(data.new.merged))
   colnames(data.new.merged) <- gsub("^Charge$", "PrecursorCharge", colnames(data.new.merged))
