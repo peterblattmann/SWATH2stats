@@ -366,15 +366,17 @@ data.filtered.max.min <- filter_on_min_peptides(data.filtered.max, 2)
 @
 
 
+
 \section{Conversion of data for other tools}
-In order to use the filtered and annotated data in other programs and packages the data has to be converted into the required format. This chapter describes the different functions within SWATH2stats that can be used to convert the filtered SWATH data into the desired format.
+Dedicated programs or tools exist to asssess the statistical significance of a regulated protein or estimate the absolute quantity thereof. A selection of such tools are listed in Section \ref{sec:software_tools}. To facilitate the analyses of SWATH data with these tools, SWATH2stats contains several functions that convert the data into the required format. 
 
-
-\subsection{Results on transition level}
-With the function \texttt{disaggregate} the SWATH data is changed from a table where one row corresponds to one quantified peak group to a table where one row corresponds to one measured transition.
+\subsection{Convert results to transition-level format}
+\subsubsection{Conversion within R}
+Some tools work based on transition-level data. With the function \texttt{disaggregate} the SWATH data is changed from a table where one row corresponds to one quantified peak group to a table where one row corresponds to one measured transition.
 
 <<>>=
 data.transition <- disaggregate(data)
+head(data.transition)
 @
 
 <<eval=FALSE>>=
@@ -386,12 +388,11 @@ write.csv(data.transition, file='transition_level_output.csv',
 For very large SWATH data it is faster to use a custom-made python script to transform the data from a peptide-level format to a transition-level format. With the function \texttt{convert4pythonscript} the necessary columns are selected and the nomenclature for modified peptides is changed. Subsequently the data is written to disk.
 
 <<>>=
-data <- convert4pythonscript(data)
-head(data)
+data.python <- convert4pythonscript(data)
 @
 
 <<eval=FALSE>>=
-write.table(data, file="input.tsv", sep="\t", row.names=FALSE, quote=FALSE)
+write.table(data.python, file="input.tsv", sep="\t", row.names=FALSE, quote=FALSE)
 @
 
 The .tsv table can be transformed into a transition level table using a python script (as example featurealigner2msstats\_withRT.py from msproteomicstools which is available in the scripts folder of the package).
@@ -406,7 +407,7 @@ data.transition <- data.frame(fread('output.csv',
 
 
 \subsection{MSstats}
-In order to use the data in the R Bioconductor package \texttt{MSstats}, the transition-level data needs to be converted using the function \texttt{convert4MSstats}. Afterwards the data can directly be processed using the \texttt{MSstats} package as shown here by application of the function \texttt{dataProcess} from the MSstats package.
+In order to use the data in the R Bioconductor package \texttt{MSstats} (Choi et al. 2014), the transition-level data needs to be converted using the function \texttt{convert4MSstats}. Afterwards the data can directly be processed using the \texttt{MSstats} package as shown here by application of the function \texttt{dataProcess} from the MSstats package.
 
 <<eval=FALSE>>=
 MSstats.input <- convert4MSstats(data.transition)
@@ -416,7 +417,7 @@ quantData <- dataProcess(MSstats.input)
 @
 
 \subsection{aLFQ}
-The package \texttt{aLFQ} can read the original OpenSWATH output. Alternatively the  \texttt{aLFQ} package can also be applied to the filtered and annotated data from the  \texttt{SWATH2stats} package.
+The package \texttt{aLFQ} (Rosenberger et al. 2014) can read the original OpenSWATH output. Alternatively the  \texttt{aLFQ} package can also be applied to the filtered and annotated data from the  \texttt{SWATH2stats} package.
 To convert the data after filtering to the format for aLFQ, the function \texttt{convert4aLFQ} is applied to the transition-level data.
 
 <<eval=FALSE>>=
@@ -435,7 +436,7 @@ prots <- ProteinInference(aLFQ.input, peptide_method = 'top',
 @
 
 \subsection{mapDIA}
-In order to convert the data into the  format for the mapDIA program, the function \texttt{convert4mapDIA} is used. Technical replicates included in the data are not taken into account by mapDIA. Therefore the function \texttt{convert4mapDIA} averages the SWATH data from technical replicates if contained.
+In order to convert the data into the  format for the mapDIA program (Teo et al. 2015), the function \texttt{convert4mapDIA} is used. Technical replicates included in the data are not taken into account by mapDIA. Therefore the function \texttt{convert4mapDIA} averages the SWATH data from technical replicates if such exist. 
 <<>>=
 mapDIA.input <- convert4mapDIA(data.transition, RT =TRUE)
 head(mapDIA.input)
@@ -446,6 +447,24 @@ write.table(mapDIA.input, file='mapDIA.txt', quote=FALSE,
           row.names=FALSE, sep='\t')
 @
 
+\subsection{PECA}
+In order to convert the data into the  format for the PECA tool (Suomi et al. 2015), the function \texttt{convert4PECA} is used. If both biological and technical replicates exist in the data, technical replicates are not taken into account by PECA. Therefore the function \texttt{convert4PECA} averages the SWATH data from technical replicates. As the PECA tool does not use transition-level data, the \texttt{convert4PECA} function is applied on the peptide-level data. 
+<<>>=
+PECA.input <- convert4PECA(data)
+head(PECA.input)
+@
+
+For DIA data, the reproducibility-optimized test statistic (ROTS) is the suggested statistic to be used within PECA (Suomi et al. 2017).
+
+<<>>=
+library(PECA)
+group1 <- c("Hela_Control_1", "Hela_Control_2", "Hela_Control_3")
+group2 <- c("Hela_Treatment_1", "Hela_Treatment_2", "Hela_Treatment_3")
+
+# PECA_df
+results <- PECA_df(PECA.input, group1, group2, id="ProteinName", test = "rots")
+head(results)
+@
 
 \subsection{imsbInfer}
 The package imsbInfer needs all the columns from the OpenSWATH output, therefore the function \texttt{reduce\_OpenSWATH\_output} needs to be omitted in the workflow (see above). If the package imsbInfer should be used after SWATH2stats, a decoy column needs to be added as exemplified below if it has been removed by the filtering functions.
@@ -461,46 +480,55 @@ specLib <- loadTransitonsMSExperiment(data.annotated.full)
 @
 
 \section{Acknowledgments}
-We want to acknowledge Koh  Ching Chiek, and Dr. Olga Schubert for help in testing the usability of this package and helpful comments to implementation and description. We want to acknowledge George Rosenberger for discussion and advice to bioinformatic questions and the OpenSWATH + pyProphet workflow.
+We want to acknowledge Koh  Ching Chiek, and Dr. Olga Schubert for help in testing the usability of this package and helpful comments to implementation and description. We want to acknowledge George Rosenberger for discussion and advice to bioinformatic questions and the OpenSWATH + pyProphet workflow. We acknowledge Tomi Suomi for assistance in how to best interface SWATH2stats to the PECA package. 
 
 \section{Software and tools}
+\label{sec:software_tools}
 \texttt{OpenSWATH}: http://www.openswath.org\\
 \texttt{MSstats}: MSstats is available on Bioconductor (www.bioconductor.org) or on www.mssstats.org\\
 \texttt{aLFQ}: aLFQ is available on CRAN (https://cran.r-project.org)\\
 \texttt{mapDIA}: mapDIA is available on Sourceforge (http://sourceforge.net/projects/mapdia/)\\
+\texttt{PECA}: PECA is available on Bioconductor (www.bioconductor.org)\\
 \texttt{imsbInfer}: imsbInfer is available on Github (https://github.com/wolski/imsbInfer)\\
 \texttt{msproteomicstools}: https://github.com/msproteomicstools\\
 
 \section{References}
-Benjamini, Y., and Hochberg, Y. (1995). Controlling the False Discovery Rate: a Practical and Powerful Approach to Multiple Testing. J. R. Statist. Soc. B, 57(1), 289-300.\\
+Benjamini Y., and Hochberg Y. (1995). Controlling the False Discovery Rate: a Practical and Powerful Approach to Multiple Testing. J. R. Statist. Soc. B, 57(1), 289-300.\\
 \\
-Choi, H., and Nesvizhskii, A. I. (2008). False discovery rates and related statistical concepts in mass spectrometry-based proteomics. Journal of Proteome Research, 7(1), 47-50.\\
+Choi H., and Nesvizhskii A.I. (2008). False discovery rates and related statistical concepts in mass spectrometry-based proteomics. Journal of Proteome Research, 7(1), 47-50.\\
 \\
-Choi, M., et al. (2014). MSstats: an R package for statistical analysis of quantitative mass spectrometry-based proteomic experiments. Bioinformatics 30(17): 2524-2526.\\
+Choi M., et al. (2014). MSstats: an R package for statistical analysis of quantitative mass spectrometry-based proteomic experiments. Bioinformatics 30(17): 2524-2526.\\
  \\
-Elias, J. E., and Gygi, S. P. (2007). Target-decoy search strategy for increased confidence in large-scale protein identifications by mass spectrometry. Nature Methods, 4(3), 207-214.\\
+Elias J.E., and Gygi S.P. (2007). Target-decoy search strategy for increased confidence in large-scale protein identifications by mass spectrometry. Nature Methods, 4(3), 207-214.\\
 \\
-Fermin, D. et al. (2011). Abacus: A computational tool for extracting and pre-processing spectral count data for label-free quantitative proteomic analysis. Proteomics, 11(7), 1340-1345.\\
+Fermin D. et al. (2011). Abacus: A computational tool for extracting and pre-processing spectral count data for label-free quantitative proteomic analysis. Proteomics, 11(7), 1340-1345.\\
 \\
 Gillet, L., et al. (2012). Targeted data extraction of the MS/MS spectra generated by data-independent acquisition: a new concept for consistent and accurate proteome analysis. Mol Cell Proteomics 11(6).\\
  \\
-Kaell, L. et al. (2008). Assigning significance to peptides identified by tandem mass spectrometry using decoy databases. Journal of Proteome Research, 7(1), 29-34.\\
+Kaell L. et al. (2008). Assigning significance to peptides identified by tandem mass spectrometry using decoy databases. Journal of Proteome Research, 7(1), 29-34.\\
 \\
 Nesvizhskii, A. I. (2010). A survey of computational methods and error rate estimation procedures for peptide and protein identification in shotgun proteomics. Journal of Proteomics, 73(11), 2092-123.\\
 \\
-Reiter, L.et al. (2009). Protein identification false discovery rates for very large proteomics data sets generated by tandem mass spectrometry. Molecular and Cellular Proteomics : MCP, 8(11), 2405-17.\\
+Reiter L. et al. (2009). Protein identification false discovery rates for very large proteomics data sets generated by tandem mass spectrometry. Molecular and Cellular Proteomics : MCP, 8(11), 2405-17.\\
 \\
-Reiter, L.et al. (2011). mProphet: automated data processing and statistical validation for large-scale SRM experiments. Nature Methods, 8(5), 430-5.\\
+Reiter L. et al. (2011). mProphet: automated data processing and statistical validation for large-scale SRM experiments. Nature Methods, 8(5), 430-5.\\
 \\
-Rosenberger, G., et al. (2014). A repository of assays to quantify 10,000 human proteins by SWATH-MS.' Sci Data 1: 140031.\\
+Rosenberger G., et al. (2014). A repository of assays to quantify 10,000 human proteins by SWATH-MS.' Sci Data 1: 140031.\\
  \\
-Rosenberger, G., et al. (2014). aLFQ: an R-package for estimating absolute protein quantities from label-free LC-MS/MS proteomics data. Bioinformatics 30(17): 2511-2513.\\
+Rosenberger G., et al. (2014). aLFQ: an R-package for estimating absolute protein quantities from label-free LC-MS/MS proteomics data. Bioinformatics 30(17): 2511-2513.\\
  \\
-Rost, H. L., et al. (2014). OpenSWATH enables automated, targeted analysis of data-independent acquisition MS data. Nat Biotechnol 32(3): 219-223.\\
+Rost H.L., et al. (2014). OpenSWATH enables automated, targeted analysis of data-independent acquisition MS data. Nat Biotechnol 32(3): 219-223.\\
  \\
-Teleman, J., et al. (2015). DIANA--algorithmic improvements for analysis of data-independent acquisition MS data. Bioinformatics 31(4): 555-562.\\
+Suomi T., Corthals G., Nevalainen O.S., and Elo L.L. (2015). Using Peptide-Level Proteomics Data for Detecting Differentially Expressed Proteins. J Proteome Res. Nov 6;14(11):4564-70. doi: 10.1021/acs.jproteome.5b00363.\\
+\\
+Suomi, T. and Elo L.L. (2017). Enhanced differential expression statistics for data-independent acquisition proteomics" Scientific Reports 7, Article number:
+5869.doi:10.1038/s41598-017-05949-y\\
+\\
+Teo G., et al. (2015). mapDIA: Preprocessing and statistical analysis of quantitative proteomics data from data independent acquisition mass spectrometry. J Proteomics 129: 108-120.\\
+  \\
+Teleman J., et al. (2015). DIANA--algorithmic improvements for analysis of data-independent acquisition MS data. Bioinformatics 31(4): 555-562.\\
  \\
-Venable, J. D., et al. (2004). Automated approach for quantitative analysis of complex peptide mixtures from tandem mass spectra. Nat Methods 1(1): 39-45.\\
+Venable J.D., et al. (2004). Automated approach for quantitative analysis of complex peptide mixtures from tandem mass spectra. Nat Methods 1(1): 39-45.\\
 \\
 \\
 
