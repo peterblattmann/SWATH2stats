@@ -1,3 +1,16 @@
+CHANGES IN VERSION 1.7.4
+-------------------------
+NEW FEATURES
+
+ o add function convert4PECA
+
+CHANGES IN VERSION 1.7.3
+-------------------------
+NEW FEATURES
+
+ o add option to keep all columns to disaggregate function
+
+
 CHANGES IN VERSION 1.7.2
 -------------------------
 NEW FEATURES
