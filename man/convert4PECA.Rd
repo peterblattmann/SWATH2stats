@@ -1,8 +1,8 @@
-\name{convert4ROPECA}
-\alias{convert4ROPECA}
+\name{convert4PECA}
+\alias{convert4PECA}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-convert4ROPECA: Convert table into the format for ROPECA
+convert4PECA: Convert table into the format for ROPECA
 }
 \description{
 This functions selects the columns necessary for ROPECA.

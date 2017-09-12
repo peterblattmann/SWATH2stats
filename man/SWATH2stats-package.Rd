@@ -14,8 +14,8 @@ This package is intended to transform SWATH data from the OpenSWATH
 \tabular{ll}{
 Package: \tab SWATH2stats\cr
 Type: \tab Package\cr
-Version: \tab 1.7.2\cr
-Date: \tab 2017-05-25\cr
+Version: \tab 1.7.6\cr
+Date: \tab 2017-09-12\cr
 License: \tab GPLv3\cr
 }
 }
@@ -33,9 +33,15 @@ Rost HL, Rosenberger G, Navarro P, Gillet L, Miladinovic SM, Schubert OT, Wolski
 Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek O. MSstats: an R package for statistical analysis of quantitative mass spectrometry-based proteomic experiments.Bioinformatics. 2014 Sep 1;30(17):2524-6. doi: 10.1093/bioinformatics/btu305.
 
 Rosenberger G, Ludwig C, Rost HL, Aebersold R, Malmstrom L. aLFQ: an R-package for estimating absolute protein quantities from label-free LC-MS/MS proteomics data. Bioinformatics. 2014 Sep 1;30(17):2511-3. doi: 10.1093/bioinformatics/btu200.
+
+Suomi T., Corthals G., Nevalainen O.S., and Elo L.L. (2015). Using Peptide-Level Proteomics Data for Detecting Differentially Expressed Proteins. J Proteome Res. Nov 6;14(11):4564-70. doi: 10.1021/acs.jproteome.5b00363.
+
+Suomi, T. and Elo L.L. (2017). Enhanced differential expression statistics for data-independent acquisition proteomics" Scientific Reports 7, Article number:
+5869.doi:10.1038/s41598-017-05949-y
 }
 \keyword{SWATH2stats}
 \seealso{
 \code{\link[aLFQ]{aLFQ}},
 \code{\link[MSstats]{MSstats}},
+\code{\link[PECA]{PECA}},
 }

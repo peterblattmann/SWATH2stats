@@ -1,8 +1,8 @@
 Package: SWATH2stats
 Type: Package
 Title: Transform and Filter SWATH Data for Statistical Packages
-Version: 1.7.5
-Date: 2017-09-11
+Version: 1.7.6
+Date: 2017-09-12
 Author: Peter Blattmann, Moritz Heusel and Ruedi Aebersold
 Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
 Description: This package is intended to transform SWATH data from the
