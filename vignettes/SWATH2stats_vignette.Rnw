@@ -75,22 +75,18 @@ data('Study_design', package='SWATH2stats')
 head(Study_design)
 @
 
-The working directory of the analysis is defined and the file name of the OpenSWATH results file and the study design file are indicated (in this example they should be present in the same folder). Whereas the rest of the script can be kept after having optimized the filtering options, this first part of the script is changed for different data that will be analyzed.
+Alternatively, the data can be loaded from your working directory. In the code below you see an example how to load the required files from your working directory (code is not executed here but just as an example). As input data for SWATH2stats it is recommended to use the quantitative data matrix after OpenSWATH, pyProphet, and TRIC analysis (see www.openswath.org).
 
 <<eval=FALSE>>=
 # set working directory
 setwd('~/Documents/MyWorkingDirectory/')
 
-# Input data file (openSWATH output)
+# Define input data file (e.g. OpenSWATH_output_file.txt)
 file.name <- 'OpenSWATH_output_file.txt'
 
 # File name for annotation file
 annotation.file <- 'Study_design_file.txt'
-@
 
-The SWATH data can be loaded from the previously indicated file into R using the following command.
-
-<<eval=FALSE>>=
 # load data
 data <- data.frame(fread(file.name, sep='\t', header=TRUE))
 @
