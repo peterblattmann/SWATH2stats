@@ -1,10 +1,42 @@
+#' Given dataframes of TRIC processed data and sample annotations, mash them
+#' together into something appropriate for downstream analyses.
+#'
+#' This performs some quick sanity checks on the data and annotations and
+#' creates the 'Condition', 'BioReplicate', and 'Run' columns along with other
+#' columns expected by MSstats/OpenSWATH.
+#'
+#' @param data  Data frame following processing by feature_alignment.py.
+#' @param data_type  Either OpenSWATH or MSstats, this defines the columns which
+#'   get created in the output data frame.
+#' @param annotation_file_column  Name of the column containing the output file
+#'   from the experiment metadata for  each sample.  In my own sample sheet, I keep
+#'   columns for the mzXML files, tric outputs, raw files, and osw outputs from
+#'   OpenSwathWorkFlow; and I cannot be relied upon to remember which is which,
+#'   ergo this option.
+#' @param data_file_column  Column in the feature_alignment.py containing the
+#'   mzXML file for each detected transition.
+#' @param condition_column  Which column annotates the experimental condition in
+#'   the swath data?
+#' @param replicate_column  Which column annotates the replicate in the data?
+#' @param run_column  Which column annotates the separate runs?
+#' @param change_run_id  Concatenate the condition, replicate, and run columns
+#'   into a new run_id column?
+#' @param verbose  Be verbose?
+#' @return Dataframe with each row annotated from the sample metadata.
+#' @author Peter Blattman
+#' @examples
+#'  \dontrun{
+#'    data("OpenSWATH_data", package="SWATH2stats")
+#'    data("Study_design", package="SWATH2stats")
+#'    data <- sample_annotation(OpenSWATH_data, Study_design)
+#' }
+#' @export
 sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
                               annotation_file_column="Filename",
                               data_file_column="filename",
                               condition_column="Condition",
                               replicate_column="BioReplicate",
-                              run_column="Run",
-                              change_run_id=TRUE, verbose=FALSE) {
+                              run_column="Run", change_run_id=TRUE, verbose=FALSE) {
   #### annotate sample
   ### needs a txt file with the columns Filename, Condition, BioReplicate, Run. In Filename a unique string contained in File
   ### must be contained.
@@ -27,10 +59,12 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
     missing_samples_from_annot_idx <- ! data_files %in% annotation_files
     missing_samples_from_annot <- data_files[missing_samples_from_annot_idx]
     if (missing_samples_from_data > 0) {
-      warning(paste0("The missing data samples from the annotation are: ", missing_samples_from_data, "."))
+      warning(paste0("The missing data samples from the annotation are: ",
+                     missing_samples_from_data, "."))
     }
     if (missing_samples_from_annot > 0) {
-      warning(paste0("The missing data samples from the data are: ", missing_samples_from_annotation, "."))
+      warning(paste0("The missing data samples from the data are: ",
+                     missing_samples_from_annotation, "."))
     }
   }
 
@@ -39,7 +73,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
     n_found <- grep(pattern=sample_annotation[i, annotation_file_column],
                     x=sample_annotation[, annotation_file_column])
     if (length(n_found) > 1) {
-      stop("The values in the column filename are not unique and will lead to erroneous results because the following string matches to multiple different filenames: ", sample_annotation[i,"Filename"])
+      stop("The values in the column filename are not unique and will lead to erroneous results because the following string matches to multiple different filenames: ", sample_annotation[i, "Filename"])
     }
   }
 
