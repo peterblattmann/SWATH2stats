@@ -47,7 +47,7 @@ Column containing the score that is used to estimate FDR or filter.
 
 RT: Column containing the retention time of the quantified peak. 
 
-align_origfilename: Column containing the filename or a unique identifier for each injection.
+filename: Column containing the filename or a unique identifier for each injection.
 
 
 

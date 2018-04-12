@@ -57,7 +57,7 @@ def peptide_to_transition(input_file, output_file, file_dialect, smart_open):
             "IsotopeLabelType,Intensity,RT,Condition,BioReplicate,Run\n")
 
         for line in csvf:
-            name = line["align_origfilename"].split("/")[-1]
+            name = line["filename"].split("/")[-1]
             fas = line["aggr_Fragment_Annotation"].split(";")
             pas = line["aggr_Peak_Area"].split(";")
             for fa, pa in zip(fas, pas):

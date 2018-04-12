@@ -50,7 +50,7 @@ head(Study_design)
 
 The SWATH-MS data is annotated using the study design table.
 ```{r}
-data.annotated <- sample_annotation(data, Study_design)
+data.annotated <- sample_annotation(data, Study_design, column.file = "align_origfilename")
 ```
 
 Remove the decoy peptides for a subsequent inspection of the data.

@@ -8,7 +8,7 @@ convert4aLFQ: Convert table into the format for aLFQ
 This functions selects the columns necessary for the aLFQ R package.
 }
 \usage{
-convert4aLFQ(data, annotation = TRUE)
+convert4aLFQ(data, annotation = TRUE, check_transitions = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -18,7 +18,9 @@ A data frame containing the SWATH data in transition-level format
   \item{annotation}{
 Option to indicate if the data has been annotated, i.e. if the columns Condition, Replicate, Run are present. If option is set to true it will write a new run_id as a string of the combination of these three columns.
 }
-
+  \item{check_transitions}{
+  Option if number of transitions should be checked. As input only transition-level data should be used and therefore this is checked. However, this makes the function slow and herewith be omitted. 
+  }
 }
 \value{
 Returns a data frame in the appropriate format for aLFQ.

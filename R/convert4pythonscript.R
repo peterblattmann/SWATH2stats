@@ -3,7 +3,7 @@ convert4pythonscript <- function(data, replace.Unimod = TRUE){
   data <- data[, c('ProteinName', 'FullPeptideName', 'Charge', 'aggr_Fragment_Annotation', 'aggr_Peak_Area', 
                      "RT","BioReplicate", "Condition", "Run")]
 
-  colnames(data) <- gsub("Run", "align_origfilename", colnames(data))
+  colnames(data) <- gsub("Run", "filename", colnames(data))
   
   if(isTRUE(replace.Unimod)){
     # replace UniMod: to UniMod_

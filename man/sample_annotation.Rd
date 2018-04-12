@@ -8,7 +8,7 @@ For statistical analysis and filtering the measurements need to be annotated wit
 }
 \usage{
 sample_annotation(data, sample.annotation, data.type="OpenSWATH", 
-column.file = "align_origfilename", change.run.id = TRUE, verbose=FALSE)
+column.file = "filename", change.run.id = TRUE, verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -21,7 +21,7 @@ A data frame containing the columns: Filename, Condition, BioReplicate, Run. The
 Option to specify the format of the table, if the column names from an OpenSWATH output or MSstats table are used.
 }
 \item{column.file}{
-Option to specify the column name where the injection file is specified. Default is set to "align_origfilename".
+Option to specify the column name where the injection file is specified. Default is set to "filename".
 }
 \item{change.run.id}{
 Option to choose if the run\_id column shall be reassigned to a unique value combining the values of Condition, BioReplicate and Run. (Option only possible if data is of format "OpenSWATH")

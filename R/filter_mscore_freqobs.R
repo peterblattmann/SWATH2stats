@@ -20,7 +20,7 @@ filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy = TRUE
     percentage <- 0
   }
 
-  threshold <- nlevels(factor(data$align_origfilename))* percentage
+  threshold <- nlevels(factor(data$filename))* percentage
   message("Treshold, peptides need to have been quantified in more conditions than: ",
           threshold)
 

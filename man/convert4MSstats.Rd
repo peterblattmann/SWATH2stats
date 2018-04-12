@@ -31,7 +31,7 @@ Option to indicate if Unimod Identifier should be replaced from ":" to "_".
 The necessary columns are selected and three columns renamed: 
 FullPeptideName -> PeptideSequence
 Charge -> PrecursorCharge
-align_origfilename -> File 
+filename -> File 
 
 }
 \value{

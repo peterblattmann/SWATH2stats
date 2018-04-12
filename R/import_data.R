@@ -2,7 +2,7 @@ utils::globalVariables(c("select.list"))
 
 import_data <- function(data){
   colnames_OpenSWATH <- c('ProteinName', 'FullPeptideName', 'Charge', 'Sequence', 'aggr_Fragment_Annotation',
-                          'aggr_Peak_Area', "transition_group_id", "decoy", "m_score", "RT", "align_origfilename", 
+                          'aggr_Peak_Area', "transition_group_id", "decoy", "m_score", "RT", "filename", 
                           "Intensity", "not applicable")
     
   message("When reading in data, please specify to which column in the OpenSWATH data they correspond. 

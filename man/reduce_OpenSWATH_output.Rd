@@ -30,7 +30,7 @@ A basic set of columns are defined in the function and are used if no column nam
 Peter Blattmann
 }
 \note{
-The column.names can be omitted and then the following columns are selected that are needed for MSstats and mapDIA analysis: ProteinName, FullPeptideName, Sequence, Charge, aggr_Fragment_Annotation, aggr_Peak_Area, align_origfilename, m_score, decoy, Intensity, RT.
+The column.names can be omitted and then the following columns are selected that are needed for MSstats and mapDIA analysis: ProteinName, FullPeptideName, Sequence, Charge, aggr_Fragment_Annotation, aggr_Peak_Area, filename, m_score, decoy, Intensity, RT.
 This function should be ommitted if the data is analyzed afterwards with the aLFQ or imsbInfer package that needs further columns. 
 }
 \examples{

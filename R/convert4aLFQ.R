@@ -1,6 +1,6 @@
 utils::globalVariables(c("aggregate", "median"))
 
-convert4aLFQ <- function(data, annotation=TRUE){
+convert4aLFQ <- function(data, annotation=TRUE, check_transitions = TRUE){
 
   if(annotation==TRUE){
     data <- data[, c('ProteinName', 'PeptideSequence', 'FragmentIon', 'NakedSequence', 'PrecursorCharge', 
@@ -19,14 +19,19 @@ convert4aLFQ <- function(data, annotation=TRUE){
   data$transition_id <- paste(data$peptide_sequence, data$transition_id, sep=" ")
   
   data$concentration <- "?"
+  data$protein_id <- factor(data$protein_id)
+  data$peptide_id <- factor(data$peptide_id)
+  data$transition_id <- factor(data$transition_id)
   
   data <- data[, c("run_id", 'protein_id', 'peptide_id', 'transition_id', 'peptide_sequence', 'precursor_charge', 
                    "transition_intensity", "concentration")]
   
-  data.agg <- aggregate(data[,c("transition_id")], by=list(data$peptide_id, data$run_id), length)
-  if(median(data.agg$x) == 1){
-    warning("The aLFQ package should only be used with transition-level data. 
-            The data only contains one transition per peptide.")
+  if(check_transitions){
+    data.agg <- aggregate(data[,c("transition_id")], by=list(data$peptide_id, data$run_id), length)
+    if(median(data.agg$x) == 1){
+      warning("The aLFQ package should only be used with transition-level data. 
+              The data only contains one transition per peptide.")
+    }
   }
   return(data)
 }

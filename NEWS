@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.9.2
+-------------------------
+NEW FEATURES
+
+ o add option check_tranisitions to convert_aLFQ function
+ o replace align_orig_filename column with filename
+
+
 CHANGES IN VERSION 1.9.1
 -------------------------
 NEW FEATURES

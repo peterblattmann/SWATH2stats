@@ -1,4 +1,4 @@
-sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", column.file = "align_origfilename", change.run.id = TRUE, verbose=FALSE){
+sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", column.file = "filename", change.run.id = TRUE, verbose=FALSE){
   #### annotate sample
   ### needs a txt file with the columns Filename, Condition, BioReplicate, Run. In Filename a unique string contained in File
   ### must be contained.

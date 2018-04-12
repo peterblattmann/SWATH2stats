@@ -6,7 +6,7 @@ convert4MSstats <- function(data, replace.values = TRUE, replace.colnames = TRUE
   if(isTRUE(replace.colnames)){
     colnames(data) <- gsub("FullPeptideName", "PeptideSequence", colnames(data))
     colnames(data) <- gsub("^Charge$", "PrecursorCharge", colnames(data))
-    colnames(data) <- gsub("align_origfilename", "File", colnames(data))
+    colnames(data) <- gsub("filename", "File", colnames(data))
     }
     col.names.missing <- MSstats.columns[!(MSstats.columns %in% colnames(data))]
     if(length(col.names.missing) > 0){
