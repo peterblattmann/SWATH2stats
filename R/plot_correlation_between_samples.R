@@ -1,6 +1,8 @@
 utils::globalVariables(c("Var1", "Var2", "value"))
 
-plot_correlation_between_samples <- function(data, column.values = "Intensity", Comparison = transition_group_id ~ Condition + BioReplicate, fun.aggregate = NULL, label = TRUE, ...){
+plot_correlation_between_samples <- function(data, column.values = "Intensity",
+                                             Comparison = transition_group_id ~ Condition + BioReplicate,
+                                             fun.aggregate = NULL, label = TRUE, ...) {
 
   if(sum(colnames(data) == "decoy") == 1){
     data <- data[data$decoy == 0,]
@@ -24,7 +26,7 @@ plot_correlation_between_samples <- function(data, column.values = "Intensity", 
 
   data.plot <- rbind(pearson.cor, spearman.cor)
   data.plot <- data.plot[!is.na(data.plot$value),]
-  
+
   if(isTRUE(label)){
     p <- (ggplot(data.plot, aes(x=Var2, y=Var1, fill=value)) + geom_tile()
           + scale_fill_gradient(low = "white", high="red", name="Correlation\n[R or rho]")
@@ -46,7 +48,7 @@ plot_correlation_between_samples <- function(data, column.values = "Intensity", 
           + scale_y_discrete(limits = rev(levels(data.plot$Var1)), expand = c(0,0))
     )
   }
-  
+
 
   print(p)
 
