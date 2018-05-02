@@ -40,7 +40,3 @@ Suomi, T. and Elo L.L. (2017). Enhanced differential expression statistics for d
 5869.doi:10.1038/s41598-017-05949-y
 }
 \keyword{SWATH2stats}
-\seealso{
-\code{\link[MSstats]{MSstats}},
-\code{\link[PECA]{PECA}},
-}
