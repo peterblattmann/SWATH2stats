@@ -1,3 +1,23 @@
+CHANGES IN VERSION 1.11.1
+-------------------------
+BUG FIXES
+
+ o remove links from manual page SWATH2stats-package
+
+
+CHANGES IN VERSION 1.11.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.8 development release
+ 
+
+CHANGES IN VERSION 1.10.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.7 release
+
 CHANGES IN VERSION 1.9.3
 -------------------------
 BUG FIXES
