@@ -4,7 +4,7 @@ mscore4protfdr<- function(data, FFT = 1, fdr_target = 0.02)
   mscore_levels_highres=10^-(c(seq(2, 20, 0.05)))
   target.protein.highres<-NULL
   decoy.protein.highres<-NULL
-  for (i in seq_len(mscore_levels_highres))
+  for (i in seq_len(length(mscore_levels_highres)))
   {  
     target.protein.highres[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels_highres[i], c("ProteinName")]))
     decoy.protein.highres[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels_highres[i], c("ProteinName")]))

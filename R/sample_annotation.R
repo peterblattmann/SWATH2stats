@@ -10,8 +10,7 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
     stop("Column for filename is not present in data file")
   }
   if(nlevels(factor(sample.annotation$Filename)) != nlevels(factor(data[,column.file]))){
-    warning("The number of sample annotation condition and 
-            filenames in data are not balanced.", "\n",
+    warning("The number of sample annotation condition and filenames in data are not balanced.", "\n",
          "Different filenames in sample annotation file: ", 
          nlevels(factor(sample.annotation$Filename)), "\n",
          "Different filenames in data file: ", 
@@ -21,9 +20,7 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
   for(i in seq_len(nrow(sample.annotation))){
     n.found <- grep(sample.annotation[i,"Filename"], sample.annotation[,"Filename"])
     if(length(n.found) > 1){
-      stop("The values in the column filename are not unique and will 
-           lead to erroneous results because the following string matches 
-           to multiple different filenames: ", sample.annotation[i,"Filename"])
+      stop("The values in the column filename are not unique and will lead to erroneous results because the following string matches to multiple different filenames: ", sample.annotation[i,"Filename"])
     }
   }
   
