@@ -1,3 +1,9 @@
+CHANGES IN VERSION 1.11.2
+-------------------------
+NEW FEATURES
+
+ o add functions convert_protein_ids, load_mart, add_genesymbol
+
 CHANGES IN VERSION 1.11.1
 -------------------------
 BUG FIXES
