@@ -1,4 +1,5 @@
-utils::globalVariables(c("par", "pdf", "plot", "lines", "legend", "mtext", "points", "axis", "grid", "abline", "dev.off"))
+utils::globalVariables(c("par", "pdf", "plot", "lines", "legend", "mtext", 
+                         "points", "axis", "grid", "abline", "dev.off"))
 
 plot.fdr_table <- function(x, output="Rconsole", filename = "FDR_report_overall", ...){
 ## Plot and create output from ID-FDR report (x) ##

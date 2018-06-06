@@ -4,7 +4,7 @@ mscore4assayfdr<- function(data, FFT = 1, fdr_target = 0.01)
   mscore_levels_highres=10^-(c(seq(2, 20, 0.05)))
   target.assays.highres<-NULL
   decoy.assays.highres<-NULL
-  for (i in 1:length(mscore_levels_highres))
+  for (i in seq_len(mscore_levels_highres))
   {
     target.assays.highres[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels_highres[i], c("transition_group_id")]))
     decoy.assays.highres[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels_highres[i], c("transition_group_id")]))

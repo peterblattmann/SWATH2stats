@@ -10,15 +10,20 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
     stop("Column for filename is not present in data file")
   }
   if(nlevels(factor(sample.annotation$Filename)) != nlevels(factor(data[,column.file]))){
-    warning("The number of sample annotation condition and filenames in data are not balanced.", "\n",
-         "Different filenames in sample annotation file: ", nlevels(factor(sample.annotation$Filename)), "\n",
-         "Different filenames in data file: ", nlevels(factor(data[,column.file])))
+    warning("The number of sample annotation condition and 
+            filenames in data are not balanced.", "\n",
+         "Different filenames in sample annotation file: ", 
+         nlevels(factor(sample.annotation$Filename)), "\n",
+         "Different filenames in data file: ", 
+         nlevels(factor(data[,column.file])))
   }
   
-  for(i in 1:nrow(sample.annotation)){
+  for(i in seq_len(nrow(sample.annotation))){
     n.found <- grep(sample.annotation[i,"Filename"], sample.annotation[,"Filename"])
     if(length(n.found) > 1){
-      stop("The values in the column filename are not unique and will lead to erroneous results because the following string matches to multiple different filenames: ", sample.annotation[i,"Filename"])
+      stop("The values in the column filename are not unique and will 
+           lead to erroneous results because the following string matches 
+           to multiple different filenames: ", sample.annotation[i,"Filename"])
     }
   }
   
@@ -43,19 +48,35 @@ sample_annotation <- function(data, sample.annotation, data.type="OpenSWATH", co
    
     # select column names
     if(data.type == "OpenSWATH"){
-      add.colnames <- colnames(data)[!(colnames(data) %in% c('ProteinName', 'FullPeptideName', 'Charge', 'aggr_Fragment_Annotation',
-                                                             'aggr_Peak_Area', 'Condition', "BioReplicate", "Run"))]
+      add.colnames <- colnames(data)[!(colnames(data) %in% c('ProteinName', 
+                                                             'FullPeptideName', 
+                                                             'Charge', 
+                                                             'aggr_Fragment_Annotation',
+                                                             'aggr_Peak_Area', 
+                                                             'Condition', 
+                                                             "BioReplicate", 
+                                                             "Run"))]
       
-      sel.colnames <- c('ProteinName', 'FullPeptideName', 'Charge', 'aggr_Fragment_Annotation',
-                        'aggr_Peak_Area', 'Condition', "BioReplicate", "Run", add.colnames)
+      sel.colnames <- c('ProteinName', 'FullPeptideName', 'Charge', 
+                        'aggr_Fragment_Annotation',
+                        'aggr_Peak_Area', 'Condition', "BioReplicate", 
+                        "Run", add.colnames)
     }
     if(data.type == "MSstats"){
-      add.colnames <- colnames(data)[!(colnames(data) %in% c("ProteinName", 'PeptideSequence', 'PrecursorCharge', 'FragmentIon',
-                                                             'ProductCharge', "IsotopeLabelType", 'Condition', "BioReplicate",
-                                                             "Run", 'Intensity'))]
+      add.colnames <- colnames(data)[!(colnames(data) %in% c("ProteinName", 
+                                                             'PeptideSequence', 
+                                                             'PrecursorCharge', 
+                                                             'FragmentIon',
+                                                             'ProductCharge', 
+                                                             "IsotopeLabelType", 
+                                                             'Condition', 
+                                                             "BioReplicate",
+                                                             "Run", 
+                                                             'Intensity'))]
       
-      sel.colnames <- c("ProteinName", 'PeptideSequence', 'PrecursorCharge', 'FragmentIon',
-                        'ProductCharge', "IsotopeLabelType", 'Condition', "BioReplicate",
+      sel.colnames <- c("ProteinName", 'PeptideSequence', 'PrecursorCharge', 
+                        'FragmentIon', 'ProductCharge', "IsotopeLabelType", 
+                        'Condition', "BioReplicate",
                         "Run", 'Intensity', add.colnames)
     }
     data <- data[,sel.colnames]

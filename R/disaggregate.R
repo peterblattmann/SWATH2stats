@@ -22,8 +22,8 @@ disaggregate <- function(data, all.columns = FALSE){
                   "transitions per precursor.\nThe data table was transformed into a table containing one row per transition."))
   }
 
-  data.new <- cbind(data, colsplit(data$aggr_Fragment_Annotation, ";", paste("Split_FragAnnot_", seq(1:max(n.transitions2)), sep="")),
-                    colsplit(data$aggr_Peak_Area, ";", paste("Split_PeakArea_", seq(1:max(n.transitions2)), sep="")), stringsAsFactors=FALSE)
+  data.new <- cbind(data, colsplit(data$aggr_Fragment_Annotation, ";", paste("Split_FragAnnot_", seq_len(max(n.transitions2)), sep="")),
+                    colsplit(data$aggr_Peak_Area, ";", paste("Split_PeakArea_", seq_len(max(n.transitions2)), sep="")), stringsAsFactors=FALSE)
 
   data.new.m <- reshape2::melt(data.new, id.vars=grep("Split_FragAnnot", colnames(data.new), invert=TRUE), measure.vars=grep("Split_FragAnnot", colnames(data.new)),
                      variable.name="FragAnnot_N", value.name = "Fragment")

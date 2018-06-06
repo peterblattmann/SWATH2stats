@@ -3,11 +3,11 @@ utils::globalVariables(c("write.csv"))
 assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001))
 {
   # create m_score intervals to be tested
-  test_levels <- 10^-seq(1:n.range)
+  test_levels <- 10^-seq_len(n.range)
 
   ## Identify the minimal m-score cutoff at which all runs still contain decoys
   decoy_count_lengths <- NULL
-  for (i in seq(1:n.range)) {
+  for (i in seq_len(n.range)) {
     decoy_count_lengths[i] <- length(by(data[data$decoy == TRUE & data$m_score <= test_levels[i],
         c("transition_group_id")], data[data$decoy == TRUE & data$m_score <= test_levels[i], c("run_id")], length))
   }
@@ -35,7 +35,7 @@ assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", pl
   data.d <- data[data$decoy == 1, ]
 
   # for each m_score cutoff in mscore_levels, count targets and decoys and calculate false targets and fdr
-  for (i in 1:length(mscore_levels)) {
+  for (i in seq_len(mscore_levels)) {
     # for each run_id, count target (and decoy) assays identified ("id" column entries)
     # and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
     fdr_cube[1, , i] <- by(data.t[data.t$m_score <= mscore_levels[i], c("transition_group_id")],
@@ -65,12 +65,16 @@ assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", pl
   }
 
   # print fdr values to console (m_score cutoff 1e-2)
-  message("The average FDR by run on assay level is ", round(mean(fdr_cube[4, , 1], na.rm=TRUE), digits=3), "\n")
-  message("The average FDR by run on peptide level is ", round(mean(fdr_cube[8, , 1], na.rm=TRUE), digits=3), "\n")
-  message("The average FDR by run on protein level is ", round(mean(fdr_cube[12, , 1], na.rm=TRUE), digits=3), "\n")
+  message("The average FDR by run on assay level is ", 
+          round(mean(fdr_cube[4, , 1], na.rm=TRUE), digits=3), "\n")
+  message("The average FDR by run on peptide level is ", 
+          round(mean(fdr_cube[8, , 1], na.rm=TRUE), digits=3), "\n")
+  message("The average FDR by run on protein level is ", 
+          round(mean(fdr_cube[12, , 1], na.rm=TRUE), digits=3), "\n")
 
   if(output == "pdf_csv"){
-    message("Individual run FDR qualities can be retrieved from ", paste(filename, ".csv"), "\n", sep="")
+    message("Individual run FDR qualities can be retrieved from ", 
+            paste(filename, ".csv"), "\n", sep="")
     # Write csv reports for mscore 1e-2 and 1e-3
     
     for(i in output_mscore_levels){
@@ -86,7 +90,8 @@ assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", pl
   class(fdr_cube2) <- "fdr_cube"
 
   if(isTRUE(plot)){
-    plot.fdr_cube(fdr_cube2, output = output, filename = filename, plot_mscore_levels = output_mscore_levels)
+    plot.fdr_cube(fdr_cube2, output = output, filename = filename, 
+                  plot_mscore_levels = output_mscore_levels)
   }
 
   if(output == "Rconsole"){

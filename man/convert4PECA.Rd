@@ -29,7 +29,6 @@ Suomi, T. and Elo L.L. (2017). "Enhanced differential expression statistics for 
 Peter Blattmann
 }
 \examples{
-library(SWATH2stats)
 data("OpenSWATH_data", package="SWATH2stats")
 data("Study_design", package="SWATH2stats")
 data <- sample_annotation(OpenSWATH_data, Study_design)

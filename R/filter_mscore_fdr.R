@@ -1,4 +1,5 @@
-filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, upper_overall_peptide_fdr_limit = 0.05, rm.decoy = TRUE)
+filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
+                              upper_overall_peptide_fdr_limit = 0.05, rm.decoy = TRUE)
 {
   mscore4protfdr_target <- mscore4protfdr(data, FFT, fdr_target = overall_protein_fdr_target)
   

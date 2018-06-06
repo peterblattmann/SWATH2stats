@@ -23,7 +23,7 @@ plot.fdr_cube <- function(x, output = "Rconsole", filename = "FDR_report_byrun",
     }
     
     # Assay level plots
-    barplot(x[1:2, , k.mscore], ylim=c(0,1.2*max(x[1:2, , k.mscore], na.rm=TRUE)), ylab = "# of assays",
+    barplot(x[seq_len(2), , k.mscore], ylim=c(0,1.2*max(x[seq_len(2), , k.mscore], na.rm=TRUE)), ylab = "# of assays",
             legend = TRUE, args.legend = list(x="topleft", cex=0.5),  names.arg=run_ids, cex.names=0.5, las=2,
             main = title)
     barplot(x[4, , k.mscore], ylim=c(0,1.2*max(x[4, , k.mscore], na.rm=TRUE)) , ylab = row.names(x)[4],

@@ -18,7 +18,7 @@ transform_MSstats_OpenSWATH <- function(data){
   data <- data[,c("ProteinName", 'PeptideSequence', 'PrecursorCharge', 'FragmentIon',
                   'ProductCharge', "IsotopeLabelType", 'Condition', "BioReplicate",
                   "Run", 'Intensity', add.colnames)]
-  colnames(data)[1:10] <- c("ProteinName", 'FullPeptideName', 'Charge', 'FragmentIon',
+  colnames(data)[seq_len(10)] <- c("ProteinName", 'FullPeptideName', 'Charge', 'FragmentIon',
                   'ProductCharge', "IsotopeLabelType", 'Condition', "BioReplicate",
                   "Run", 'Intensity')
 
