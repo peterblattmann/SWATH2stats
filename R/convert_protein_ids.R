@@ -21,7 +21,8 @@ load_mart <- function(species, ensembl.path, mart, verbose = FALSE){
 }
 
 add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein", 
-                           ID1 = "uniprotswissprot", ID2 = "hgnc_symbol"){
+                           ID1 = "uniprotswissprot", ID2 = "hgnc_symbol", id.separator = "/",
+                           copy_nonconverted = TRUE){
   # remove column if it already exists
   if(ID2 %in% colnames(data_table)){
     data_table[,ID2] <- NULL
@@ -29,22 +30,45 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
   gene.ID.table[,ID2] <- as.character(gene.ID.table[,ID2])
   data_table <- merge(data_table, gene.ID.table, 
                       by.x=column.name, by.y=ID1, all.x=TRUE)
-  
   #annotate the shared peptides
   .ids <- which(is.na(data_table[,ID2]))
-  .ids <- intersect(.ids, grep("/", data_table[,column.name]))
+  .ids <- intersect(.ids, grep(id.separator, data_table[,column.name]))
 
   for(i in .ids){
     .Protein <- as.character(data_table[i,column.name])
-    .Protein.single <- unlist(strsplit(.Protein, "/"))
+    .Protein.single <- unlist(strsplit(.Protein, id.separator))
     .Protein.new <- .Protein
     for(k in .Protein.single[.Protein.single %in% gene.ID.table[,ID1]]){
       .Protein.new <- gsub(k, gene.ID.table[gene.ID.table[,ID1] == k,ID2], 
                            .Protein.new)
     }
     data_table[data_table[,column.name] == .Protein, ID2] <- .Protein.new
-  }
 
+    if(!copy_nonconverted){
+      for(k in .Protein.single[!(.Protein.single %in% gene.ID.table[,ID1])]){
+         .Protein.new <- gsub(paste(id.separator, k, sep =""), "", .Protein.new)
+         .Protein.new <- gsub(paste(k, id.separator,  sep =""), "", .Protein.new)
+      }
+      data_table[data_table[,column.name] == .Protein, ID2] <- .Protein.new
+    }
+  }
+  
+  #add non converted IDs
+  non_converted <- is.na(data_table[,ID2])
+  if(sum(non_converted) & copy_nonconverted){
+    if(sum(non_converted) > 20){
+      message("The following " , sum(non_converted), " identifiers were not converted and will be copied (the first 20 are shown): ", 
+              paste(unique(data_table[non_converted,column.name])[seq_len(20)], collapse = ", "))
+    } else {
+      message("The following identifiers were not converted and will be copied: ", 
+              paste(unique(data_table[non_converted,column.name]), collapse = ", "))
+    }
+      
+    for(i in which(non_converted)){
+      data_table[i,ID2] <- data_table[i,column.name]
+    }
+  }
+ 
   #bring gene_symbol column in front
   data_table <- data_table[,c(ID2, colnames(data_table)[seq(length(colnames(data_table))-1)])]
   return(data_table)
@@ -55,7 +79,10 @@ convert_protein_ids <- function(data_table, column.name = "Protein",
                              host = "www.ensembl.org", 
                              mart = "ENSEMBL_MART_ENSEMBL",
                              ID1 = "uniprotswissprot", 
-                             ID2 = "hgnc_symbol", verbose = FALSE){
+                             ID2 = "hgnc_symbol", 
+                             id.separator = "/", 
+                             copy_nonconverted = TRUE,
+                             verbose = FALSE){
   
   if(class(data_table) == "data.frame"){
     type <- "data.frame"
@@ -73,9 +100,9 @@ convert_protein_ids <- function(data_table, column.name = "Protein",
   IDs <- unique(as.character(data_table[,column.name]))
   
   # separate non-proteotypic peptides
-  IDs.np <- IDs[grep("/", IDs)]
+  IDs.np <- IDs[grep(id.separator, IDs)]
   IDs.np <- gsub("^[[:digit:]]+/", "", IDs.np)
-  IDs.np <- unlist(strsplit(IDs.np, "/"))
+  IDs.np <- unlist(strsplit(IDs.np, id.separator))
   
   # remove contaminant peptides
   IDs <- IDs[grep("^CONT_", IDs, invert = TRUE)]
@@ -92,7 +119,7 @@ convert_protein_ids <- function(data_table, column.name = "Protein",
   n.ids.multiple <- names(n.ids[n.ids > 1])
   for(i in n.ids.multiple){
     new.id <- paste(gene.ID.table[gene.ID.table[,ID1] == i, ID2], 
-                    collapse = "/")
+                    collapse = id.separator)
     gene.ID.table <- gene.ID.table[gene.ID.table[,ID1] != i,]
     new.id.df <- data.frame(uniprotswissprot = i, hgnc_symbol = new.id)
     colnames(new.id.df) <- c(ID1, ID2)
@@ -101,7 +128,9 @@ convert_protein_ids <- function(data_table, column.name = "Protein",
   
   data_table_output <- add_genesymbol(data_table, 
                                       gene.ID.table, 
-                                      column.name, ID1, ID2)
+                                      column.name, ID1, ID2, 
+                                      id.separator, 
+                                      copy_nonconverted)
 
   if(type == "file"){
     file.name <- gsub("\\..*", "", file)

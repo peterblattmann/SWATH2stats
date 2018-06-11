@@ -9,7 +9,7 @@ This function adds an additional gene or protein symbol to a table.
 }
 \usage{
 add_genesymbol(data_table, gene.ID.table, column.name = "Protein", 
-ID1 = "uniprotswissprot", ID2 = "hgnc_symbol")
+ID1 = "uniprotswissprot", ID2 = "hgnc_symbol", id.separator = "/", copy_nonconverted = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,6 +28,14 @@ ID1 = "uniprotswissprot", ID2 = "hgnc_symbol")
   \item{ID2}{
   The type of the converted protein identifiers.
 }
+  \item{id.separator}{
+  Separator between protein identifiers of shared peptides.
+}
+  \item{copy_nonconverted}{
+  Option defining if the identifiers that cannot be converted should be copied.
+}
+
+
 }
 \value{
 Returns the data frame with an added column of the converted protein identifiers.

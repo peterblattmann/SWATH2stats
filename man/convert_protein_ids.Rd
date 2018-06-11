@@ -14,7 +14,9 @@ convert_protein_ids(data_table,
                  host = "www.ensembl.org", 
                  mart = "ENSEMBL_MART_ENSEMBL",
                  ID1 = "uniprotswissprot", 
-                 ID2 = "hgnc_symbol", 
+                 ID2 = "hgnc_symbol",
+                 id.separator = "/",
+                 copy_nonconverted = TRUE
                  verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -29,17 +31,24 @@ convert_protein_ids(data_table,
   The species of the protein identifiers in the term used by biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl", "drerio_gene_ensembl", etc.)
 }
   \item{host}{
-  Path of the biomaRt database. 
+  Path of the biomaRt database (e.g. "www.ensembl.org", "dec2017.archive.ensembl.org"). 
 }
   \item{mart}{
-  The species of the protein identifiers in the term used by biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl", "drerio_gene_ensembl", etc.)
+  The type of mart (e.g. "ENSEMBL_MART_ENSEMBL", etc.)
 }
   \item{ID1}{
-  The type of the original protein identifiers.
+  The type of the original protein identifiers (e.g. "uniprotswissprot", "ensembl_peptide_id").
 }
   \item{ID2}{
-  The type of the converted protein identifiers.
+  The type of the converted protein identifiers (e.g. "hgnc_symbol", "mgi_symbol", "external_gene_name").
 }
+  \item{id.separator}{
+  Separator between protein identifiers of shared peptides.
+}
+  \item{copy_nonconverted}{
+  Option defining if the identifiers that cannot be converted should be copied.
+}
+
   \item{verbose}{
   Option to write a file containing the version of the database used. 
 }
