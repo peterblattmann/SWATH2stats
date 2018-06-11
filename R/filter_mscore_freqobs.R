@@ -1,40 +1,34 @@
-utils::globalVariables(c("Peptide_Charge", ".N"))
+filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy=TRUE) {
+  data[["peptide_charge"]] <- paste(data[["full_peptide_name"]], data[["charge"]])
 
-filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy = TRUE){
-  data$Peptide_Charge <- paste(data$FullPeptideName, data$Charge)
-
-  if(sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)){
-    #data <- subset(data, decoy == 0)
-    data <- data[data$decoy == 0,]
+  if(sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)) {
+    data <- data[data[["decoy"]] == 0,]
   }
 
-  #data.filtered <- subset(data, m_score <= mscore)
-  data.filtered <- data[data$m_score <= mscore,]
-  data.filtered <- data.table(data.filtered)
+  data.filtered <- data[data[["m_score"]] <= mscore,]
+  data.filtered <- data.table::data.table(data.filtered)
 
-  data.filtered <- data.filtered[,c("Peptide_Charge", "aggr_Peak_Area"), with=FALSE]
-  setkey(data.filtered, Peptide_Charge)
-  data.n <- data.filtered[,.N, by="Peptide_Charge"]
+  data.filtered <- data.filtered[, c("peptide_charge", "aggr_peak_area"), with=FALSE]
+  data.table::setkey(data.filtered, peptide_charge)
+  data.n <- data.filtered[, .N, by="peptide_charge"]
 
-  if(is.null(percentage)){
+  if (is.null(percentage)) {
     percentage <- 0
   }
 
-  threshold <- nlevels(factor(data$align_origfilename))* percentage
+  threshold <- nlevels(factor(data[["align_origfilename"]])) * percentage
   message("Treshold, peptides need to have been quantified in more conditions than: ",
           threshold)
 
-  peptides.filtered <- data.n[data.n$N >= threshold]
-  peptides.filtered <- data.frame(Peptides_Charge = peptides.filtered$Peptide_Charge)
+  peptides.filtered <- data.n[data.n[["N"]] >= threshold]
+  peptides.filtered <- data.frame("peptide_charge" = peptides.filtered[["peptide_charge"]])
 
   message("Fraction of peptides selected: ",
-          signif(length(unique(peptides.filtered$Peptides_Charge))
-                 /length(unique(data$Peptide_Charge)), digits = 2))
+          signif(length(unique(peptides.filtered[["peptide_charge"]]))
+                 / length(unique(data[["peptide_charge"]])), digits=2))
 
-  data.filtered <- merge(data, peptides.filtered, by.x="Peptide_Charge", by.y="Peptides_Charge")
-
-  message("Dimension difference: ", paste(dim(data)-dim(data.filtered), collapse=", "))
-
+  data.filtered <- merge(data, peptides.filtered, by="peptide_charge")
+  message("Original dimension: ", nrow(data), ", new dimension: ", nrow(data.filtered),
+          ", difference: ", nrow(data) - nrow(data.filtered), ".")
   return(data.filtered)
 }
-

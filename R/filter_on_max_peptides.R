@@ -1,46 +1,37 @@
-utils::globalVariables(c("PROTEIN", "PEPTIDE", "Intensity", ".SD", "head"))
-
-filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE){
+filter_on_max_peptides <- function(data, n_peptides, rm.decoy=TRUE, column="proteinname") {
   data <- unifyProteinGroupLabels(data)
   if(isTRUE(rm.decoy)){
     data <- removeDecoyProteins(data)
   }
-  
-  data<- data.table(data)
-  if(length(grep("ProteinName", colnames(data))) > 0){
-    setnames(data, "ProteinName", "PROTEIN")
+
+  data <- data.table::as.data.table(data)
+  if (length(grep(column, colnames(data))) > 0) {
+    data.table::setnames(data, column, "protein")
   }
-  
-  #data$PEPTIDE <- paste(data$PeptideSequence, data$PrecursorCharge, sep="_")
-  data$PEPTIDE <- data$FullPeptideName
+  ##data$PEPTIDE <- paste(data$PeptideSequence, data$PrecursorCharge, sep="_")
+  data[["peptide"]] <- data[["fullpeptidename"]]
+  data.peptides <- data[, c("protein", "peptide", "intensity"), with=FALSE]
+  data.table::setkey(data, protein, peptide)
 
+  data.peptides.int <- data.peptides[, sum(intensity), by="protein,peptide"]
+  data.table::setnames(data.peptides.int, "V1", "sum.intensity")
 
-  data.peptides <- data[,c("PROTEIN", "PEPTIDE", "Intensity"), with=FALSE]
-  setkey(data, PROTEIN, PEPTIDE) 
-
-  data.peptides.int <- data.peptides[, sum(Intensity), by="PROTEIN,PEPTIDE"]
-  setnames(data.peptides.int, "V1", "SUM.INTENSITY")
-
-  setkey(data.peptides.int, PROTEIN)
-  data.peptides.int <- data.peptides.int[order(data.peptides.int$SUM.INTENSITY, decreasing=TRUE), ]
-
-  peptides.sel <- unique(data.peptides.int[, head(.SD, n_peptides), by=PROTEIN])
-
-  data.filtered <- data.frame(data[PEPTIDE %in% peptides.sel$PEPTIDE,])
-
+  data.table::setkey(data.peptides.int, protein)
+  data.peptides.int <- data.peptides.int[order(data.peptides.int[["sum.intensity"]], decreasing=TRUE), ]
+  peptides.sel <- unique(data.peptides.int[, head(.SD, n_peptides), by=protein])
+  data.filtered <- data.frame(data[peptide %in% peptides.sel[["peptide"]], ])
 
   message("Before filtering: ", "\n",
-          "  Number of proteins: ", length(unique(data$PROTEIN)), "\n",
-          "  Number of peptides: ", length(unique(data$PEPTIDE)), "\n\n",
-          "Percentage of peptides removed: ", round((length(unique(data$PEPTIDE)) - length(unique(data.filtered$PEPTIDE)))/length(unique(data$PEPTIDE))*100, digits=2), "%", "\n\n",
-          "After filtering: ", "\n", 
-          "  Number of proteins: ", length(unique(data.filtered$PROTEIN)), "\n",
-          "  Number of peptides: ", length(unique(data.filtered$PEPTIDE)), "\n")
+          "  Number of proteins: ", length(unique(data[["protein"]])), "\n",
+          "  Number of peptides: ", length(unique(data[["peptide"]])), "\n\n",
+          "Percentage of peptides removed: ", round(
+          (length(unique(data[["peptide"]])) - length(unique(data.filtered[["peptide"]]))) /
+          length(unique(data[["peptide"]])) * 100, digits=2), "%", "\n\n",
+          "After filtering: ", "\n",
+          "  Number of proteins: ", length(unique(data.filtered[["protein"]])), "\n",
+          "  Number of peptides: ", length(unique(data.filtered[["peptide"]])))
 
-  colnames(data.filtered) <- gsub("PROTEIN", "ProteinName", colnames(data.filtered))
-  data.filtered <- data.filtered[,-which(colnames(data.filtered) == "PEPTIDE")]
-
+  colnames(data.filtered) <- gsub("protein", "proteinname", colnames(data.filtered))
+  data.filtered <- data.filtered[, -which(colnames(data.filtered) == "peptide")]
   return(data.filtered)
 }
-
-
