@@ -1,9 +1,15 @@
+CHANGES IN VERSION 1.10.2
+-------------------------
+BUG FIXES
+
+ o see that convert4aLFQ outputs character vectors
+
+
 CHANGES IN VERSION 1.10.1
 -------------------------
 BUG FIXES
 
  o remove links from manual page SWATH2stats-package
-
 
 
 CHANGES IN VERSION 1.10.0
