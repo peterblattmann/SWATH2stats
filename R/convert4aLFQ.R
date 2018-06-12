@@ -23,16 +23,22 @@ convert4aLFQ <- function(data, annotation=TRUE, check_transitions = TRUE){
   data <- data[, c("run_id", 'protein_id', 'peptide_id', 'transition_id', 'peptide_sequence', 'precursor_charge', 
                    "transition_intensity", "concentration")]
   #check transitions
-  data.fac <- data
-  data.fac$protein_id <- factor(data.fac$protein_id)
-  data.fac$peptide_id <- factor(data.fac$peptide_id)
-  data.fac$transition_id <- factor(data.fac$transition_id)
+  data$protein_id <- factor(data$protein_id)
+  data$peptide_id <- factor(data$peptide_id)
+  data$transition_id <- factor(data$transition_id)
+  
   if(check_transitions){
-    data.agg <- aggregate(data.fac[,c("transition_id")], by=list(data.fac$peptide_id, data.fac$run_id), length)
+    data.agg <- aggregate(data[,c("transition_id")], by=list(data$peptide_id, data$run_id), length)
     if(median(data.agg$x) == 1){
       warning("The aLFQ package should only be used with transition-level data. 
               The data only contains one transition per peptide.")
     }
   }
+  
+  # convert back to character vector
+  data$protein_id <- as.character(data$protein_id)
+  data$peptide_id <- as.character(data$peptide_id)
+  data$transition_id <- as.character(data$transition_id)
+  
   return(data)
 }
