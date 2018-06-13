@@ -1,3 +1,12 @@
+#' I do not yet understand what is going on in this function.  It is querying
+#' the swath2stats data for a few parameters and eventually melting
+#' it. Depending on what comes of that, it drops some rows and returns a new,
+#' presumably better data structure.
+#'
+#' @param data SWATH2stats data structure to beat on.
+#' @param all.columns  Mess with the set of returned columns?
+#' @return a new version of the swath2stats data.
+#' @export
 disaggregate <- function(data, all.columns=FALSE) {
 
   # sanity test on the number of transitions per precursor
@@ -15,14 +24,14 @@ disaggregate <- function(data, all.columns=FALSE) {
 
   # test if always the same number of transitions per precursor were used
   if (min(n.transitions2) == max(n.transitions2)) {
-    message(paste("The library contains", max(n.transitions2), "transitions per precursor.
-The data table was transformed into a table containing one row per transition."))
+    message("The library contains", max(n.transitions2), "transitions per precursor.
+The data table was transformed into a table containing one row per transition.")
   }
 
   if (min(n.transitions2) != max(n.transitions2)) {
-    message(paste("The library contains between ", min(n.transitions2)," and ", max(n.transitions2),
-                  " transitions per precursor.
-The data table was transformed into a table containing one row per transition."))
+    message("The library contains between ", min(n.transitions2)," and ", max(n.transitions2),
+            " transitions per precursor.
+The data table was transformed into a table containing one row per transition.")
   }
 
   data.new <- cbind(data, colsplit(data[["aggr_fragment_annotation"]], ";",
@@ -77,8 +86,8 @@ The data table was transformed into a table containing one row per transition.")
 
   if (sum(is.na(data.new.merged[["intensity"]])) > 0) {
     .ids <- !is.na(data.new.merged[["intensity"]])
-    message(paste((length(data.new.merged[["intensity"]]) - sum(.ids)),
-                  "row(s) was/were removed because they did not contain data due to different number of transitions per precursor"))
+    message(length(data.new.merged[["intensity"]]) - sum(.ids),
+            "row(s) was/were removed because they did not contain data due to different number of transitions per precursor")
     data.new.merged <- data.new.merged[.ids, ]
   }
 

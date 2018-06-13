@@ -1,3 +1,15 @@
+#' Filter data based on a given FDR and mscore. (I think)
+#'
+#' @param data  SWATH2stats data structure to filter.
+#' @param FFT  Look, I know this is not actually 'fast fourier transform', but
+#'   that is still my best guess.
+#' @param overall_protein_fdr_target  Choose an fdr target to hit.
+#' @param mscore_limit  and an mscore threshold.
+#' @param upper_overall_peptide_fdr_limit  phew, that is a mouthful, but it is
+#'   what it says on the tin.
+#' @param rm.decoy  Drop decoy rows?
+#' @return filtered data!
+#' @export
 filter_mscore_fdr <- function(data, FFT=1, overall_protein_fdr_target=0.02, mscore_limit=0.01,
                               upper_overall_peptide_fdr_limit=0.05, rm.decoy=TRUE) {
   mscore4protfdr_target <- mscore4protfdr(data, FFT, fdr_target=overall_protein_fdr_target)

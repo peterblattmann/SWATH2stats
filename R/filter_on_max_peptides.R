@@ -1,6 +1,14 @@
-filter_on_max_peptides <- function(data, n_peptides, rm.decoy=TRUE, column="proteinname") {
+#' Filter-out absurdly high peptides from the data.
+#'
+#' @param data SWATH2stats data to filter.
+#' @param n_peptides Number of first n peptides to keep
+#' @param rm.decoy  Drop the decoys?
+#' @param column which column to use for filtering?
+#' @return filtered data!
+#' @export
+filter_on_max_peptides <- function(data, n_peptides=6, rm.decoy=TRUE, column="proteinname") {
   data <- unifyProteinGroupLabels(data)
-  if(isTRUE(rm.decoy)){
+  if (isTRUE(rm.decoy)) {
     data <- removeDecoyProteins(data)
   }
 
@@ -18,7 +26,7 @@ filter_on_max_peptides <- function(data, n_peptides, rm.decoy=TRUE, column="prot
 
   data.table::setkey(data.peptides.int, protein)
   data.peptides.int <- data.peptides.int[order(data.peptides.int[["sum.intensity"]], decreasing=TRUE), ]
-  peptides.sel <- unique(data.peptides.int[, head(.SD, n_peptides), by=protein])
+  peptides.sel <- unique(data.peptides.int[, head(x=.SD, n=n_peptides), by=protein])
   data.filtered <- data.frame(data[peptide %in% peptides.sel[["peptide"]], ])
 
   message("Before filtering: ", "\n",

@@ -37,7 +37,10 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
                               condition_column="condition",
                               replicate_column="bioreplicate",
                               fullpeptidename_column="fullunimodpeptidename",
-                              run_column="run", change_run_id=TRUE, verbose=FALSE) {
+                              run_id=NULL,
+                              run_column="run",
+                              change_run_id=TRUE,
+                              verbose=FALSE) {
   #### annotate sample
   ### needs a txt file with the columns Filename, Condition, BioReplicate, Run. In Filename a unique string contained in File
   ### must be contained.
@@ -147,11 +150,15 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
       data <- data[, sel_colnames]
     }
 
-    if (change_run_id) {
-      data[["run_id"]] <- paste(data[["condition"]],
-                                data[["bioreplicate"]],
-                                data[["run"]], sep="_")
-    }
-    return(data)
-  }
+    if (isTRUE(change_run_id)) {
+      if (is.null(run_column)) {
+        data[["run_id"]] <- paste(data[["condition"]],
+                                  data[["bioreplicate"]],
+                                  data[["run"]], sep="_")
+      } else {
+        data[["run_id"]] <- data[[run_column]]
+      } ## Use a specific column for the run id?
+    }  ## change the run id?
+  }  ### OpenSwath data
+  return(data)
 }

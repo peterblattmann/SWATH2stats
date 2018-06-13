@@ -1,3 +1,10 @@
+#' Calculate the mscore which provides the given peptide fdr hit rate.
+#'
+#' @param data SWATH2stats data to poke.
+#' @param FFT I dunno.
+#' @param fdr_target  What fdr to query?
+#' @return an mscore which gets to this fdr hit rate.
+#' @export
 mscore4pepfdr <- function(data, FFT=1, fdr_target=0.01) {
   ## generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
   mscore_levels_highres <- 10 ^ -(c(seq(2, 20, 0.05)))

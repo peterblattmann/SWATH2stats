@@ -1,4 +1,13 @@
-filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy=TRUE) {
+#' Filter data based on a given FDR and mscore. (I think)
+#'
+#' @param data  SWATH2stats data structure to filter.
+#' @param mscore  Chosen mscore limit.
+#' @param percentage  Look for peptides in > this percent of the possible
+#'   conditions, if they are found in less than this threshold, bye bye!
+#' @param rm.decoy  Drop the decoys!?
+#' @return filtered data!
+#' @export
+filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL, rm.decoy=TRUE) {
   data[["peptide_charge"]] <- paste(data[["full_peptide_name"]], data[["charge"]])
 
   if(sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)) {
@@ -17,8 +26,8 @@ filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy=TRUE) 
   }
 
   threshold <- nlevels(factor(data[["align_origfilename"]])) * percentage
-  message("Treshold, peptides need to have been quantified in more conditions than: ",
-          threshold)
+  message("Peptides need to have been quantified in more conditions than: ",
+          threshold, " in order to pass this percentage-based threshold.")
 
   peptides.filtered <- data.n[data.n[["N"]] >= threshold]
   peptides.filtered <- data.frame("peptide_charge" = peptides.filtered[["peptide_charge"]])

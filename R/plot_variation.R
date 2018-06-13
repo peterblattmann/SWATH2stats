@@ -1,10 +1,23 @@
+#' Plot variation data!
+#'
+#' I have not looked closely at this function yet.
+#'
+#' @param data SWATH2stats data to poke.
+#' @param column.values  Which column to poke?
+#' @param comparison  A formula describing the group(s) to examine.
+#' @param fun.aggregate  Which function should be used to bring together the
+#'   values (I think this should be sum, yesno?)
+#' @param label  Put labels in the plot?
+#' @return a plot!
+#' @export
 plot_variation <- function(data, column.values="intensity",
                            comparison=transition_group_id + condition ~ bioreplicate,
                            fun.aggregate=NULL, label=TRUE, ...) {
   if (sum(colnames(data) == "decoy") == 1) {
     data <- data[data[["decoy"]] == 0, ]
   }
-  data.c <- reshape2::dcast(data, comparison, value.var=column.values, fun.aggregate=fun.aggregate)
+  data.c <- reshape2::dcast(data, comparison, value.var=column.values,
+                            fun.aggregate=fun.aggregate)
   data.c[data.c == 0] <- NA
 
   n_vars <- length(all.vars(comparison))

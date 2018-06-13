@@ -1,3 +1,15 @@
+#' Calculate the mscore which provides the given protein fdr hit rate.
+#'
+#' Hmmm the 3 functions in this family are largely equivalent, differing only in
+#' the column which is used to query the name.  At some point in the near future
+#' I would like to replace these with a generic function that can handle either
+#' assays, peptides, or proteins.
+#'
+#' @param data SWATH2stats data to poke.
+#' @param FFT I dunno.
+#' @param fdr_target  What fdr to query?
+#' @return an mscore which gets to this fdr hit rate.
+#' @export
 mscore4protfdr <- function(data, FFT=1, fdr_target=0.02) {
   # generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
   mscore_levels_highres <- 10 ^ -(c(seq(2, 20, 0.05)))

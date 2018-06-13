@@ -1,3 +1,10 @@
+#' Filter data to keep rows which make sense with respect to proteolytic ends.
+#'
+#' @param data  SWATH2stats data to filter.
+#' @param rm.decoy  Drop decoys?
+#' @param column  Which column to query for filtering?
+#' @return  Filtered data!
+#' @export
 filter_proteotypic_peptides <- function(data, rm.decoy=TRUE, column="proteinname") {
   data <- unifyProteinGroupLabels(data, column=column)
   if (isTRUE(rm.decoy)) {
