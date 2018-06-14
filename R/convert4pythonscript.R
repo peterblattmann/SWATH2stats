@@ -1,15 +1,15 @@
-convert4pythonscript <- function(data, replace.Unimod = TRUE){
+convert4pythonscript <- function(data, replace.Unimod=TRUE) {
 
-  data <- data[, c('ProteinName', 'FullPeptideName', 'Charge', 'aggr_Fragment_Annotation', 'aggr_Peak_Area', 
-                     "RT","BioReplicate", "Condition", "Run")]
+  data <- data[, c("proteinname", "fullpeptidename", "charge", "aggr_fragment_annotation", "aggr_peak_area",
+                   "rt","bioreplicate", "condition", "run")]
 
-  colnames(data) <- gsub("Run", "align_origfilename", colnames(data))
-  
-  if(isTRUE(replace.Unimod)){
+  colnames(data) <- gsub("run", "filename", colnames(data))
+
+  if (isTRUE(replace.Unimod)) {
     # replace UniMod: to UniMod_
-    data$FullPeptideName <- gsub("UniMod:", "UniMod_", data$FullPeptideName)
-    data$aggr_Fragment_Annotation <- gsub("UniMod:", "UniMod_", data$aggr_Fragment_Annotation)
+    data[["fullpeptidename"]] <- gsub("UniMod:", "UniMod_", data[["fullpeptidename"]])
+    data[["aggr_fragment_annotation"]] <- gsub("UniMod:", "UniMod_", data[["aggr_fragment_annotation"]])
   }
-    
+
   return(data)
 }

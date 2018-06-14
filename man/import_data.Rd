@@ -10,7 +10,48 @@ import_data(data)
 \item{data}{I am guessing tric-formatted tsv data?}
 }
 \value{
+<<<<<<< HEAD
 swath2stats data
+=======
+Returns the data frame in the appropriate format.
+}
+
+
+\note{
+List of column names of the OpenSWATH data:
+
+ProteinName: Unique identifier for protein or proteingroup that the peptide maps to. Proteotypic peptides should be indicated by 1/ in order to be recognized as such by the function filter_proteotypic_peptides.
+
+FullPeptideName: Unique identifier for the peptide.
+
+Charge: Charge of the peptide precursor ion quantified.
+
+Sequence: Naked peptide sequence without modifications.
+
+aggr_Fragment_Annotation: aggregated annotation for the different Fragments quantified for this peptide. In the OpenSWATH results the different annotation in OpenSWATH are concatenated by a semicolon.
+
+aggr_Peak_Area: aggregated Intensity values for the different Fragments quantified for this peptide. In the OpenSWATH results the aggregated Peak Area intensities are concatenated by a semicolon. 
+
+transition_group_id: A unique identifier for each transition group used.
+
+decoy: Indicating with 1 or 0 if this transition group is a decoy.
+
+m_score: Column containing the score that is used to estimate FDR or filter. M-score values of identified peak groups are equivalent to a q-value and thus typically are smaller than 0.01, depending on the confidence of identification (the lower the m-score, the higher the confidence).
+
+Column containing the score that is used to estimate FDR or filter. 
+
+RT: Column containing the retention time of the quantified peak. 
+
+filename: Column containing the filename or a unique identifier for each injection.
+
+
+
+Intensity: column containing the intensity value for each quantified peptide.
+
+Columns needed for FDR estimation and filtering functions: ProteinName, FullPeptideName, transition_group_id, decoy, m_score
+
+Columns needed for conversion to transition-level format (needed for MSStats and mapDIA input): aggr_Fragment_Annotation, aggr_Peak_Area
+>>>>>>> upstream/master
 }
 \description{
 Import some data into swath2stats, presumably from openMS.

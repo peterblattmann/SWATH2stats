@@ -14,7 +14,7 @@ test_that("load data and annotate", {
   expect_that(dim(data)[2], equals(13))
   data <- sample_annotation(data, Study_design)
 
-  filename.data <- unique(subset(data, Condition == "Hela_Treatment" & BioReplicate == 2 & Run == 4)[,"align_origfilename"])
+  filename.data <- unique(subset(data, Condition == "Hela_Treatment" & BioReplicate == 2 & Run == 4)[,"filename"])
   filename.design <- subset(Study_design, Condition == "Hela_Treatment" & BioReplicate == 2 & Run == 4)[,"Filename"]
   filename.design2 <- subset(Study_design, Condition == "Hela_Treatment" & BioReplicate == 1 & Run == 4)[,"Filename"]
 

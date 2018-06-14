@@ -84,7 +84,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
     }
   }
 
-  for (i in 1:nrow(sample_annotation)) {
+  for (i in seq_len(nrow(sample_annotation))) {
     ## Why not just do that as x %in% y?
     n_found <- grep(pattern=sample_annotation[i, annotation_file_column],
                     x=sample_annotation[, annotation_file_column])

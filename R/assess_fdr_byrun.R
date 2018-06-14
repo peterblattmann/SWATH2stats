@@ -61,21 +61,14 @@ assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRU
   data.d <- data[data[["decoy"]] == 1, ]
 
   ## for each m_score cutoff in mscore_levels, count targets and decoys and calculate false targets and fdr
-  for (i in 1:length(mscore_levels)) {
+  for (i in sql_len(length(mscore_levels))) {
     ## for each run_id, count target (and decoy) assays identified ("id" column entries)
     ## and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
     fdr_cube[1, , i] <- by(data.t[data.t[["m_score"]] <= mscore_levels[i], c("transition_group_id")],
                            data.t[data.t[["m_score"]] <= mscore_levels[i], c("run_id")], length)
-    if (nrow(data.d) > 0) {
-      fdr_cube[2, , i] <- by(data.d[data.d[["m_score"]] <= mscore_levels[i], c("transition_group_id")],
-                             data.d[data.d[["m_score"]] <= mscore_levels[i], c("run_id")], length)
-    } else {
-      tmp_cube <- fdr_cube[1, , i]
-      for (c in 1:length(tmp_cube)) {
-        tmp_cube[c] <- 0
-      }
-      fdr_cube[2, , i] <- tmp_cube
-    }
+    fdr_cube[2, , i] <- by(data.d[data.d[["m_score"]] <= mscore_levels[i], c("transition_group_id")],
+                           data.d[data.d[["m_score"]] <= mscore_levels[i], c("run_id")], length)
+
     fdr_cube[3, , i] <- fdr_cube[2, , i] * FFT
     fdr_cube[4, , i] <- fdr_cube[3, , i] / fdr_cube[1, , i]
 

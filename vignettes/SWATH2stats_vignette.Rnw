@@ -117,8 +117,8 @@ With the first two commands the number of files in the OpenSWATH data and the na
 
 <<eval=FALSE>>=
 # list number and different Files present
-nlevels(factor(data$align_origfilename))
-levels(factor(data$align_origfilename))
+nlevels(factor(data$filename))
+levels(factor(data$filename))
 
 # load the study design table from the indicated file
 Study_design <- read.delim2(annotation.file,

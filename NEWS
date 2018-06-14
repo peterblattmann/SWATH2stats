@@ -1,3 +1,51 @@
+CHANGES IN VERSION 1.11.3
+-------------------------
+BUG FIXES
+
+ o updates to convert_protein_ids, see that convert4aLFQ outputs character vectors
+
+
+CHANGES IN VERSION 1.11.2
+-------------------------
+NEW FEATURES
+
+ o add functions convert_protein_ids, load_mart, add_genesymbol
+
+CHANGES IN VERSION 1.11.1
+-------------------------
+BUG FIXES
+
+ o remove links from manual page SWATH2stats-package
+
+
+CHANGES IN VERSION 1.11.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.8 development release
+ 
+
+CHANGES IN VERSION 1.10.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.7 release
+
+CHANGES IN VERSION 1.9.3
+-------------------------
+BUG FIXES
+
+ o removed aLFQ direct link in manual
+
+
+CHANGES IN VERSION 1.9.2
+-------------------------
+NEW FEATURES
+
+ o add option check_tranisitions to convert_aLFQ function
+ o replace align_orig_filename column with filename
+
+
 CHANGES IN VERSION 1.9.1
 -------------------------
 NEW FEATURES

@@ -1,8 +1,8 @@
 Package: SWATH2stats
 Type: Package
 Title: Transform and Filter SWATH Data for Statistical Packages
-Version: 1.9.1
-Date: 2017-11-02
+Version: 1.11.3
+Date: 2018-06-12
 Author: Peter Blattmann, Moritz Heusel and Ruedi Aebersold
 Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
 Description: This package is intended to transform SWATH data from the
@@ -11,7 +11,7 @@ Description: This package is intended to transform SWATH data from the
         estimation.
 License: GPL-3
 Depends: R(>= 2.10.0)
-Imports: data.table, reshape2, grid, ggplot2, stats, grDevices, graphics, utils
+Imports: data.table, reshape2, grid, ggplot2, stats, grDevices, graphics, utils, biomaRt
 Suggests: testthat, aLFQ, knitr, PECA
 Enhances: imsbInfer, MSstats
 biocViews: Proteomics, Annotation, ExperimentalDesign, Preprocessing,

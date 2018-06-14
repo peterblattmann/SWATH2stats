@@ -23,7 +23,7 @@ transform_MSstats_OpenSWATH <- function(data) {
 
   data <- data[, c(query_columns, add.colnames)]
   new_columns <- gsub(pattern="peptidesequence", replacement="fullpeptidename", x=query_columns)
-  colnames(data)[1:10] <- new_columns
+  colnames(data)[seq_len(10)] <- new_columns
 
   if (length(add.colnames) > 0) {
     message("Additional columns present in the data: ", paste(add.colnames, collapse=", "))

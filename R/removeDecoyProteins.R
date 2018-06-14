@@ -9,7 +9,7 @@ removeDecoyProteins <- function(data, column="proteinname") {
   identifiers <- data[ids, column]
   identifiers_split <- strsplit(as.character(identifiers), "/")
   identifiers_split_removed <- lapply(identifiers_split, rmDecoyProt)
-  identifiers_removed <- sapply(identifiers_split_removed, function(x) { paste(x, collapse="/") })
+  identifiers_removed <- vapply(identifiers_split_removed, function(x) { paste(x, collapse="/"), "a" })
   data[ids, column] <- identifiers_removed
   return(data)
 }
