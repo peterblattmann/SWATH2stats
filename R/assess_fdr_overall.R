@@ -64,19 +64,19 @@ assess_fdr_overall <-function(data, FFT=1, n_range=20, output="pdf_csv",
   true_target_proteins <- target_proteins - (decoy_proteins * FFT)
 
   fdr_table <- structure(list(
-    mscore_cutoff = mscore_levels,
-    target_assays = target_assays,
-    decoy_assays = decoy_assays,
-    assay_fdr = assay_fdr,
-    true_target_assays = true_target_assays,
-    target_peptides = target_peptides,
-    decoy_peptides = decoy_peptides,
-    peptide_fdr = peptide_fdr,
-    true_target_peptides = true_target_peptides,
-    target_proteins = target_proteins,
-    decoy_proteins = decoy_proteins,
-    protein_fdr = protein_fdr,
-    true_target_proteins = true_target_proteins),
+    "mscore_cutoff" = mscore_levels,
+    "target_assays" = target_assays,
+    "decoy_assays" = decoy_assays,
+    "assay_fdr" = assay_fdr,
+    "true_target_assays" = true_target_assays,
+    "target_peptides" = target_peptides,
+    "decoy_peptides" = decoy_peptides,
+    "peptide_fdr" = peptide_fdr,
+    "true_target_peptides" = true_target_peptides,
+    "target_proteins" = target_proteins,
+    "decoy_proteins" = decoy_proteins,
+    "protein_fdr" = protein_fdr,
+    "true_target_proteins" = true_target_proteins),
     class="fdr_table")
 
   if (isTRUE(plot)) {
