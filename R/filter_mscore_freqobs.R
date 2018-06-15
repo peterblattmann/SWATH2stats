@@ -1,11 +1,26 @@
-#' Filter data based on a given FDR and mscore. (I think)
+#' Filter openSWATH output table according to mscore.
 #'
-#' @param data  SWATH2stats data structure to filter.
-#' @param mscore  Chosen mscore limit.
-#' @param percentage  Look for peptides in > this percent of the possible
-#'   conditions, if they are found in less than this threshold, bye bye!
-#' @param rm.decoy  Drop the decoys!?
-#' @return filtered data!
+#' This function filters the SWATH data according to the m_score value, as well
+#' as to the number of occurence in the data (requant) and within a condition
+#' (condition)
+#'
+#' @param data  A data frame containing SWATH data.
+#' @param mscore  Value that defines the mscore threshold according to which the
+#'   data will be filtered.
+#' @param percentage  Percentage in which replicas the transition has to reach
+#'   the mscore threshold.
+#' @param rm.decoy  Option to remove the decoys during filtering.
+#' @return Returns a data frame with the filtered data.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered <- filter_mscore(data, 0.01)
+#'  data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
+#'  data.filtered <- filter_mscore_condition(data, 0.01, 3)
+#' }
 #' @export
 filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL, rm.decoy=TRUE) {
   data[["peptide_charge"]] <- paste(data[["full_peptide_name"]], data[["charge"]])

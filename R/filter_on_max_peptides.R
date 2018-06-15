@@ -1,10 +1,24 @@
-#' Filter-out absurdly high peptides from the data.
+#' Filter only for the highest intense peptides
 #'
-#' @param data SWATH2stats data to filter.
-#' @param n_peptides Number of first n peptides to keep
-#' @param rm.decoy  Drop the decoys?
+#' In order to reduce the data, the data is filtered only for the proteins with
+#' the highest intensity peptides.
+#'
+#' @param data A data frame containing SWATH data with the column names:
+#'   ProteinNames, PeptideSequence, PrecursorCharge, Intensity.
+#' @param n_peptides Maximum number of highest intense peptides to filter the
+#'   data on.
+#' @param rm.decoy  Option to remove the decoys during filtering.
 #' @param column which column to use for filtering?
-#' @return filtered data!
+#' @return  Returns a data frame of the filtered data.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered <- filter_mscore_freqobs(data, 0.01,0.8)
+#'  data.max <- filter_on_max_peptides(data.filtered, 5)
+#' }
 #' @export
 filter_on_max_peptides <- function(data, n_peptides=6, rm.decoy=TRUE, column="proteinname") {
   data <- unifyProteinGroupLabels(data)

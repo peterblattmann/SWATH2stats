@@ -2,26 +2,50 @@
 % Please edit documentation in R/write_matrix_peptides.R
 \name{write_matrix_peptides}
 \alias{write_matrix_peptides}
-\title{Write out a matrix of peptides from swath2stats data.}
+\title{Writes out an overview matrix of peptides mapping to a FDR quality controlled
+protein master list at controlled global peptide FDR quality.}
 \usage{
 write_matrix_peptides(data, write.csv = FALSE, fun.aggregate = sum,
   filename = "SWATH2stats_overview_matrix_peptidelevel.csv",
   rm.decoy = FALSE)
 }
 \arguments{
-\item{data}{SWATH2stats data to write out.}
+\item{data}{A data frame containing annotated OpenSWATH/pyProphet data.}
 
-\item{write.csv}{Write the result to a csv file?  This should be folded into the next arg.}
+\item{write.csv}{Option to determine if table should be written automatically
+into csv file.}
 
-\item{fun.aggregate}{What function to use when aggregating the set of intensities?}
+\item{fun.aggregate}{What function to use when aggregating the set of
+intensities?}
 
-\item{filename}{Where to write the data?}
+\item{filename}{File base name of the .csv matrix written out to the working
+folder.}
 
-\item{rm.decoy}{Remove the decoys?}
+\item{rm.decoy}{Logical whether decoys will be removed from the data
+matrix. Defaults to FALSE. It's sometimes useful to know how decoys behave
+across a dataset and how many you allow into your final table with the
+current filtering strategy.}
 }
 \value{
-the peptides as a matrix!
+the peptides as a matrix! also output .csv matrix is written to the
+  working folder.
 }
 \description{
-Write out a matrix of peptides from swath2stats data.
+Writes out an overview matrix on peptide level of a supplied (unfiltered or
+prefiltered) OpenSWATH results data frame.
+The peptide quantification is achieved by summing the areas under all 6
+transitions per precursor and summing all precursors per FullPeptideName.
+In order to keep the peptide-to-protein association, the FullPeptideName is
+joined with the ProteinName.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ write_matrix_peptides(data)
+}
+}
+\author{
+Moritz Heusel
 }

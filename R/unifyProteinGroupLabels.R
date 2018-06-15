@@ -1,8 +1,20 @@
-#' Bring together protein group labels.
+#' Unify the protein group labels.
 #'
-#' @param data  SWATH2stats data to modify.
+#' Unify the protein group labels (2/ProteinA/ProteinB and 2/ProteinB/ProteinA)
+#' to one common label (e.g. 2/ProteinA/ProteinB)
+#'
+#' @param data  A data frame containing SWATH data.
 #' @param column Which column to use for unifying the groups.
-#' @return slightly modified data structure.
+#' @return Returns a data frame with the unififed protein labels.
+#' @author Moritz Heusel
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered.decoy <- filter_mscore(data, 0.01)
+#'  data.unified <- unifyProteinGroupLabels(data.filtered.decoy)
+#' }
 #' @export
 unifyProteinGroupLabels <- function(data, column="proteinname") {
   data[[column]] <- as.character(data[[column]])

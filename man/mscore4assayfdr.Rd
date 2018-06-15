@@ -2,20 +2,55 @@
 % Please edit documentation in R/mscore4assayfdr.R
 \name{mscore4assayfdr}
 \alias{mscore4assayfdr}
-\title{Calculate the mscore which provides the given assay fdr hit rate.}
+\title{Find m_score cutoff to reach a desired FDR on assay level (over the entire
+OpenSWATH/pyProphet output table)}
 \usage{
 mscore4assayfdr(data, FFT = 1, fdr_target = 0.01)
 }
 \arguments{
-\item{data}{SWATH2stats data to poke.}
+\item{data}{Annotated OpenSWATH/pyProphet data table. See function
+sample_annotation from this package.}
 
-\item{FFT}{I dunno.}
+\item{FFT}{Ratio of false positives to true negatives, q-values from
+[Injection_name]_full_stat.csv in pyProphet stats output. As an
+approximation, the q-values of multiple runs are averaged and supplied as
+argument FFT. Numeric from 0 to 1. Defaults to 1, the most conservative
+value (1 Decoy indicates 1 False target).}
 
-\item{fdr_target}{What fdr to query?}
+\item{fdr_target}{Assay FDR target, numeric, defaults to 0.01. An m_score
+  cutoff achieving an FDR < fdr_target will be selected.
+Calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above.}
 }
 \value{
-an mscore which gets to this fdr hit rate.
+Returns the m_score cutoff selected to arrive at the desired FDR
 }
 \description{
-Calculate the mscore which provides the given assay fdr hit rate.
+This function estimates the m_score cutoff required in a dataset to reach a
+given overall assay level FDR.
+It counts target and decoy assays at high resolution across the m_score
+cutoffs and reports a useful m_score cutoff - assay FDR pair close to the
+supplied fdr_target level over the entire dataset. The m_score cutoff is
+returned by the function and can be used in the context of the filtering
+functions, e.g.:
+data.assayFDR1pc<-filter_mscore(data, mscore4assayfdr(data, fdr_target=0.01))
+To arrive from decoy counts at an estimation of the false discovery rate
+(false positives among the targets remaining at a given mscore cutoff) the
+ratio of false positives to true negatives (decoys) (FFT) must be
+supplied. It is estimated for each run individually by pyProphet and
+contained in the pyProphet statistics [Injection_name]_full_stat.csv. As an
+approximation, the FFTs of multiple runs are averaged and supplied as
+argument FFT. For further details see the Vignette Section 1.3 and 4.1.
+For FDR evaluations on peptide and protein level, please refer to functions
+mscore4pepfdr and mscore4protfdr.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ mscore4assayfdr(data, FFT=0.7, fdr_target=0.01)
+}
+}
+\author{
+Moritz Heusel
 }

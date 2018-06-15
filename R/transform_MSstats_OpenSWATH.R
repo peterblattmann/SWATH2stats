@@ -1,7 +1,23 @@
-#'  I have no idea what this function does, lets look at it...
+#'  Transforms column names to OpenSWATH column names
 #'
-#' @param data swath2stats data to modify, I am guessing.
-#' @return transformed data?
+#' This functions transforms the column names from a data frame in MSstats
+#' format to a data frame with column names used by the OpenSWATH output. The
+#' original table needs to contain at least the 10 columns defined by MSstats:
+#' ProteinName, PeptideSequence, PrecursorCharge, FragmentIon, ProductCharge,
+#' IsotopeLabelType, Condition, BioReplicate, Run, Intensity.)
+#'
+#' @param data A data frame containing the SWATH data in the MSstats format
+#' @return The data frame in the appropriate format.
+#' @references Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek
+#'   O. MSstats: an R package for statistical analysis of quantitative mass
+#'   spectrometry-based proteomic experiments.Bioinformatics. 2014 Sep
+#'   1;30(17):2524-6. doi: 10.1093/bioinformatics/btu305.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("MSstats_data", package="SWATH2stats")
+#'  transform_MSstats_OpenSWATH(MSstats_data)
+#' }
 #' @export
 transform_MSstats_OpenSWATH <- function(data) {
   colnames(data) <- gsub("\\.", "", colnames(data))

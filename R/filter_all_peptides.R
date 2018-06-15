@@ -1,12 +1,24 @@
-#' This function is named filter_all_peptides, but it appears to me that it
-#' primarily serves to remove the leading slash number characters from the
-#' peptide names -- which is certainly a good thing(TM), but is that filtering?
-#' Perhaps I am still missing something
+#' Select all proteins that are supported by peptides.
 #'
-#' @param data  SWATH2stats data structure to be modified.
+#' This functions counts all proteins that are supported by peptides (including
+#' non proteo-typic peptides). All peptides (incl. non proteotypic peptides are
+#' selected. For the proteins supproted by proteotypic peptide the "1/" in front
+#' of the identifier is removed to facilitate further data processing.
+#'
+#' @param data  A data frame containing SWATH data.
 #' @param column  Which column contains the data to modify?
 #' @param n  How many new IDs should we print to show if this worked?
-#' @return  Slightly modified data in the same format.
+#' @return  Returns a data frame with the data from both proteotypic and
+#'   non-proteotypic peptides.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered.decoy <- filter_mscore(data, 0.01)
+#'  data.all <- filter_all_peptides(data.filtered.decoy)
+#' }
 #' @export
 filter_all_peptides <- function(data, column="proteinname", n=6) {
   data_proteins <- gsub(pattern="^[[:digit:]]\\/", replacement="", x=data[[column]])

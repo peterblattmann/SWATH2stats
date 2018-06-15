@@ -1,6 +1,27 @@
+#'  Convert table into the format for ROPECA
+#'
+#' This functions selects the columns necessary for ROPECA.
+#'
+#' @param data   A data frame containing SWATH data.
+#' @return Returns a data frame in the appropriate format for ROPECA.
+#' @note The table must not contain any technical replica, the intensity of
+#'   technical replica is averaged. This function requires the package reshape2.
+#' @author Peter Blattmann
+#' @references Suomi, T. and Elo L.L. (2017). "Enhanced differential expression
+#'   statistics for data-independent acquisition proteomics" Scientific Reports
+#'   7, Article number: 5869.doi:10.1038/s41598-017-05949-y
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered.decoy <- filter_mscore(data, 0.01)
+#'  data.PECA <- convert4PECA(data.filtered.decoy)
+#' }
+#' @export
 convert4PECA <- function(data) {
-
-  columns <- c("proteinname", "fullpeptidename", "charge", "intensity", "bioreplicate", "condition", "rt")
+  columns <- c("proteinname", "fullpeptidename", "charge", "intensity",
+               "bioreplicate", "condition", "rt")
 
   col.names.missing <- columns[!(columns %in% colnames(data))]
   if (length(col.names.missing) > 0) {

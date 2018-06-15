@@ -2,23 +2,38 @@
 % Please edit documentation in R/count_analytes.R
 \name{count_analytes}
 \alias{count_analytes}
-\title{Count the number of analytes observed in a swath2stats data structure.}
+\title{Counts analytes in different injections}
 \usage{
 count_analytes(data, column_levels = c("transition_group_id",
   "fullpeptidename", "proteinname"), column_by = "run_id", rm_decoy = TRUE)
 }
 \arguments{
-\item{data}{swath2stats data structure.}
+\item{data}{A data frame containing SWATH data.}
 
-\item{column_levels}{Use these columns to collate the data with stats::aggregate.}
+\item{column_levels}{Columns in which different identifiers should be
+counted.}
 
-\item{column_by}{Use this column for collecting the resulting counts.}
+\item{column_by}{Column for which the different identifiers should be counted
+for, e.g. for the different injections.}
 
-\item{rm_decoy}{Keep the decoys?}
+\item{rm_decoy}{Option to not remove decoy before counting.}
 }
 \value{
-data frame of counted peptides.
+Returns a data frame with the count of the different identifiers per
+  e.g. injection.
 }
 \description{
-Count the number of analytes observed in a swath2stats data structure.
+This functions counts the number of different peakgroups, peptides and
+proteins in different injections.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ count_analytes(data)
+}
+}
+\author{
+Peter Blattmann
 }

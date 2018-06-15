@@ -1,13 +1,32 @@
-#'  Make a plot of the correlation between samples/groups in the swath2stats data.
+#'  Plots the correlation between injections.
 #'
-#' @param data SWATH2stats data to poke.
-#' @param column.values  Which column to query?
+#' This function plots the Pearson's and Spearman correlation between
+#' samples. If decoys are present these are removed before plotting.
+#'
+#' @param data Data frame that is produced by the OpenSWATH/pyProphet workflow.
+#' @param column.values   Indicates the columns for which the correlation is
+#'   assessed. This can be the Intensity or Signal, but also the retention
+#'   time.
 #' @param size  How large should the text in the grid be (smaller is better for
 #'   rmarkdown html reports).
-#' @param comparison  Formula describing the organization of samples to query.
-#' @param fun.aggregate  Which function should be used to gather the data?
-#' @param label  Put labels of the correlations in the plot?
-#' @return plot!
+#' @param comparison  The comparison for assessing the variability. Default is
+#'   to assess the variability per transition_group_id over the different
+#'   Condition and Replicates. Comparison is performed using the dcast()
+#'   function of the reshape2 package.
+#' @param fun.aggregate  If for the comparison values have to be aggregated one
+#'   needs to provide the function here.
+#' @param label  Option to print correlation value in the plot.
+#' @param ... Further arguments passed to methods.
+#' @return Plots in Rconsole a correlation heatmap and returns the data frame
+#'   used to do the plotting.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  plot_correlation_between_samples(data)
+#' }
 #' @export
 plot_correlation_between_samples <- function(data, column.values="intensity", size=6,
                                              comparison=transition_group_id ~ condition + bioreplicate,

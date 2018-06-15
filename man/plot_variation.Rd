@@ -2,27 +2,49 @@
 % Please edit documentation in R/plot_variation.R
 \name{plot_variation}
 \alias{plot_variation}
-\title{Plot variation data!}
+\title{Plots the coefficient of variation for different replicates.}
 \usage{
 plot_variation(data, column.values = "intensity",
   comparison = transition_group_id + condition ~ bioreplicate,
   fun.aggregate = NULL, label = TRUE, ...)
 }
 \arguments{
-\item{data}{SWATH2stats data to poke.}
+\item{data}{Data frame that is produced by the OpenSWATH/pyProphet workflow.}
 
-\item{column.values}{Which column to poke?}
+\item{column.values}{Indicates the columns for which the variation is
+assessed. This can be the Intensity or Signal, but also the retention
+time.}
 
-\item{comparison}{A formula describing the group(s) to examine.}
+\item{comparison}{The comparison for assessing the variability. Default is to
+assess the variability per transition_group_id and Condition over the
+different Replicates. Comparison is performed using the dcast() function of
+the reshape2 package.}
 
-\item{fun.aggregate}{Which function should be used to bring together the
-values (I think this should be sum, yesno?)}
+\item{fun.aggregate}{If for the comparison values have to be aggregated one
+needs to provide the function here.}
 
-\item{label}{Put labels in the plot?}
+\item{label}{Option to print value of median cv.}
+
+\item{...}{further arguments passed to method.}
 }
 \value{
-a plot!
+Returns a list with the data and calculated cv and a table that
+  summarizes the mean, median and mode cv per Condition (if Condition is
+  contained in the comparison). In addition it plots in Rconsole a violin
+  plot with the observed coefficient of variations.
 }
 \description{
-I have not looked closely at this function yet.
+This function plots the coefficient of variation within replicates for a
+given value. If decoys are present these are removed before plotting.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ plot_variation(data)
+}
+}
+\author{
+Peter Blattmann
 }

@@ -1,17 +1,37 @@
 #' Take data from the swath2stats format and get it ready for use by MSstats.
 #'
 #' Though the two tools use very similar formats, some coercion is required to
-#' pass swath2stats data into msstats; ergo this function.
+#' Convert table into the format for MSstats.
 #'
-#' @param data  SWATH2stats formatted data.
-#' @param replace_values  Change the peculiar sample IDs from openswath into the
-#'   somewhat more human-readable format generated from a combination of
-#'   run/replicate/etc.
-#' @param replace_colnames  Change a few column names to make them fit better in
-#'   msstats?
-#' @param replace_unimod  Change the unimod column name to make it fit better in
-#'   msstats?
-#' @return MSstats compatible data, hopefully.
+#' This functions selects the columns necessary for MSstats and renames them if
+#' necessary.
+#'
+#' The necessary columns are selected and three columns renamed:
+#' FullPeptideName -> PeptideSequence
+#' Charge -> PrecursorCharge
+#' filename -> File
+#'
+#' @param data  A data frame containing SWATH data.
+#' @param replace_values Option to indicate if negative and 0 values should be replaced with NA.
+#' @param replace_colnames Option to indicate if column names should be renamed
+#'   and columns reduced to the necessary columns for MSstats.
+#' @param replace_unimod Option to indicate if Unimod Identifier should be
+#'   replaced from ":" to "_".
+#' @return Returns a data frame in the appropriate format for MSstats.
+#' @references Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek
+#'   O. MSstats: an R package for statistical analysis of quantitative mass
+#'   spectrometry-based proteomic experiments.Bioinformatics. 2014 Sep
+#'   1;30(17):2524-6. doi: 10.1093/bioinformatics/btu305.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered.decoy <- filter_mscore(data, 0.01)
+#'  raw <- disaggregate(data.filtered.decoy)
+#'  data.mapDIA <- convert4MSstats(raw)
+#' }
 #' @export
 convert_for_msstats <- function(data, replace_values=TRUE,
                                 replace_colnames=TRUE, replace_unimod=TRUE) {

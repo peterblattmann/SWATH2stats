@@ -1,10 +1,26 @@
-#' Filter SWATH2stats data based on mscore/condition
+#' Filter openSWATH output table according to mscore.
 #'
-#' @param data SWATH2stats data.
-#' @param mscore Threshold below which to drop rows.
-#' @param n.replica  Minimum required number of replicates.
-#' @param rm.decoy  Drop decoy rows?
-#' @return filtered data structure
+#' This function filters the SWATH data according to the m_score value, as well
+#' as to the number of occurence in the data (requant) and within a condition
+#' (condition).
+#'
+#' @param data A data frame containing SWATH data.
+#' @param mscore Value that defines the mscore threshold according to which the
+#'   data will be filtered.
+#' @param n.replica Number of measurements within at least one condition that
+#'   have to pass the mscore threshold for this transition.
+#' @param rm.decoy  Drop decoys from the data?
+#' @return A copy of the data which has been mscore-filtered.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered <- filter_mscore(data, 0.01)
+#'  data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
+#'  data.filtered <- filter_mscore_condition(data, 0.01, 3)
+#' }
 #' @export
 filter_mscore_condition <- function(data, mscore=1.0, n.replica, rm.decoy=TRUE) {
 

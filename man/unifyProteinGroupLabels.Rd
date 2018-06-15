@@ -2,18 +2,31 @@
 % Please edit documentation in R/unifyProteinGroupLabels.R
 \name{unifyProteinGroupLabels}
 \alias{unifyProteinGroupLabels}
-\title{Bring together protein group labels.}
+\title{Unify the protein group labels.}
 \usage{
 unifyProteinGroupLabels(data, column = "proteinname")
 }
 \arguments{
-\item{data}{SWATH2stats data to modify.}
+\item{data}{A data frame containing SWATH data.}
 
 \item{column}{Which column to use for unifying the groups.}
 }
 \value{
-slightly modified data structure.
+Returns a data frame with the unififed protein labels.
 }
 \description{
-Bring together protein group labels.
+Unify the protein group labels (2/ProteinA/ProteinB and 2/ProteinB/ProteinA)
+to one common label (e.g. 2/ProteinA/ProteinB)
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ data.filtered.decoy <- filter_mscore(data, 0.01)
+ data.unified <- unifyProteinGroupLabels(data.filtered.decoy)
+}
+}
+\author{
+Moritz Heusel
 }

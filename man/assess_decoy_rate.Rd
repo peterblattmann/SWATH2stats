@@ -7,7 +7,7 @@
 assess_decoy_rate(data)
 }
 \arguments{
-\item{data}{SWATH2stats data structure.}
+\item{data}{A data frame that contains at least a column named "FullPeptideName" and "decoy".}
 }
 \value{
 list containing the number of decoys, non-decoys, and the ratio.
@@ -15,4 +15,20 @@ list containing the number of decoys, non-decoys, and the ratio.
 \description{
 This looks at the swath2stats table and compares the length of the detected
 decoy peptides vs non-decoy peptides.
+}
+\details{
+A printout is generated to indicate the number of non-decoy, decoy peptides
+and the rate of decoy vs non-decoy peptides. Unique peptides are counted, so
+a precursor with different charge states is counted as one peptide. In the
+column "decoy" the values need to be 1,0 or TRUE and FALSE.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data <- OpenSWATH_data
+ assess_decoy_rate(data)
+}
+}
+\author{
+Peter Blattmann
 }

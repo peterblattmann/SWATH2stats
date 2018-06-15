@@ -1,3 +1,9 @@
+#' Annotate the SWATH data with the sample information
+#'
+#' For statistical analysis and filtering the measurements need to be annotated
+#' with Filename, Condition, BioReplicate, and Run. This functions takes this
+#' information from a txt file containing this meta-data.
+#'
 #' Given dataframes of TRIC processed data and sample annotations, mash them
 #' together into something appropriate for downstream analyses.
 #'
@@ -5,24 +11,30 @@
 #' creates the 'Condition', 'BioReplicate', and 'Run' columns along with other
 #' columns expected by MSstats/OpenSWATH.
 #'
-#' @param data  Data frame following processing by feature_alignment.py.
-#' @param data_type  Either OpenSWATH or MSstats, this defines the columns which
-#'   get created in the output data frame.
+#' @param data  A data frame containing SWATH data.
+#' @param sample_annotation A data frame containing the columns: Filename,
+#'   Condition, BioReplicate, Run. The values contained in the column filename
+#'   have to be present in the filename of the SWATH data.
+#' @param data_type Option to specify the format of the table, if the column
+#'   names from an OpenSWATH output or MSstats table are used.
 #' @param annotation_file_column  Name of the column containing the output file
 #'   from the experiment metadata for  each sample.  In my own sample sheet, I keep
 #'   columns for the mzXML files, tric outputs, raw files, and osw outputs from
 #'   OpenSwathWorkFlow; and I cannot be relied upon to remember which is which,
 #'   ergo this option.
-#' @param data_file_column  Column in the feature_alignment.py containing the
-#'   mzXML file for each detected transition.
+#' @param data_file_column Option to specify the column name where the injection
+#'   file is specified. Default is set to "filename".
 #' @param condition_column  Which column annotates the experimental condition in
 #'   the swath data?
 #' @param replicate_column  Which column annotates the replicate in the data?
 #' @param run_column  Which column annotates the separate runs?
-#' @param change_run_id  Concatenate the condition, replicate, and run columns
-#'   into a new run_id column?
-#' @param verbose  Be verbose?
-#' @return Dataframe with each row annotated from the sample metadata.
+#' @param change_run_id  Option to choose if the run\_id column shall be
+#'   reassigned to a unique value combining the values of Condition,
+#'   BioReplicate and Run. (Option only possible if data is of format
+#'   "OpenSWATH")
+#' @param verbose  Option to turn on reporting on which filename it is working
+#'   on.
+#' @return Returns a dataframe with each row annotated for the study design
 #' @author Peter Blattman
 #' @examples
 #'  \dontrun{

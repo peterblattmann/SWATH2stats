@@ -2,23 +2,42 @@
 % Please edit documentation in R/filter_on_min_peptides.R
 \name{filter_on_min_peptides}
 \alias{filter_on_min_peptides}
-\title{Filter-out too-low peptides from the data!}
+\title{Filter openSWATH output for proteins that are identified by a minimum of n independent peptides.}
 \usage{
 filter_on_min_peptides(data, n_peptides = 6, rm.decoy = TRUE,
   column = "proteinname")
 }
 \arguments{
-\item{data}{SWATH2stats data to filter.}
+\item{data}{Data table that is produced by the openSWATH/iPortal workflow.}
 
-\item{n_peptides}{Number of first n peptides to keep}
+\item{n_peptides}{Number of minimal number of peptide IDs associated with a
+protein ID in order to be kept in the dataset.}
 
-\item{rm.decoy}{Drop the decoys?}
+\item{rm.decoy}{Option to remove the decoys during filtering.}
 
 \item{column}{which column to use for filtering?}
 }
 \value{
-filtered data!
+Returns the filtered data frame with only peptides that map to
+  proteins with >= n_peptides peptides.
 }
 \description{
-Filter-out too-low peptides from the data!
+This function removes entries mapping to proteins that are identified by less
+than n_peptides.
+Removing single-hit proteins from an analysis can significantly increase the
+sensitivity under strict protein fdr criteria, as evaluated by
+e.g. assess_fdr_overall.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ data.filtered <- filter_mscore_freqobs(data, 0.01,0.8)
+ data.max <- filter_on_max_peptides(data.filtered, 5)
+ data.min.max <- filter_on_min_peptides(data.max, 3)
+}
+}
+\author{
+Moritz Heusel
 }

@@ -1,11 +1,28 @@
-#' I do not yet understand what is going on in this function.  It is querying
-#' the swath2stats data for a few parameters and eventually melting
-#' it. Depending on what comes of that, it drops some rows and returns a new,
-#' presumably better data structure.
+#' Transforms the SWATH data from a peptide- to a transition-level table.
 #'
-#' @param data SWATH2stats data structure to beat on.
-#' @param all.columns  Mess with the set of returned columns?
-#' @return a new version of the swath2stats data.
+#' If the SWATH data should be analyzed on transition-level the data needs to be
+#' tranformed from peptide-level table to a transition-level table (one row per
+#' transition instead of one row per peptide). The columns
+#' "aggr_Fragment_Annotation" and "aggr_Peak_Area" are disaggregated into the
+#' new columns "FragmentIon" and "Intensity".
+#' The following columns are renamed if they exist: FullPeptideName ->
+#' PeptideSequence, Charge -> PrecursorCharge, Area -> Intensity, Fragment ->
+#' FragmentIon, Sequence -> NakedSequence.
+#'
+#' @param data A data frame containing SWATH data.
+#' @param all.columns Option that all columns are processed. Otherwise only the
+#'   typical columns needed for downstream analysis are processed.
+#' @return Returns a data frame containing the SWATH data in a transition-level
+#'   table.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  data.filtered.decoy <- filter_mscore(data, 0.01)
+#'  raw <- disaggregate(data.filtered.decoy)
+#' }
 #' @export
 disaggregate <- function(data, all.columns=FALSE) {
 

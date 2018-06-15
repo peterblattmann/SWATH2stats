@@ -2,18 +2,35 @@
 % Please edit documentation in R/removeDecoyProteins.R
 \name{removeDecoyProteins}
 \alias{removeDecoyProteins}
-\title{Use a couple of small regular expressions to drop decoy rows.}
+\title{Removes decoy proteins from the protein group label}
 \usage{
 removeDecoyProteins(data, column = "proteinname")
 }
 \arguments{
-\item{data}{SWATH2stats data to filter.}
+\item{data}{A data frame containing SWATH data.}
 
 \item{column}{which column to query?}
 }
 \value{
-filtered data.
+Returns a data frame with changed protein labels
 }
 \description{
-Use a couple of small regular expressions to drop decoy rows.
+There exist peptides annotated as protein groups with
+2/ProteinA/DECOY_ProteinB. However these are in principal proteotypic
+peptides and should be annoated 1/ProteinA. This function changes these
+labels accordingly. The subfunction rmDecoyProt removes the Decoy protein,
+calling removeDecoyProteins also changes the nubmer before the protein group
+accordingly.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ data.filtered.decoy <- filter_mscore(data, 0.01)
+ data.2 <- removeDecoyProteins(data.filtered.decoy)
+}
+}
+\author{
+Moritz Heusel
 }

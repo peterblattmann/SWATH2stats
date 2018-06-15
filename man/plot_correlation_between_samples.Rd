@@ -2,29 +2,50 @@
 % Please edit documentation in R/plot_correlation_between_samples.R
 \name{plot_correlation_between_samples}
 \alias{plot_correlation_between_samples}
-\title{Make a plot of the correlation between samples/groups in the swath2stats data.}
+\title{Plots the correlation between injections.}
 \usage{
 plot_correlation_between_samples(data, column.values = "intensity",
   size = 6, comparison = transition_group_id ~ condition + bioreplicate,
   fun.aggregate = NULL, label = TRUE, ...)
 }
 \arguments{
-\item{data}{SWATH2stats data to poke.}
+\item{data}{Data frame that is produced by the OpenSWATH/pyProphet workflow.}
 
-\item{column.values}{Which column to query?}
+\item{column.values}{Indicates the columns for which the correlation is
+assessed. This can be the Intensity or Signal, but also the retention
+time.}
 
 \item{size}{How large should the text in the grid be (smaller is better for
 rmarkdown html reports).}
 
-\item{comparison}{Formula describing the organization of samples to query.}
+\item{comparison}{The comparison for assessing the variability. Default is
+to assess the variability per transition_group_id over the different
+Condition and Replicates. Comparison is performed using the dcast()
+function of the reshape2 package.}
 
-\item{fun.aggregate}{Which function should be used to gather the data?}
+\item{fun.aggregate}{If for the comparison values have to be aggregated one
+needs to provide the function here.}
 
-\item{label}{Put labels of the correlations in the plot?}
+\item{label}{Option to print correlation value in the plot.}
+
+\item{...}{Further arguments passed to methods.}
 }
 \value{
-plot!
+Plots in Rconsole a correlation heatmap and returns the data frame
+  used to do the plotting.
 }
 \description{
-Make a plot of the correlation between samples/groups in the swath2stats data.
+This function plots the Pearson's and Spearman correlation between
+samples. If decoys are present these are removed before plotting.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ plot_correlation_between_samples(data)
+}
+}
+\author{
+Peter Blattmann
 }

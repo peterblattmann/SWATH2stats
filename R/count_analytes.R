@@ -1,10 +1,24 @@
-#' Count the number of analytes observed in a swath2stats data structure.
+#' Counts analytes in different injections
 #'
-#' @param data  swath2stats data structure.
-#' @param column_levels  Use these columns to collate the data with stats::aggregate.
-#' @param column_by Use this column for collecting the resulting counts.
-#' @param rm_decoy  Keep the decoys?
-#' @return  data frame of counted peptides.
+#' This functions counts the number of different peakgroups, peptides and
+#' proteins in different injections.
+#'
+#' @param data A data frame containing SWATH data.
+#' @param column_levels  Columns in which different identifiers should be
+#'   counted.
+#' @param column_by Column for which the different identifiers should be counted
+#'   for, e.g. for the different injections.
+#' @param rm_decoy Option to not remove decoy before counting.
+#' @return Returns a data frame with the count of the different identifiers per
+#'   e.g. injection.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  count_analytes(data)
+#' }
 #' @export
 count_analytes <- function(data,
                            column_levels=c("transition_group_id", "fullpeptidename", "proteinname"),

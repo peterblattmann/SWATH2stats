@@ -2,26 +2,36 @@
 % Please edit documentation in R/filter_all_peptides.R
 \name{filter_all_peptides}
 \alias{filter_all_peptides}
-\title{This function is named filter_all_peptides, but it appears to me that it
-primarily serves to remove the leading slash number characters from the
-peptide names -- which is certainly a good thing(TM), but is that filtering?
-Perhaps I am still missing something}
+\title{Select all proteins that are supported by peptides.}
 \usage{
 filter_all_peptides(data, column = "proteinname", n = 6)
 }
 \arguments{
-\item{data}{SWATH2stats data structure to be modified.}
+\item{data}{A data frame containing SWATH data.}
 
 \item{column}{Which column contains the data to modify?}
 
 \item{n}{How many new IDs should we print to show if this worked?}
 }
 \value{
-Slightly modified data in the same format.
+Returns a data frame with the data from both proteotypic and
+  non-proteotypic peptides.
 }
 \description{
-This function is named filter_all_peptides, but it appears to me that it
-primarily serves to remove the leading slash number characters from the
-peptide names -- which is certainly a good thing(TM), but is that filtering?
-Perhaps I am still missing something
+This functions counts all proteins that are supported by peptides (including
+non proteo-typic peptides). All peptides (incl. non proteotypic peptides are
+selected. For the proteins supproted by proteotypic peptide the "1/" in front
+of the identifier is removed to facilitate further data processing.
+}
+\examples{
+\dontrun{
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- sample_annotation(OpenSWATH_data, Study_design)
+ data.filtered.decoy <- filter_mscore(data, 0.01)
+ data.all <- filter_all_peptides(data.filtered.decoy)
+}
+}
+\author{
+Peter Blattmann
 }

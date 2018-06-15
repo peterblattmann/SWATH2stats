@@ -1,10 +1,30 @@
+#' Gather some data from biomaRt. Convert protein ids
+#'
+#' This function renames protein ids in a data frame or file.
+#'
+#' @param species  The species of the protein identifiers in the term used by
+#'  biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl",
+#' "drerio_gene_ensembl", etc.)
+
+#' @param ensembl.path  ensembl host to query.
+#' @param mart   The type of mart (e.g. "ENSEMBL_MART_ENSEMBL", etc.)
+#' @param verbose print a summary of the ensembl connection.
+#' @return ensembl connection for performing future queries.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
+#'                           Abundance = c(100, 3390, 43423))
+#'  convert_protein_ids(data_table)
+#' }
+#' @export
 load_mart <- function(species, ensembl.path, mart, verbose=FALSE) {
   dataset.mart <- species
-  ensembl.mart <- useMart(mart, dataset=dataset.mart, host=ensembl.path)
+  ensembl.mart <- biomaRt::useMart(mart, dataset=dataset.mart, host=ensembl.path)
 
-  list.datasets <- listDatasets(ensembl.mart)
+  list.datasets <- biomaRt::listDatasets(ensembl.mart)
   list.datasets[which(list.datasets == dataset.mart), "version"]
-  list.marts <- listMarts(ensembl.mart, host=ensembl.path)
+  list.marts <- biomaRt::listMarts(ensembl.mart, host=ensembl.path)
   list.marts[which(list.marts == mart), "version"]
 
   if (verbose) {
@@ -20,7 +40,28 @@ load_mart <- function(species, ensembl.path, mart, verbose=FALSE) {
   return(ensembl.mart)
 }
 
-add_genesymbol <- function(data_table, gene.ID.table, column.name="Protein",
+#' Gather gene symbols from biomart and add them to a swath2stats data set.
+#'
+#' @note Protein identifiers from shared peptides should be separated by a forward
+#' slash. The host of archived ensembl databases can be introduced as well
+#' (e.g. "dec2017.archive.ensembl.org")
+#'
+#' @param data_table   A data frame or file name.
+#' @param gene.ID.table  a table to match against
+#' @param column.name   The column name where the original protein identifiers
+#'   are present.
+#' @param ID1   The type of the original protein identifiers
+#'   (e.g. "uniprotswissprot", "ensembl_peptide_id").
+#' @param ID2   The type of the converted protein identifiers
+#'   (e.g. "hgnc_symbol", "mgi_symbol", "external_gene_name").
+#' @param id.separator   Separator between protein identifiers of shared
+#'   peptides.
+#' @param copy_nonconverted  Option defining if the identifiers that cannot be
+#'   converted should be copied.
+#' @return some gene symbols
+#' @author Peter Blattmann
+#' @export
+add_genesymbol <- function(data_table, gene.ID.table, column.name="protein",
                            ID1="uniprotswissprot", ID2="hgnc_symbol", id.separator="/",
                            copy_nonconverted=TRUE) {
   ## remove column if it already exists
@@ -74,6 +115,41 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name="Protein",
   return(data_table)
 }
 
+#' Convert protein ids
+#'
+#' This function renames protein ids in a data frame or file
+#'
+#' @param data_table   A data frame or file name.
+#' @param column.name  The column name where the original protein identifiers are present.
+#' @param species  The species of the protein identifiers in the term used by
+#'   biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl",
+#'   "drerio_gene_ensembl", etc.)
+#' @param host  Path of the biomaRt database (e.g. "www.ensembl.org",
+#'   "dec2017.archive.ensembl.org").
+#' @param mart  The type of mart (e.g. "ENSEMBL_MART_ENSEMBL", etc.)
+#' @param ID1   The type of the original protein identifiers
+#'   (e.g. "uniprotswissprot", "ensembl_peptide_id").
+#' @param ID2   The type of the converted protein identifiers
+#'   (e.g. "hgnc_symbol", "mgi_symbol", "external_gene_name").
+#' @param id.separator   Separator between protein identifiers of shared
+#'   peptides.
+#' @param copy_nonconverted   Option defining if the identifiers that cannot be
+#'   converted should be copied.
+#' @param verbose   Option to write a file containing the version of the
+#'   database used.
+#' @return The data frame with an added column of the converted protein
+#'   identifiers.
+#' @note Protein identifiers from shared peptides should be separated by a
+#'   forward slash. The host of archived ensembl databases can be introduced as
+#'   well (e.g. "dec2017.archive.ensembl.org")
+#' @author Peter Blattmann
+#' @examples
+#'  \dontrun {
+#'   data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
+#'                            Abundance = c(100, 3390, 43423))
+#'   convert_protein_ids(data_table)
+#' }
+#' @export
 convert_protein_ids <- function(data_table, column.name="Protein",
                              species="hsapiens_gene_ensembl",
                              host="www.ensembl.org",

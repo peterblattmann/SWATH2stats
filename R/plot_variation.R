@@ -1,14 +1,32 @@
-#' Plot variation data!
+#' Plots the coefficient of variation for different replicates.
 #'
-#' I have not looked closely at this function yet.
+#' This function plots the coefficient of variation within replicates for a
+#' given value. If decoys are present these are removed before plotting.
 #'
-#' @param data SWATH2stats data to poke.
-#' @param column.values  Which column to poke?
-#' @param comparison  A formula describing the group(s) to examine.
-#' @param fun.aggregate  Which function should be used to bring together the
-#'   values (I think this should be sum, yesno?)
-#' @param label  Put labels in the plot?
-#' @return a plot!
+#' @param data Data frame that is produced by the OpenSWATH/pyProphet workflow.
+#' @param column.values  Indicates the columns for which the variation is
+#'   assessed. This can be the Intensity or Signal, but also the retention
+#'   time.
+#' @param comparison The comparison for assessing the variability. Default is to
+#'   assess the variability per transition_group_id and Condition over the
+#'   different Replicates. Comparison is performed using the dcast() function of
+#'   the reshape2 package.
+#' @param fun.aggregate If for the comparison values have to be aggregated one
+#'   needs to provide the function here.
+#' @param label  Option to print value of median cv.
+#' @param ... further arguments passed to method.
+#' @return Returns a list with the data and calculated cv and a table that
+#'   summarizes the mean, median and mode cv per Condition (if Condition is
+#'   contained in the comparison). In addition it plots in Rconsole a violin
+#'   plot with the observed coefficient of variations.
+#' @author Peter Blattmann
+#' @examples
+#' \dontrun{
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- sample_annotation(OpenSWATH_data, Study_design)
+#'  plot_variation(data)
+#' }
 #' @export
 plot_variation <- function(data, column.values="intensity",
                            comparison=transition_group_id + condition ~ bioreplicate,
