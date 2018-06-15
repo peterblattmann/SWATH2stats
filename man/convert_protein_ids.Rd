@@ -16,7 +16,7 @@ convert_protein_ids(data_table,
                  ID1 = "uniprotswissprot", 
                  ID2 = "hgnc_symbol",
                  id.separator = "/",
-                 copy_nonconverted = TRUE
+                 copy_nonconverted = TRUE,
                  verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.

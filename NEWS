@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.11.4
+-------------------------
+BUG FIXES
+
+ o fix manual page to convert_protein_ids
+
+
 CHANGES IN VERSION 1.11.3
 -------------------------
 BUG FIXES
