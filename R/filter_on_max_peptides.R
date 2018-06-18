@@ -31,8 +31,15 @@ filter_on_max_peptides <- function(data, n_peptides=6, rm.decoy=TRUE, column="pr
     data.table::setnames(data, column, "protein")
   }
   ##data$PEPTIDE <- paste(data$PeptideSequence, data$PrecursorCharge, sep="_")
-  data[["peptide"]] <- data[["fullpeptidename"]]
+  ## I have absolutely no clue why, but if this is left as its default factor, then
+  ## when we do the setkey(data, protein, peptide) in a couple lines, the
+  ## peptide names will be messed up.  To me, this feels like a bug in R, as
+  ## there is no reason for it to reorder the elements in the factor when doing
+  ## the setkey(), yet it clearly is.
+  data[["peptide"]] <- as.character(data[["fullpeptidename"]])
+
   data.peptides <- data[, c("protein", "peptide", "intensity"), with=FALSE]
+  ## This line is where my copy of data changes w.r.t. the original code.
   data.table::setkey(data, protein, peptide)
 
   data.peptides.int <- data.peptides[, sum(intensity), by="protein,peptide"]
@@ -40,16 +47,18 @@ filter_on_max_peptides <- function(data, n_peptides=6, rm.decoy=TRUE, column="pr
 
   data.table::setkey(data.peptides.int, protein)
   data.peptides.int <- data.peptides.int[order(data.peptides.int[["sum.intensity"]], decreasing=TRUE), ]
+
   peptides.sel <- unique(data.peptides.int[, head(x=.SD, n=n_peptides), by=protein])
+  selected_idx <- data[["peptide"]] %in% peptides.sel[["peptide"]]
   data.filtered <- data.frame(data[peptide %in% peptides.sel[["peptide"]], ])
 
-  message("Before filtering: ", "\n",
+  message("Before filtering:\n",
           "  Number of proteins: ", length(unique(data[["protein"]])), "\n",
           "  Number of peptides: ", length(unique(data[["peptide"]])), "\n\n",
           "Percentage of peptides removed: ", round(
           (length(unique(data[["peptide"]])) - length(unique(data.filtered[["peptide"]]))) /
-          length(unique(data[["peptide"]])) * 100, digits=2), "%", "\n\n",
-          "After filtering: ", "\n",
+          length(unique(data[["peptide"]])) * 100, digits=2), "%\n\n",
+          "After filtering:\n",
           "  Number of proteins: ", length(unique(data.filtered[["protein"]])), "\n",
           "  Number of peptides: ", length(unique(data.filtered[["peptide"]])))
 

@@ -103,7 +103,7 @@ The data table was transformed into a table containing one row per transition.")
   if (sum(is.na(data.new.merged[["intensity"]])) > 0) {
     .ids <- !is.na(data.new.merged[["intensity"]])
     message(length(data.new.merged[["intensity"]]) - sum(.ids),
-            "row(s) was/were removed because they did not contain data due to different number of transitions per precursor")
+            " row(s) was(were) removed because they did not contain data due to different number of transitions per precursor.")
     data.new.merged <- data.new.merged[.ids, ]
   }
 

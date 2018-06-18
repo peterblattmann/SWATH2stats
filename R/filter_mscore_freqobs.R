@@ -24,7 +24,7 @@
 #' @export
 filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
                                   rm.decoy=TRUE, file_column="filename") {
-  data[["peptide_charge"]] <- paste(data[["full_peptide_name"]], data[["charge"]])
+  data[["peptide_charge"]] <- paste(data[["fullpeptidename"]], data[["charge"]])
 
   if (sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)) {
     data <- data[data[["decoy"]] == 0, ]
@@ -50,7 +50,8 @@ filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
 
   ## This is an odd couple of lines.  I am guessing that they want the first, but not the second?
   peptides.filtered <- data.n[data.n[["N"]] >= threshold]
-  ##peptides.filtered <- data.frame("peptide_charge" = peptides.filtered[["peptide_charge"]])
+  peptides.filtered <- as.data.frame(peptides.filtered[["peptide_charge"]])
+  colnames(peptides.filtered) <- "peptide_charge"
   ## If I interpret the intent correctly, the goal is to drop peptides from
   ## charge states which have fewer than x observed peptides where x is the
   ## percentage * the number of conditions as defined by threshold above.
@@ -58,9 +59,6 @@ filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
   remaining_charges <- as.numeric(peptides.filtered[["peptide_charge"]])
   dropped_charge_idx <- ! all_charges %in% remaining_charges
   dropped_charges <- all_charges[dropped_charge_idx]
-  message("Charge states: ", toString(dropped_charges),
-          " had too few peptides to keep for this threshold.")
-
   message("Fraction of peptides selected: ",
           signif(length(unique(peptides.filtered[["peptide_charge"]]))
                  / length(unique(data[["peptide_charge"]])), digits=2))

@@ -65,7 +65,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
   run_column <- tolower(run_column)
   fullpeptidename_column <- tolower(fullpeptidename_column)
 
-  if (! class(data) == "data.frame" | class(data) == "data.table") {
+  if (! class(data)[1] == "data.frame" | class(data)[1] == "data.table") {
     stop("Input data is not a data.frame/data.table")
   }
   if (! annotation_file_column %in% colnames(sample_annotation)) {
