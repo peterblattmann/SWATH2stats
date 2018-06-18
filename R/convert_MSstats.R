@@ -34,7 +34,7 @@
 #' }
 #' @export
 convert_MSstats <- function(data, replace_values=TRUE,
-                                replace_colnames=TRUE, replace_unimod=TRUE) {
+                            replace_colnames=TRUE, replace_unimod=TRUE) {
 
   msstats_columns <- c("proteinname", "peptidesequence", "precursorcharge",
                        "fragmention", "productcharge", "isotopelabeltype",
@@ -72,12 +72,12 @@ convert_MSstats <- function(data, replace_values=TRUE,
     # replace negative values to 0 and 0 to NA
       if (sum(data[["intensity"]] < 0, na.rm=TRUE) > 0) {
         data[data[["intensity"]] < 0, "intensity"] <- 0
-        warning("Negative intensity values were replaced by NA")
+        warning("Intensity values which were negative have been replaced by NA.")
       }
 
       if (sum(data[["intensity"]] == 0, na.rm=TRUE) > 0) {
         data[data[["intensity"]] %in% 0, "intensity"] <- NA
-      warning("Intensity values that were 0, were replaced by NA")
+        warning("Intensity values which were 0 have been replaced by NA.")
       }
     }
 

@@ -52,13 +52,7 @@ filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
   peptides.filtered <- data.n[data.n[["N"]] >= threshold]
   peptides.filtered <- as.data.frame(peptides.filtered[["peptide_charge"]])
   colnames(peptides.filtered) <- "peptide_charge"
-  ## If I interpret the intent correctly, the goal is to drop peptides from
-  ## charge states which have fewer than x observed peptides where x is the
-  ## percentage * the number of conditions as defined by threshold above.
-  all_charges <- levels(as.factor(as.numeric(data.n[["peptide_charge"]])))
-  remaining_charges <- as.numeric(peptides.filtered[["peptide_charge"]])
-  dropped_charge_idx <- ! all_charges %in% remaining_charges
-  dropped_charges <- all_charges[dropped_charge_idx]
+
   message("Fraction of peptides selected: ",
           signif(length(unique(peptides.filtered[["peptide_charge"]]))
                  / length(unique(data[["peptide_charge"]])), digits=2))
