@@ -11,6 +11,8 @@ reduce_OpenSWATH_output(data, column.names = NULL,
 \item{data}{A data frame containing SWATH data.}
 
 \item{column.names}{A vector of column names that can be selected.}
+
+\item{data_file_column}{Name of the column containing the files from the (raw)data.}
 }
 \value{
 Returns a data frame with the selected columns.

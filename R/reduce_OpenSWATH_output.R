@@ -14,6 +14,7 @@
 #'
 #' @param data  A data frame containing SWATH data.
 #' @param column.names A vector of column names that can be selected.
+#' @param data_file_column  Name of the column containing the files from the (raw)data.
 #' @return Returns a data frame with the selected columns.
 #' @author Peter Blattmann
 #' @examples

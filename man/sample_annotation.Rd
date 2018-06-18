@@ -9,8 +9,7 @@ sample_annotation(data, sample_annotation, data_type = "OpenSWATH",
   data_file_column = "filename", condition_column = "condition",
   replicate_column = "bioreplicate",
   fullpeptidename_column = c("fullpeptidename", "fullunimodpeptidename"),
-  run_id = NULL, run_column = "run", change_run_id = TRUE,
-  verbose = FALSE)
+  run_column = "run", change_run_id = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}
@@ -28,6 +27,10 @@ columns for the mzXML files, tric outputs, raw files, and osw outputs from
 OpenSwathWorkFlow; and I cannot be relied upon to remember which is which,
 ergo this option.}
 
+\item{check_files}{Boolean checking if one wishes to ensure that the files
+listed in the annotation data are equivalent to the files in the actual
+data.}
+
 \item{data_file_column}{Option to specify the column name where the injection
 file is specified. Default is set to "filename".}
 
@@ -35,6 +38,9 @@ file is specified. Default is set to "filename".}
 the swath data?}
 
 \item{replicate_column}{Which column annotates the replicate in the data?}
+
+\item{fullpeptidename_column}{Character list of possible column names used
+to define the full peptide name.}
 
 \item{run_column}{Which column annotates the separate runs?}
 

@@ -28,6 +28,8 @@ aggregated one needs to provide the function here. (I think this should be
 sum, yesno?)}
 
 \item{label}{Option to print value of median cv.}
+
+\item{...}{Arguments passed through, currently unused.}
 }
 \value{
 Plots in Rconsole a violin plot comparing the total variation with

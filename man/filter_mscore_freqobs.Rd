@@ -17,6 +17,8 @@ data will be filtered.}
 the mscore threshold. ??}
 
 \item{rm.decoy}{Option to remove the decoys during filtering.}
+
+\item{file_column}{Column in the (raw)data in which the filenames should be found.}
 }
 \value{
 Returns a data frame with the filtered data.

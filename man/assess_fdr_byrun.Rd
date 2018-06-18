@@ -30,10 +30,10 @@ console enabling further computation or custom plotting / output.}
 \item{plot}{Logical, whether or not to create plots from the results (using
 the associated method plot.fdr_cube()}
 
+\item{filename}{Modify the basename of the result files if set.}
+
 \item{output_mscore_levels}{Define m-score levels to plot and write the
 estimated FDR results.}
-
-\item{Optional, }{modifying the basename of the result files if applicable.}
 }
 \value{
 Returns an array of target/decoy identification numbers and

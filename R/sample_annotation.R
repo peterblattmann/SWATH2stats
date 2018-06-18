@@ -22,11 +22,16 @@
 #'   columns for the mzXML files, tric outputs, raw files, and osw outputs from
 #'   OpenSwathWorkFlow; and I cannot be relied upon to remember which is which,
 #'   ergo this option.
+#' @param check_files Boolean checking if one wishes to ensure that the files
+#'   listed in the annotation data are equivalent to the files in the actual
+#'   data.
 #' @param data_file_column Option to specify the column name where the injection
 #'   file is specified. Default is set to "filename".
 #' @param condition_column  Which column annotates the experimental condition in
 #'   the swath data?
 #' @param replicate_column  Which column annotates the replicate in the data?
+#' @param fullpeptidename_column  Character list of possible column names used
+#'   to define the full peptide name.
 #' @param run_column  Which column annotates the separate runs?
 #' @param change_run_id  Option to choose if the run\_id column shall be
 #'   reassigned to a unique value combining the values of Condition,
@@ -49,7 +54,6 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
                               condition_column="condition",
                               replicate_column="bioreplicate",
                               fullpeptidename_column=c("fullpeptidename", "fullunimodpeptidename"),
-                              run_id=NULL,
                               run_column="run",
                               change_run_id=TRUE,
                               verbose=FALSE) {

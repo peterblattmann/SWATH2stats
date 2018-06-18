@@ -29,6 +29,8 @@
 #' @param mscore_limit  FDR target for the quantitative values kept/reported for
 #'   all peptides mapping to the high-confidence protein master list. Defaults
 #'   to 0.05. If all values up to m_score 0.01 shall be kept, set = 1.
+#' @param upper_overall_peptide_fdr_limit  Option to relax or tighten the false
+#'   discovery rate limit.
 #' @param rm.decoy Logical T/F, whether decoy entries should be removed after
 #'   the analysis. Defaults to TRUE. Can be useful to disable to track the
 #'   influence on decoy fraction by further filtering steps such as requiring 2

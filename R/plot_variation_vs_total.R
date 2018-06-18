@@ -16,6 +16,7 @@
 #'   aggregated one needs to provide the function here. (I think this should be
 #'   sum, yesno?)
 #' @param label  Option to print value of median cv.
+#' @param ...  Arguments passed through, currently unused.
 #' @return Plots in Rconsole a violin plot comparing the total variation with
 #'   the variation within replicates. In addition it returns the data frame from
 #'   which the plotting is done and a table with the calculated mean, median and
@@ -68,7 +69,8 @@ plot_variation_vs_total <- function(data, column.values="intensity",
     ggplot2::geom_violin(scale="area") +
     ggplot2::xlab("") +
     ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
-    ggplot2::labs(title=paste(column.values, "coefficient of variation - total versus within replicates"))
+    ggplot2::labs(title=paste(column.values,
+                              "coefficient of variation - total versus within replicates"))
 
   if (isTRUE(label)) {
     p <- ggplot(na.omit(data.comb), aes(x=scope, y=cv)) +

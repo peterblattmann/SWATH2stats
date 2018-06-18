@@ -10,6 +10,7 @@
 library(SWATH2stats)
 library(data.table)
 data('Spyogenes', package='SWATH2stats')
+data <- Spyogenes
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  data <- data.frame(fread('rawOpenSwathResults_1pcnt_only.tsv', sep='\t', header=TRUE))

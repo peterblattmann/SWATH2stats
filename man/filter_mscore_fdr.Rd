@@ -29,6 +29,9 @@ will be kept/reported. Defaults to 0.02.}
 all peptides mapping to the high-confidence protein master list. Defaults
 to 0.05. If all values up to m_score 0.01 shall be kept, set = 1.}
 
+\item{upper_overall_peptide_fdr_limit}{Option to relax or tighten the false
+discovery rate limit.}
+
 \item{rm.decoy}{Logical T/F, whether decoy entries should be removed after
 the analysis. Defaults to TRUE. Can be useful to disable to track the
 influence on decoy fraction by further filtering steps such as requiring 2

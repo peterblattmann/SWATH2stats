@@ -41,6 +41,7 @@ Load the SWATH-MS example data from the package, this is a reduced file in order
 library(SWATH2stats)
 library(data.table)
 data('Spyogenes', package='SWATH2stats')
+data <- Spyogenes
 ```
 
 Alternatively the original file downloaded from the Peptide Atlas can be loaded from the working directory.

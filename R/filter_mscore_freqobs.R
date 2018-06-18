@@ -10,6 +10,7 @@
 #' @param percentage  Percentage in which replicas the transition has to reach
 #'   the mscore threshold. ??
 #' @param rm.decoy  Option to remove the decoys during filtering.
+#' @param file_column  Column in the (raw)data in which the filenames should be found.
 #' @return Returns a data frame with the filtered data.
 #' @author Peter Blattmann
 #' @examples

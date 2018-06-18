@@ -35,7 +35,7 @@
 #'   console enabling further computation or custom plotting / output.
 #' @param plot Logical, whether or not to create plots from the results (using
 #'   the associated method plot.fdr_cube()
-#' @param Optional, modifying the basename of the result files if applicable.
+#' @param filename  Modify the basename of the result files if set.
 #' @param output_mscore_levels Define m-score levels to plot and write the
 #'   estimated FDR results.
 #' @return Returns an array of target/decoy identification numbers and
