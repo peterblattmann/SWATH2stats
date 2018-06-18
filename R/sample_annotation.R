@@ -44,6 +44,7 @@
 #' @export
 sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
                               annotation_file_column="filename",
+                              check_files=TRUE,
                               data_file_column="filename",
                               condition_column="condition",
                               replicate_column="bioreplicate",
@@ -76,7 +77,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
   }
 
   annotation_files <- levels(as.factor(sample_annotation[[annotation_file_column]]))
-  data_files <- levels(as.factor(sample_annotation[[data_file_column]]))
+  data_files <- levels(as.factor(data[[data_file_column]]))
   ## I want to make sure all these functions work for the data provided with the package.
   ## Unfortunately, the files listed in the data look like:
   ## '/scratch/9148912somethingsomething/filename.mzXML.gz' while the files in
@@ -85,7 +86,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
   ## failure.
   annotation_files <- basename(annotation_files)
   data_files <- basename(data_files)
-  removal_regexes <- c("\\.gz$", "\\.mzXML$", "\\.mzML$")
+  removal_regexes <- c("\\.gz$", "\\.mzXML$", "\\.mzML$", "\\.xls", "\\.xlsx")
   for (removal in removal_regexes) {
     annotation_files <- gsub(pattern=removal, replacement="",
                              x=annotation_files)
@@ -95,22 +96,26 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
   annotation_files <- sort(annotation_files)
   data_files <- sort(data_files)
 
-  if (isTRUE(all.equal(annotation_files, data_files))) {
-    message("Found the same mzXML files in the annotations and data.")
+  if (isTRUE(check_files)) {
+    if (isTRUE(all.equal(annotation_files, data_files))) {
+      message("Found the same mzXML files in the annotations and data.")
+    } else {
+      warning("The files listed in the sample annotation and data are not equivalent.")
+      missing_samples_from_data_idx <- ! annotation_files %in% data_files
+      missing_samples_from_data <- annotation_files[missing_samples_from_data_idx]
+      missing_samples_from_annot_idx <- ! data_files %in% annotation_files
+      missing_samples_from_annot <- data_files[missing_samples_from_annot_idx]
+      if (missing_samples_from_data > 0) {
+        warning(paste0("The missing data samples from the annotation are: ",
+                       toString(missing_samples_from_data), "."))
+      }
+      if (missing_samples_from_annot > 0) {
+        warning(paste0("The missing data samples from the data are: ",
+                       toString(missing_samples_from_annot), "."))
+      }
+    }
   } else {
-    warning("The files listed in the sample annotation and data are not equivalent.")
-    missing_samples_from_data_idx <- ! annotation_files %in% data_files
-    missing_samples_from_data <- annotation_files[missing_samples_from_data_idx]
-    missing_samples_from_annot_idx <- ! data_files %in% annotation_files
-    missing_samples_from_annot <- data_files[missing_samples_from_annot_idx]
-    if (missing_samples_from_data > 0) {
-      warning(paste0("The missing data samples from the annotation are: ",
-                     toString(missing_samples_from_data), "."))
-    }
-    if (missing_samples_from_annot > 0) {
-      warning(paste0("The missing data samples from the data are: ",
-                     toString(missing_samples_from_annot), "."))
-    }
+    message("Not checking that the files are identical between the annotation and data.")
   }
 
   for (i in seq_len(nrow(sample_annotation))) {
