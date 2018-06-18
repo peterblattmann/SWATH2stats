@@ -35,7 +35,7 @@ transform_MSstats_OpenSWATH <- function(data) {
   query_columns <- c("proteinname", "peptidesequence", "precursorcharge", "fragmention",
                      "productcharge", "isotopelabeltype", "condition", "bioreplicate",
                      "run", "intensity")
-  add.colnames <- colnames(data)[!(colnames(data) %in% query_column)]
+  add.colnames <- colnames(data)[!(colnames(data) %in% query_columns)]
 
   data <- data[, c(query_columns, add.colnames)]
   new_columns <- gsub(pattern="peptidesequence", replacement="fullpeptidename", x=query_columns)

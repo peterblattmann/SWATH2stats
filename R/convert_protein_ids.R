@@ -46,11 +46,11 @@ load_mart <- function(species, ensembl.path, mart, verbose=FALSE) {
 #' slash. The host of archived ensembl databases can be introduced as well
 #' (e.g. "dec2017.archive.ensembl.org")
 #'
-#' @param data_table   A data frame or file name.
-#' @param gene.ID.table  a table to match against
-#' @param column.name   The column name where the original protein identifiers
+#' @param data_table A data frame or file name.
+#' @param gene.ID.table A table to match against
+#' @param column.name The column name where the original protein identifiers
 #'   are present.
-#' @param ID1   The type of the original protein identifiers
+#' @param ID1 The type of the original protein identifiers
 #'   (e.g. "uniprotswissprot", "ensembl_peptide_id").
 #' @param ID2   The type of the converted protein identifiers
 #'   (e.g. "hgnc_symbol", "mgi_symbol", "external_gene_name").
@@ -144,21 +144,21 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name="protein",
 #'   well (e.g. "dec2017.archive.ensembl.org")
 #' @author Peter Blattmann
 #' @examples
-#'  \dontrun {
+#'  \dontrun{
 #'   data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
 #'                            Abundance = c(100, 3390, 43423))
 #'   convert_protein_ids(data_table)
 #' }
 #' @export
 convert_protein_ids <- function(data_table, column.name="Protein",
-                             species="hsapiens_gene_ensembl",
-                             host="www.ensembl.org",
-                             mart="ENSEMBL_MART_ENSEMBL",
-                             ID1="uniprotswissprot",
-                             ID2="hgnc_symbol",
-                             id.separator="/",
-                             copy_nonconverted=TRUE,
-                             verbose=FALSE) {
+                                species="hsapiens_gene_ensembl",
+                                host="www.ensembl.org",
+                                mart="ENSEMBL_MART_ENSEMBL",
+                                ID1="uniprotswissprot",
+                                ID2="hgnc_symbol",
+                                id.separator="/",
+                                copy_nonconverted=TRUE,
+                                verbose=FALSE) {
 
   if (class(data_table) == "data.frame") {
     type <- "data.frame"
@@ -188,8 +188,8 @@ convert_protein_ids <- function(data_table, column.name="Protein",
   length(IDs)
 
   organism.mart <- load_mart(species, host, mart)
-  gene.ID.table <- getBM(attributes=c(ID2, ID1), filters=c(ID1),
-                           values=IDs, mart=organism.mart)
+  gene.ID.table <- biomaRt::getBM(attributes=c(ID2, ID1), filters=c(ID1),
+                                  values=IDs, mart=organism.mart)
 
   n.ids <- table(gene.ID.table[, ID1])
   n.ids.multiple <- names(n.ids[n.ids > 1])
@@ -197,7 +197,9 @@ convert_protein_ids <- function(data_table, column.name="Protein",
     new.id <- paste(gene.ID.table[gene.ID.table[,ID1] == i, ID2],
                     collapse=id.separator)
     gene.ID.table <- gene.ID.table[gene.ID.table[, ID1] != i, ]
-    new.id.df <- data.frame(uniprotswissprot=i, hgnc_symbol=new.id)
+    new.id.df <- data.frame(
+      "uniprotswissprot" = i,
+      "hgnc_symbol" = new.id)
     colnames(new.id.df) <- c(ID1, ID2)
     gene.ID.table <- rbind(gene.ID.table, new.id.df)
   }

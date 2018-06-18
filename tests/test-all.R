@@ -1,3 +1,5 @@
 #!/usr/bin/env Rscript
 library(testthat)
-test_check("SWATH2stats")
+library(SWATH2stats)
+all <- try(testthat::test_dir("tests/testthat", reporter="summary"))
+summary(all)

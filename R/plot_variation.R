@@ -50,19 +50,19 @@ plot_variation <- function(data, column.values="intensity",
 
   if (isTRUE(label)) {
     p <- (ggplot(na.omit(data.cv), aes_string(x=colnames(data.cv)[1], y="cv")) +
-          geom_violin(scale="area") +
-          theme(axis.text.x=element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
-          stat_summary(fun.data=function(x) {
+          ggplot2::geom_violin(scale="area") +
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
+          ggplot2::stat_summary(fun.data=function(x) {
             data.frame(y=median(x),
                        label=paste("median cv:\n",
                                    signif(median(x,na.rm=TRUE),
                                           digits=2))) }, geom="text") +
-          labs(title=paste(column.values, "cv across conditions")))
+          ggplot2::labs(title=paste(column.values, "cv across conditions")))
   } else {
     p <- (ggplot(na.omit(data.cv), aes_string(x=colnames(data.cv)[1], y="cv")) +
-          geom_violin(scale="area") +
-          theme(axis.text.x=element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
-          labs(title="cv across conditions"))
+          ggplot2::geom_violin(scale="area") +
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
+          ggplot2::labs(title="cv across conditions"))
   }
 
   print(p)

@@ -22,7 +22,7 @@
 #'  data.mapDIA <- convert4mapDIA(raw, RT=TRUE)
 #' }
 #' @export
-convert4mapDIA <- function(data, RT=FALSE) {
+convert_mapDIA <- function(data, RT=FALSE) {
 
   mDIA.columns <- c("proteinname", "peptidesequence", "fragmention",
                     "intensity", "bioreplicate", "condition", "rt")
@@ -39,11 +39,9 @@ convert4mapDIA <- function(data, RT=FALSE) {
   data[["peptidesequence"]] <- gsub(":", "_", data[["peptidesequence"]])
   data[["fragmention"]] <- gsub(":", "_", data[["fragmention"]])
 
-  data.red.wide.test <- dcast(
-    data,
-    proteinname + peptidesequence + fragmention ~ condition + bioreplicate,
-    fun.aggregate=length,
-    value.var="intensity")
+  data.red.wide.test <- reshape2::dcast(data,
+                                        proteinname + peptidesequence + fragmention ~ condition + bioreplicate,
+                                        fun.aggregate=length, value.var="intensity")
 
   if (sum(data.red.wide.test[, 4:dim(data.red.wide.test)[2]] > 1) > 0) {
     col.names.repl <- apply(data.red.wide.test[, 4:dim(data.red.wide.test)[2]], 2, function(x) sum(x > 1))
@@ -56,11 +54,9 @@ convert4mapDIA <- function(data, RT=FALSE) {
             "and in the following rows: ", paste(row.names.repl, collapse=", "))
   }
 
-  data.red.wide <- dcast(
-    data,
-    proteinname + peptidesequence + fragmention ~ condition + bioreplicate,
-    fun.aggregate=mean,
-    value.var="intensity")
+  data.red.wide <- reshape2::dcast(data,
+                                   proteinname + peptidesequence + fragmention ~ condition + bioreplicate,
+                                   fun.aggregate=mean, value.var="intensity")
 
   if (RT) {
     RTs <- unique(aggregate(data[, c(which(colnames(data)=="rt"))],

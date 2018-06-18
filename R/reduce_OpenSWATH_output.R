@@ -24,12 +24,13 @@
 #'  data.filtered <- reduce_OpenSWATH_output(data)
 #' }
 #' @export
-reduce_OpenSWATH_output <- function(data, column.names=NULL) {
+reduce_OpenSWATH_output <- function(data, column.names=NULL, data_file_column="filename") {
+  colnames(data) <- tolower(colnames(data))
   if (is.null(column.names)) {
     column.names <- c("proteinname", "fullpeptidename", "sequence", "charge",
                       "aggr_fragment_annotation", "aggr_peak_area",
                       "align_origfilename", "m_score", "decoy",
-                      "intensity", "rt", "run_id", "transition_group_id")
+                      "intensity", "rt", "run_id", "transition_group_id", data_file_column)
   }
   if (length(column.names) > length(column.names[column.names %in% colnames(data)])) {
     col.names.missing <- column.names[!column.names %in% colnames(data)]

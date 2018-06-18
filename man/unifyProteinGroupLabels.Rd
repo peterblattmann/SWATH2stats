@@ -4,12 +4,14 @@
 \alias{unifyProteinGroupLabels}
 \title{Unify the protein group labels.}
 \usage{
-unifyProteinGroupLabels(data, column = "proteinname")
+unifyProteinGroupLabels(data, column = "proteinname", keep_colnames = FALSE)
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}
 
 \item{column}{Which column to use for unifying the groups.}
+
+\item{keep_colnames}{Return the column names to their case-sensitive precursors.}
 }
 \value{
 Returns a data frame with the unififed protein labels.

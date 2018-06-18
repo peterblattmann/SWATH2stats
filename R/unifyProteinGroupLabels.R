@@ -5,6 +5,7 @@
 #'
 #' @param data  A data frame containing SWATH data.
 #' @param column Which column to use for unifying the groups.
+#' @param keep_colnames Return the column names to their case-sensitive precursors.
 #' @return Returns a data frame with the unififed protein labels.
 #' @author Moritz Heusel
 #' @examples
@@ -16,7 +17,10 @@
 #'  data.unified <- unifyProteinGroupLabels(data.filtered.decoy)
 #' }
 #' @export
-unifyProteinGroupLabels <- function(data, column="proteinname") {
+unifyProteinGroupLabels <- function(data, column="proteinname", keep_colnames=FALSE) {
+  original_columns <- colnames(data)
+  colnames(data) <- tolower(colnames(data))
+  column <- tolower(column)
   data[[column]] <- as.character(data[[column]])
   ids <- grep("^([2-9])|([1-9][0-9][0-9]*)/", data[[column]])
   identifiers <- data[ids, column]
@@ -24,5 +28,8 @@ unifyProteinGroupLabels <- function(data, column="proteinname") {
   identifiers_split_sorted <- lapply(identifiers_split, function(x) { sort(x) })
   identifiers_sorted <- vapply(identifiers_split_sorted, function(x) { paste(x, collapse="/") }, "a")
   data[ids, column] <- identifiers_sorted
+  if (isTRUE(keep_colnames)) {
+    colnames(data) <- original_columns
+  }
   return(data)
 }

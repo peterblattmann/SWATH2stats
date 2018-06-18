@@ -4,7 +4,8 @@
 \alias{reduce_OpenSWATH_output}
 \title{Reduce columns of OpenSWATH data}
 \usage{
-reduce_OpenSWATH_output(data, column.names = NULL)
+reduce_OpenSWATH_output(data, column.names = NULL,
+  data_file_column = "filename")
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}

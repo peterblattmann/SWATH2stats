@@ -7,8 +7,9 @@
 sample_annotation(data, sample_annotation, data_type = "OpenSWATH",
   annotation_file_column = "filename", data_file_column = "filename",
   condition_column = "condition", replicate_column = "bioreplicate",
-  fullpeptidename_column = "fullunimodpeptidename", run_id = NULL,
-  run_column = "run", change_run_id = TRUE, verbose = FALSE)
+  fullpeptidename_column = c("fullpeptidename", "fullunimodpeptidename"),
+  run_id = NULL, run_column = "run", change_run_id = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}
@@ -61,11 +62,10 @@ creates the 'Condition', 'BioReplicate', and 'Run' columns along with other
 columns expected by MSstats/OpenSWATH.
 }
 \examples{
- \dontrun{
-   data("OpenSWATH_data", package="SWATH2stats")
-   data("Study_design", package="SWATH2stats")
-   data <- sample_annotation(OpenSWATH_data, Study_design)
-}
+ data("OpenSWATH_data", package="SWATH2stats")
+ data("Study_design", package="SWATH2stats")
+ data <- SWATH2stats::sample_annotation(OpenSWATH_data, Study_design, verbose=TRUE)
+ summary(data)
 }
 \author{
 Peter Blattman

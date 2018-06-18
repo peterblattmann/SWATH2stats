@@ -23,6 +23,7 @@
 count_analytes <- function(data,
                            column_levels=c("transition_group_id", "fullpeptidename", "proteinname"),
                            column_by="run_id", rm_decoy=TRUE) {
+  colnames(data) <- tolower(colnames(data))
   if (sum(colnames(data) == "decoy") == 1 & isTRUE(rm_decoy)) {
     data <- data[data[["decoy"]] == 0, ]
   }

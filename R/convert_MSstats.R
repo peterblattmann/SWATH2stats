@@ -33,7 +33,7 @@
 #'  data.mapDIA <- convert4MSstats(raw)
 #' }
 #' @export
-convert_for_msstats <- function(data, replace_values=TRUE,
+convert_MSstats <- function(data, replace_values=TRUE,
                                 replace_colnames=TRUE, replace_unimod=TRUE) {
 
   msstats_columns <- c("proteinname", "peptidesequence", "precursorcharge",

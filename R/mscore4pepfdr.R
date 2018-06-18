@@ -45,10 +45,10 @@ mscore4pepfdr <- function(data, FFT=1, fdr_target=0.01) {
   target_peptides_highres <- NULL
   decoy_peptides_highres <- NULL
   for (i in 1:length(mscore_levels_highres)) {
-    target_peptides.highres[i] <- length(
+    target_peptides_highres[i] <- length(
       unique(data[data[["decoy"]] == FALSE &
                   data[["m_score"]] <= mscore_levels_highres[i], c("fullpeptidename")]))
-    decoy_peptides.highres[i] <- length(
+    decoy_peptides_highres[i] <- length(
       unique(data[data[["decoy"]] == TRUE &
                   data[["m_score"]] <= mscore_levels_highres[i], c("fullpeptidename")]))
   }

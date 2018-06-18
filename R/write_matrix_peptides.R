@@ -34,14 +34,15 @@ write_matrix_peptides <- function(data, write.csv=FALSE,
                                   fun.aggregate=sum,
                                   filename="SWATH2stats_overview_matrix_peptidelevel.csv",
                                   rm.decoy=FALSE) {
+  colnames(data) <- tolower(colnames(data))
   if (rm.decoy == TRUE) {
     data <- subset(data, data[["decoy"]] == 0)
   }
   data.peptide <- data[, c("proteinname", "run_id", "fullpeptidename", "intensity")]
-  ProteinName_FullPeptideName <- paste(data.peptide[["proteinname"]],
+  proteinname_fullpeptidename <- paste(data.peptide[["proteinname"]],
                                        data.peptide[["fullpeptidename"]], sep="_")
-  data.peptide <- cbind(ProteinName_FullPeptideName, data.peptide)
-  data.peptide.table <- reshape2::dcast(data.peptide, ProteinName_FullPeptideName ~ run_id,
+  data.peptide <- cbind(proteinname_fullpeptidename, data.peptide)
+  data.peptide.table <- reshape2::dcast(data.peptide, proteinname_fullpeptidename ~ run_id,
                                         value.var="intensity", fun.aggregate=fun.aggregate)
   if (isTRUE(write.csv)) {
     write.csv(data.peptide.table, file=filename, row.names=FALSE, quote=FALSE)

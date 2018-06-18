@@ -47,7 +47,6 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
 
     if (output == "pdf_csv") {
       pdf(file=paste(filename,  "_", format(k.mscore.label, scientific=TRUE), ".pdf", sep=""))
-      par(mfrow=c(3,2))
       title <- NULL
     }
 
@@ -171,9 +170,9 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
     retlist[[count]][["protein_mscore"]] <- protein_mscoreplot
 
     if (output == "pdf_csv") {
-      par(mfrow=c(1, 1))
-      mtext(paste("FDR by run target/decoy ID report (m_score <= ",
-                  format(k.mscore.label, scientific= TRUE), ")", sep=""), line=2, adj=0.5)
+      ##par(mfrow=c(1, 1))
+      ##mtext(paste("FDR by run target/decoy ID report (m_score <= ",
+      ##            format(k.mscore.label, scientific= TRUE), ")", sep=""), line=2, adj=0.5)
       dev.off()
       message(filename, ".pdf report plots written to working folder", "\n")
     }

@@ -37,18 +37,17 @@
 #' @return Returns a dataframe with each row annotated for the study design
 #' @author Peter Blattman
 #' @examples
-#'  \dontrun{
-#'    data("OpenSWATH_data", package="SWATH2stats")
-#'    data("Study_design", package="SWATH2stats")
-#'    data <- sample_annotation(OpenSWATH_data, Study_design)
-#' }
+#'  data("OpenSWATH_data", package="SWATH2stats")
+#'  data("Study_design", package="SWATH2stats")
+#'  data <- SWATH2stats::sample_annotation(OpenSWATH_data, Study_design, verbose=TRUE)
+#'  summary(data)
 #' @export
 sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
                               annotation_file_column="filename",
                               data_file_column="filename",
                               condition_column="condition",
                               replicate_column="bioreplicate",
-                              fullpeptidename_column="fullunimodpeptidename",
+                              fullpeptidename_column=c("fullpeptidename", "fullunimodpeptidename"),
                               run_id=NULL,
                               run_column="run",
                               change_run_id=TRUE,
@@ -70,18 +69,36 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
     stop("Input data is not a data.frame/data.table")
   }
   if (! annotation_file_column %in% colnames(sample_annotation)) {
-    stop(paste0("The file column: ", annotation_file_column, " is missing from the annotations."))
+    stop(paste0("The file column: '", annotation_file_column, "' is missing from the annotations."))
   }
   if (! data_file_column %in% colnames(data)) {
-    stop(paste0("The data file column: ", data_file_column, " is missing from the data file."))
+    stop(paste0("The data file column: '", data_file_column, "' is missing from the data file."))
   }
 
-  annotation_files <- sort(levels(as.factor(sample_annotation[[annotation_file_column]])))
-  data_files <- sort(levels(as.factor(data[[data_file_column]])))
+  annotation_files <- levels(as.factor(sample_annotation[[annotation_file_column]]))
+  data_files <- levels(as.factor(sample_annotation[[data_file_column]]))
+  ## I want to make sure all these functions work for the data provided with the package.
+  ## Unfortunately, the files listed in the data look like:
+  ## '/scratch/9148912somethingsomething/filename.mzXML.gz' while the files in
+  ## the annotations look like 'filename'
+  ## Therefore my test that the two sets are equivalent is a priori doomed to
+  ## failure.
+  annotation_files <- basename(annotation_files)
+  data_files <- basename(data_files)
+  removal_regexes <- c("\\.gz$", "\\.mzXML$", "\\.mzML$")
+  for (removal in removal_regexes) {
+    annotation_files <- gsub(pattern=removal, replacement="",
+                             x=annotation_files)
+    data_files <- gsub(pattern=removal, replacement="",
+                       x=data_files)
+  }
+  annotation_files <- sort(annotation_files)
+  data_files <- sort(data_files)
+
   if (isTRUE(all.equal(annotation_files, data_files))) {
     message("Found the same mzXML files in the annotations and data.")
   } else {
-    warning("The number of sample annotation condition and filenames in data are equal.")
+    warning("The files listed in the sample annotation and data are not equivalent.")
     missing_samples_from_data_idx <- ! annotation_files %in% data_files
     missing_samples_from_data <- annotation_files[missing_samples_from_data_idx]
     missing_samples_from_annot_idx <- ! data_files %in% annotation_files
@@ -115,7 +132,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
       }
       coord <- grep(i, data[, data_file_column], fixed=TRUE)
       if (length(coord) == 0) {
-        warning(paste0("No measurement value found for this sample in the data file: ", i, "."))
+        warning(paste0("No measurement value found for sample '", i, "' in the data file."))
       }
 
       data_subset <- sample_annotation[which(i == sample_annotation[[annotation_file_column]]), ]
@@ -126,12 +143,23 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
 
     # select column names
     if (data_type == "openswath") {
+      full_peptide <- fullpeptidename_column %in% colnames(data)
+      if (sum(full_peptide) == 0) {
+        stop("Unable to find a column containing the full peptide name.")
+      } else if (sum(full_peptide) == 1) {
+        full_peptide <- fullpeptidename_column[full_peptide]
+      } else {
+        chosen_full_peptide <- fullpeptidename_column[full_peptide][1]
+        warning("There are multiple possibilities for the full peptidename, ",
+                chosen_full_peptide, " was chosen.")
+        full_peptide <- chosen_full_peptide
+      }
       add_colnames <- colnames(data)[!(colnames(data) %in%
-                                       c("proteinname", fullpeptidename_column, "charge",
+                                       c("proteinname", full_peptide, "charge",
                                          "aggr_fragment_annotation", "aggr_peak_area",
                                          "condition", "bioreplicate", "run"))]
 
-      sel_colnames <- c("proteinname", fullpeptidename_column, "charge",
+      sel_colnames <- c("proteinname", full_peptide, "charge",
                         "aggr_fragment_annotation", "aggr_peak_area",
                         "condition", "bioreplicate", "run", add_colnames)
 
@@ -150,6 +178,7 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
                           "aggr_fragment_annotation", "aggr_peak_area",
                           "condition", "bioreplicate", "run", add_colnames)
     }
+
     if (data_type == "msstats") {
       add_colnames <- colnames(data)[!(colnames(data) %in%
                                        c("proteinname", "peptidesequence", "precursorcharge",
@@ -163,14 +192,18 @@ sample_annotation <- function(data, sample_annotation, data_type="OpenSWATH",
     }
 
     if (isTRUE(change_run_id)) {
-      if (is.null(run_column)) {
+      ##if (is.null(run_column)) {
         data[["run_id"]] <- paste(data[["condition"]],
                                   data[["bioreplicate"]],
                                   data[["run"]], sep="_")
-      } else {
-        data[["run_id"]] <- data[[run_column]]
-      } ## Use a specific column for the run id?
+      ##} else {
+      ##  data[["run_id"]] <- data[[run_column]]
+      ##} ## Use a specific column for the run id?
     }  ## change the run id?
   }  ### OpenSwath data
+  if (isTRUE(verbose)) {
+    message(nrow(sample_annotation), " samples were read from the annotations.")
+    message(nrow(data), " transitions were read from the data and merged with the annotations.")
+  }
   return(data)
 }

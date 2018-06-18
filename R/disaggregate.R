@@ -51,32 +51,34 @@ The data table was transformed into a table containing one row per transition.")
 The data table was transformed into a table containing one row per transition.")
   }
 
-  data.new <- cbind(data, colsplit(data$aggr_Fragment_Annotation, ";", paste("Split_FragAnnot_", seq_len(max(n.transitions2)), sep="")),
-                    colsplit(data$aggr_Peak_Area, ";", paste("Split_PeakArea_", seq_len(max(n.transitions2)), sep="")), stringsAsFactors=FALSE)
+  data.new <- cbind(data, reshape2::colsplit(data[["aggr_fragment_annotation"]], ";",
+                                             paste("split_fragannot_",
+                                                   seq_len(max(n.transitions2)), sep="")),
+                    reshape2::colsplit(data[["aggr_peak_area"]], ";",
+                                       paste("split_peakarea_",
+                                             seq_len(max(n.transitions2)), sep="")), stringsAsFactors=FALSE)
 
-  data.new.m <- reshape2::melt(data.new, id.vars=grep("Split_FragAnnot",
+  data.new.m <- reshape2::melt(data.new, id.vars=grep("split_fragannot",
                                                       colnames(data.new), invert=TRUE),
-                               measure.vars=grep("Split_FragAnnot", colnames(data.new)),
-                               variable.name="FragAnnot_N", value.name = "Fragment")
-  data.new.m2 <- reshape2::melt(data.new.m, id.vars=grep("Split_PeakArea",
+                               measure.vars=grep("split_fragannot", colnames(data.new)),
+                               variable.name="fragannot_n", value.name="fragment")
+  data.new.m2 <- reshape2::melt(data.new.m, id.vars=grep("split_peakarea",
                                                          colnames(data.new.m), invert=TRUE),
-                                measure.vars=grep("Split_PeakArea", colnames(data.new.m)),
-                                variable.name="Area_N", value.name = "Area")
+                                measure.vars=grep("split_peakarea", colnames(data.new.m)),
+                                variable.name="area_n", value.name="area")
 
   # added because it didn't name the variables in a later trial
-  if (sum(colnames(data.new.m2) %in% c("FragAnnot_N")) == 0) {
+  if (sum(colnames(data.new.m2) %in% c("fragannot_n")) == 0) {
     l <- length(colnames(data.new.m2))
-    colnames(data.new.m2)[l-3] <- "FragAnnot_N"
-    colnames(data.new.m2)[l-2] <- "Fragment"
-    colnames(data.new.m2)[l-1] <- "Area_N"
-    colnames(data.new.m2)[l] <- "Area"
+    colnames(data.new.m2)[l - 3] <- "fragannot_n"
+    colnames(data.new.m2)[l - 2] <- "fragment"
+    colnames(data.new.m2)[l - 1] <- "area_n"
+    colnames(data.new.m2)[l] <- "area"
   }
 
-
-  data.new.m3 <- data.new.m2[gsub("Split_FragAnnot_", "",
-                                  data.new.m2[,"FragAnnot_N"]) == gsub("Split_PeakArea_", "",
-                                                                       data.new.m2[,"Area_N"]), ]
-
+  data.new.m3 <- data.new.m2[gsub("split_fragannot_", "",
+                                  data.new.m2[, "fragannot_n"]) == gsub("split_peakarea_", "",
+                                                                       data.new.m2[,"area_n"]), ]
   cols <- colnames(data.new.m3)
   if (isTRUE(all.columns)) {
     data.new.merged <- data.new.m3

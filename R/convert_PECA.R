@@ -19,7 +19,7 @@
 #'  data.PECA <- convert4PECA(data.filtered.decoy)
 #' }
 #' @export
-convert4PECA <- function(data) {
+convert_PECA <- function(data) {
   columns <- c("proteinname", "fullpeptidename", "charge", "intensity",
                "bioreplicate", "condition", "rt")
 

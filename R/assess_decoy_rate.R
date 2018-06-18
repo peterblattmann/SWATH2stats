@@ -19,6 +19,7 @@
 #' }
 #' @export
 assess_decoy_rate <- function(data) {
+  colnames(data) <- tolower(colnames(data))
   if(sum(colnames(data) == "decoy") < 1) {
     stop("There is no decoy column in the table")
   }

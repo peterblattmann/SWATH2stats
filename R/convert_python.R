@@ -22,7 +22,7 @@
 #'  data.pythonscript <- convert4pythonscript(data.filtered.decoy)
 #' }
 #' @export
-convert4pythonscript <- function(data, replace.Unimod=TRUE) {
+convert_python <- function(data, replace.Unimod=TRUE) {
 
   data <- data[, c("proteinname", "fullpeptidename", "charge", "aggr_fragment_annotation", "aggr_peak_area",
                    "rt","bioreplicate", "condition", "run")]

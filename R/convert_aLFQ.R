@@ -26,7 +26,7 @@
 #'  data.aLFQ <- convert4aLFQ(raw)
 #' }
 #' @export
-convert4aLFQ <- function(data, annotation=TRUE, check_transitions=TRUE) {
+convert_aLFQ <- function(data, annotation=TRUE, check_transitions=TRUE) {
 
   if (annotation==TRUE) {
     data <- data[, c("proteinname", "peptidesequence", "fragmention", "nakedsequence", "precursorcharge",

@@ -17,31 +17,7 @@
 #'
 #' @docType package
 #' @name SWATH2stats
-#' @import Biobase
-#' @import data.table
-#' @import dplyr
-#' @import ggplot2
-#' @import graphics
-#' @import grDevices
-#' @import grid
-#' @import knitr
-#' @import magrittr
-#' @import reshape2
-#' @import scales
-#' @import stats
-#' @import utils
-NULL
-
-#' Pipe operator
-#'
-#' Shamelessly scabbed from Hadley: https://github.com/sckott/analogsea/issues/32
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
+#' @importFrom ggplot2 aes aes_string ggplot
 NULL
 
 #' data.table's funky column assignment operator
@@ -54,3 +30,6 @@ NULL
 #' @export
 #' @importFrom data.table :=
 NULL
+
+#' The following is used to set the ggplot2 default text size.
+base_size <- 16

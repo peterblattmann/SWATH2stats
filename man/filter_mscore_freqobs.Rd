@@ -5,7 +5,7 @@
 \title{Filter openSWATH output table according to mscore.}
 \usage{
 filter_mscore_freqobs(data, mscore = 0.01, percentage = NULL,
-  rm.decoy = TRUE)
+  rm.decoy = TRUE, file_column = "filename")
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}
@@ -14,7 +14,7 @@ filter_mscore_freqobs(data, mscore = 0.01, percentage = NULL,
 data will be filtered.}
 
 \item{percentage}{Percentage in which replicas the transition has to reach
-the mscore threshold.}
+the mscore threshold. ??}
 
 \item{rm.decoy}{Option to remove the decoys during filtering.}
 }

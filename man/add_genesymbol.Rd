@@ -11,7 +11,7 @@ add_genesymbol(data_table, gene.ID.table, column.name = "protein",
 \arguments{
 \item{data_table}{A data frame or file name.}
 
-\item{gene.ID.table}{a table to match against}
+\item{gene.ID.table}{A table to match against}
 
 \item{column.name}{The column name where the original protein identifiers
 are present.}
