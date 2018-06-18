@@ -31,7 +31,7 @@ This functions selects the columns necessary for the aLFQ R package.
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  raw <- disaggregate(data.filtered.decoy)
- data.aLFQ <- convert4aLFQ(raw)
+ data.aLFQ <- convert_aLFQ(raw)
 }
 }
 \references{

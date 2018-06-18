@@ -23,14 +23,15 @@
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  raw <- disaggregate(data.filtered.decoy)
-#'  data.aLFQ <- convert4aLFQ(raw)
+#'  data.aLFQ <- convert_aLFQ(raw)
 #' }
 #' @export
 convert_aLFQ <- function(data, annotation=TRUE, check_transitions=TRUE) {
 
-  if (annotation==TRUE) {
-    data <- data[, c("proteinname", "peptidesequence", "fragmention", "nakedsequence", "precursorcharge",
-                     "intensity", "condition", "bioreplicate", "run")]
+  if (isTRUE(annotation)) {
+    data <- data[, c("proteinname", "peptidesequence", "fragmention",
+                     "nakedsequence", "precursorcharge", "intensity",
+                     "condition", "bioreplicate", "run")]
     data[["run_id"]] <- paste(data[["condition"]], data[["bioreplicate"]], data[["run"]], sep="_")
   }
 

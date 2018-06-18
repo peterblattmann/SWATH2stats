@@ -53,8 +53,9 @@ Protein identifiers from shared peptides should be separated by a
 }
 \examples{
  \dontrun{
-  data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
-                           Abundance = c(100, 3390, 43423))
+  data_table <- data.frame(
+       "Protein" = c("Q01581", "P49327", "2/P63261/P60709"),
+       "Abundance" = c(100, 3390, 43423))
   convert_protein_ids(data_table)
 }
 }

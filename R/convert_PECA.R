@@ -16,7 +16,7 @@
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
-#'  data.PECA <- convert4PECA(data.filtered.decoy)
+#'  data.PECA <- convert_PECA(data.filtered.decoy)
 #' }
 #' @export
 convert_PECA <- function(data) {

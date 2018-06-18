@@ -40,8 +40,8 @@ and Decoy ID numbers are visualized.
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- x <- assess_fdr_byrun(data, FFT=0.7, output = "Rconsole", plot = FALSE)
- plot.fdr_cube(x, output = "pdf_csv", filename = "Assess_fdr_byrun_testplot",
+ x <- assess_fdr_byrun(data, FFT=0.7, output="Rconsole", plot=FALSE)
+ plot.fdr_cube(x, output="pdf_csv", filename="Assess_fdr_byrun_testplot",
                plot_mscore_levels=0.01)
 }
 }

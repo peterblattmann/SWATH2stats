@@ -29,7 +29,7 @@ The table must not contain any technical replica, the intensity of
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  raw <- disaggregate(data.filtered.decoy)
- data.mapDIA <- convert4mapDIA(raw, RT=TRUE)
+ data.mapDIA <- convert_mapDIA(raw, RT=TRUE)
 }
 }
 \references{

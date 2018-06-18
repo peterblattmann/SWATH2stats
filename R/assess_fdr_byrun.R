@@ -46,7 +46,7 @@
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  assess_fdr_byrun(data, FFT=0.7, output = "pdf_csv", plot = TRUE,
+#'  assess_fdr_byrun(data, FFT=0.7, output="pdf_csv", plot=TRUE,
 #'                   filename="Testoutput_assess_fdr_byrun")
 #' }
 #' @export

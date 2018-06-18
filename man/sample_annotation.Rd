@@ -5,8 +5,9 @@
 \title{Annotate the SWATH data with the sample information}
 \usage{
 sample_annotation(data, sample_annotation, data_type = "OpenSWATH",
-  annotation_file_column = "filename", data_file_column = "filename",
-  condition_column = "condition", replicate_column = "bioreplicate",
+  annotation_file_column = "filename", check_files = TRUE,
+  data_file_column = "filename", condition_column = "condition",
+  replicate_column = "bioreplicate",
   fullpeptidename_column = c("fullpeptidename", "fullunimodpeptidename"),
   run_id = NULL, run_column = "run", change_run_id = TRUE,
   verbose = FALSE)
