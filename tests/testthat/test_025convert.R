@@ -5,7 +5,7 @@ test_that("data conversion", {
   data <- OpenSWATH_data
   data(Study_design, package="SWATH2stats")
 
-  data <- sample_annotation(data, Study_design)
+  data <- sample_annotation(data, Study_design, check_files=FALSE)
   data.filtered.mscore <- filter_mscore_freqobs(data, mscore=0.01, percentage=0.8)
 
   data2 <- data.table::data.table(data)
@@ -116,7 +116,7 @@ After filtering:
        raw2$run == 3, "intensity"] <- -100
   data.MSstats <- convert_MSstats(raw2)
   expect_warning(convert_MSstats(raw2),
-                 "Negative intensity values were replaced by NA")
+                 "Intensity values which were 0 have been replaced by NA.")
   expect_true(is.na(data.MSstats[data.MSstats$fragmention == "1069078_FIIDPAAVITGR_2" &
                                  data.MSstats$run == 3, "intensity"]))
 })

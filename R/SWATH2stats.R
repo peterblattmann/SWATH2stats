@@ -18,6 +18,10 @@
 #' @docType package
 #' @name SWATH2stats
 #' @importFrom ggplot2 aes aes_string ggplot
+#' @importFrom grDevices dev.off pdf
+#' @importFrom graphics abline axis grid legend lines mtext par plot points
+#' @importFrom stats aggregate cor density median na.omit sd
+#' @importFrom utils head select.list write.csv write.table
 NULL
 
 #' data.table's funky column assignment operator

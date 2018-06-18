@@ -6,7 +6,6 @@ test_that("filtering", {
   data(OpenSWATH_data, package="SWATH2stats")
   data <- OpenSWATH_data
   data(Study_design, package="SWATH2stats")
-  start_data <- data
 
   data <- reduce_OpenSWATH_output(data)
 
@@ -23,7 +22,7 @@ test_that("filtering", {
   expect_warning(reduce_OpenSWATH_output(data2), "These columns are missing from the data:proteinname")
 
   ## sample_annotation
-  data <- sample_annotation(data, Study_design)
+  data <- sample_annotation(data, Study_design, check_files=FALSE)
 
   ## assess_decoy_rate
   decoys_numbers <- assess_decoy_rate(data)

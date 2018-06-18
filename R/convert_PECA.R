@@ -37,8 +37,8 @@ convert_PECA <- function(data) {
   ## data$FragmentIon     <- gsub(":", "_", data$FragmentIon)
 
   ## Interesting, this uses length() for aggregate, why is that I wonder?
-  data.red.wide.test <- dcast(data, proteinname + fullpeptidename_charge ~ condition + bioreplicate,
-                              fun.aggregate=length, value.var="intensity")
+  data.red.wide.test <- reshape2::dcast(data, proteinname + fullpeptidename_charge ~ condition + bioreplicate,
+                                        fun.aggregate=length, value.var="intensity")
 
   if (sum(data.red.wide.test[, 4:dim(data.red.wide.test)[2]] > 1) > 0) {
     col.names.repl <- apply(data.red.wide.test[, 4:dim(data.red.wide.test)[2]], 2, function(x) sum(x > 1))
@@ -51,8 +51,8 @@ convert_PECA <- function(data) {
             "and in the following rows: ", paste(row.names.repl, collapse=", "))
   }
 
-  data.out <- dcast(data, proteinname + fullpeptidename_charge  ~ condition + bioreplicate,
-                    fun.aggregate=mean, value.var="intensity")
+  data.out <- reshape2::dcast(data, proteinname + fullpeptidename_charge  ~ condition + bioreplicate,
+                              fun.aggregate=mean, value.var="intensity")
   data.out <- droplevels(data.out)
 
   return(data.out)

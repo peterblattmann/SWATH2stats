@@ -165,7 +165,7 @@ convert_protein_ids <- function(data_table, column.name="Protein",
     type <- "data.frame"
   } else {
     type <- "file"
-    data_table <- data.frame(fread(file, sep="\t", header=TRUE))
+    data_table <- data.frame(data.table::fread(file, sep="\t", header=TRUE))
   }
 
   if (!(column.name %in% colnames(data_table))) {

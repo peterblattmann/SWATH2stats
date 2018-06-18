@@ -41,13 +41,14 @@ filter_mscore_condition <- function(data, mscore=1.0, n.replica, rm.decoy=TRUE) 
   data.filtered <- unique(data.filtered[,c("peptide_charge", "peptide_charge_condition", "aggr_peak_area")])
   data.filtered <- data.table::data.table(data.filtered)
 
-  data.table::setkey(data.filtered, peptide_charge, peptide_charge_condition, aggr_peak_area)
+  data.table::setkeyv(data.filtered, cols=c("peptide_charge", "peptide_charge_condition", "aggr_peak_area"))
   # number of occurences of Precursor per Condition is calculated
   data.n <- data.filtered[, .N, by="peptide_charge,peptide_charge_condition"]
 
   # only precursors that are present in more that n.replica are selected
   precursor.filtered <- data.n[data.n[["N"]] >= n.replica]
-  precursor.filtered <- data.frame(peptide_charge = unique(precursor.filtered[["peptide_charge"]]))
+  precursor.filtered <- data.frame(
+    "peptide_charge" = unique(precursor.filtered[["peptide_charge"]]))
 
   message("Fraction of peptides selected: ",
           signif(length(unique(precursor.filtered[["peptide_charge"]])) /
