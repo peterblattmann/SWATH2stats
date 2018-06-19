@@ -42,7 +42,9 @@ filter_mscore_condition <- function(data, mscore=1.0, n.replica, rm.decoy=TRUE) 
   data.filtered <- data.table::data.table(data.filtered)
 
   data.table::setkeyv(data.filtered, cols=c("peptide_charge", "peptide_charge_condition", "aggr_peak_area"))
-  # number of occurences of Precursor per Condition is calculated
+  ## number of occurences of Precursor per Condition is calculated
+  ## .N is data.table's shorthand for counting subsets
+  .N <- NULL
   data.n <- data.filtered[, .N, by="peptide_charge,peptide_charge_condition"]
 
   # only precursors that are present in more that n.replica are selected

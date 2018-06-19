@@ -65,7 +65,7 @@ plot_variation_vs_total <- function(data, column.values="intensity",
   data.comb <- rbind(data1.c[, c("rep", "cv", "scope")],
                      data2.c[, c("rep", "cv", "scope")])
   data.comb[["scope"]] <- factor(data.comb[["scope"]], levels=c("total", "replicate"))
-  p <- ggplot(na.omit(data.comb), aes(x=scope, y=cv)) +
+  p <- ggplot(na.omit(data.comb), aes_string(x="scope", y="cv")) +
     ggplot2::geom_violin(scale="area") +
     ggplot2::xlab("") +
     ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
@@ -73,7 +73,7 @@ plot_variation_vs_total <- function(data, column.values="intensity",
                               "coefficient of variation - total versus within replicates"))
 
   if (isTRUE(label)) {
-    p <- ggplot(na.omit(data.comb), aes(x=scope, y=cv)) +
+    p <- ggplot(na.omit(data.comb), aes_string(x="scope", y="cv")) +
       ggplot2::geom_violin(scale="area") +
       ggplot2::xlab("") +
       ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +

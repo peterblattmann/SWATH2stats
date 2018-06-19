@@ -40,17 +40,24 @@ filter_on_max_peptides <- function(data, n_peptides=6, rm.decoy=TRUE, column="pr
 
   data.peptides <- data[, c("protein", "peptide", "intensity"), with=FALSE]
   ## This line is where my copy of data changes w.r.t. the original code.
-  data.table::setkey(data, protein, peptide)
+  ##data.table::setkey(data, protein, peptide)
+  data.table::setkeyv(x=data, cols=c("protein", "peptide"))
 
+  ## I am not sure how to get around this bit of odd NSE.
+  intensity <- NULL
   data.peptides.int <- data.peptides[, sum(intensity), by="protein,peptide"]
   data.table::setnames(data.peptides.int, "V1", "sum.intensity")
 
-  data.table::setkey(data.peptides.int, protein)
+  ##data.table::setkey(data.peptides.int, protein)
+  data.table::setkeyv(x=data.peptides.int, cols="protein")
   data.peptides.int <- data.peptides.int[order(data.peptides.int[["sum.intensity"]], decreasing=TRUE), ]
 
-  peptides.sel <- unique(data.peptides.int[, head(x=.SD, n=n_peptides), by=protein])
+  ## .SD is data.table shorthand for _s_ubset _d_atatable.
+  .SD <- NULL
+  peptides.sel <- unique(data.peptides.int[, head(x=.SD, n=n_peptides), by="protein"])
   selected_idx <- data[["peptide"]] %in% peptides.sel[["peptide"]]
-  data.filtered <- data.frame(data[peptide %in% peptides.sel[["peptide"]], ])
+  ##data.filtered <- data.frame(data[peptide %in% peptides.sel[["peptide"]], ])
+  data.filtered <- as.data.frame(data[selected_idx, ])
 
   message("Before filtering:\n",
           "  Number of proteins: ", length(unique(data[["protein"]])), "\n",

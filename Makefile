@@ -8,11 +8,14 @@ build:
 
 check:
 	@echo "Performing check with R CMD check hpgltools"
-	export _R_CHECK_FORCE_SUGGESTS_=FALSE && R CMD check . --no-build-vignettes
+##	export _R_CHECK_FORCE_SUGGESTS_=FALSE && R CMD check . --no-build-vignettes
+	export _R_CHECK_FORCE_SUGGESTS_=FALSE && R -e "devtools::check()"
 
 clean:
 	@echo "Cleaning up"
-	@echo "Not currently doing anything here."
+	rm -rf ./..Rcheck &
+	rm -f tests/testthat/*.csv tests/testthat/*.pdf
+	rm -f $$(find . -name .Rhistory)
 
 clean_vignette:
 	rm -f vignettes/*.rda vignettes/*.map vignettes/*.Rdata

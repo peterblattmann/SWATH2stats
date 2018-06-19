@@ -42,13 +42,12 @@
 #'   calculated FDR values at different m-score cutoffs.
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  assess_fdr_byrun(data, FFT=0.7, output="pdf_csv", plot=TRUE,
-#'                   filename="Testoutput_assess_fdr_byrun")
-#' }
+#'  assessed <- assess_fdr_byrun(data, FFT=0.7, output="pdf_csv", plot=TRUE,
+#'                               filename="Testoutput_assess_fdr_byrun")
+#'  summary(assessed)
 #' @export
 assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRUE,
                              filename="FDR_report_byrun", output_mscore_levels=c(0.01, 0.001)) {

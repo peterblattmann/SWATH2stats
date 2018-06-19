@@ -1,0 +1,7 @@
+## Ignore travis config file
+^.git
+^\.travis\.yml$
+^packrat/
+^\.Rprofile$
+^Makefile$
+^scripts

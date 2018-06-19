@@ -61,19 +61,19 @@ plot_correlation_between_samples <- function(data, column.values="intensity", si
   data.plot <- data.plot[!is.na(data.plot$value), ]
 
   if (isTRUE(label)) {
-    p <- ggplot(data.plot, aes(x=Var2, y=Var1, fill=value)) +
+    p <- ggplot(data.plot, aes_string(x="Var2", y="Var1", fill="value")) +
       ggplot2::geom_tile() +
       ggplot2::scale_fill_gradient(low="white", high="red", name="Correlation\n[R or rho]") +
       ggplot2::xlab("") +
       ggplot2::ylab("") +
       ggplot2::labs(title=paste(column.values, "correlation between samples:\nPearson (upper triangle) and Spearman correlation (lower triangle)")) +
-      ggplot2::geom_text(size=size, aes(label=round(data.plot$value, digits=2))) +
+      ggplot2::geom_text(size=size, aes_string(label="round(data.plot$value, digits=2)")) +
       ggplot2::scale_x_discrete(expand=c(0,0)) +
       ggplot2::scale_y_discrete(limits=rev(levels(data.plot$Var1)), expand=c(0,0)) +
       ggplot2::theme(plot.title=ggplot2::element_text(hjust=0.5, vjust=1),
                      axis.text.x=ggplot2::element_text(angle=90, hjust=1))
   } else {
-    p <- ggplot(data.plot, aes(x=Var2, y=Var1, fill=value)) +
+    p <- ggplot(data.plot, aes_string(x="Var2", y="Var1", fill="value")) +
       ggplot2::geom_tile() +
       ggplot2::scale_fill_gradient(low="white", high="red", name="Correlation\n[R or rho]") +
       ggplot2::xlab("") +

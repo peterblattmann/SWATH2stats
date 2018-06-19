@@ -38,7 +38,10 @@ filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
   ##data.filtered <- data[data[["m_score"]] <= mscore, ]
   ##data.filtered <- data.table::data.table(data.filtered)
   data.filtered <- data.filtered[, c("peptide_charge", "aggr_peak_area"), with=FALSE]
-  data.table::setkey(data.filtered, peptide_charge)
+  ## data.table::setkey(data.filtered, peptide_charge)
+  data.table::setkeyv(x=data.filtered, cols="peptide_charge")
+  ## .N is data.table's shorthand for counting subsets
+  .N <- NULL
   data.n <- data.filtered[, .N, by="peptide_charge"]
 
   if (is.null(percentage)) {

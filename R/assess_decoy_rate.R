@@ -12,11 +12,10 @@
 #' @return list containing the number of decoys, non-decoys, and the ratio.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data <- OpenSWATH_data
-#'  assess_decoy_rate(data)
-#' }
+#'  assessed <- assess_decoy_rate(data)
+#'  summary(assessed)
 #' @export
 assess_decoy_rate <- function(data) {
   colnames(data) <- tolower(colnames(data))

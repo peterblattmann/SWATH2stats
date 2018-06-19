@@ -23,11 +23,10 @@ a precursor with different charge states is counted as one peptide. In the
 column "decoy" the values need to be 1,0 or TRUE and FALSE.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data <- OpenSWATH_data
- assess_decoy_rate(data)
-}
+ assessed <- assess_decoy_rate(data)
+ summary(assessed)
 }
 \author{
 Peter Blattmann
