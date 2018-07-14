@@ -52,8 +52,9 @@ options(width=70)
 To install the SWATH2stats package the following commands can be executed within R (after package has been accepted to Bioconductor).
 
 <<eval=FALSE>>=
-source("http://www.bioconductor.org/biocLite.R")
-biocLite("SWATH2stats")
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("SWATH2stats")
 @
 
 The SWATH2stats package can now be loaded.

@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.11.5
+-------------------------
+UDPATE
+
+ o move from bioclite to BiocManager
+
+
 CHANGES IN VERSION 1.11.4
 -------------------------
 BUG FIXES
