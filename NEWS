@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.11.6
+-------------------------
+BUG FIXES
+
+ o fix manual page and function in convert_protein_ids to copy non-converted IDs
+
+
 CHANGES IN VERSION 1.11.5
 -------------------------
 UDPATE

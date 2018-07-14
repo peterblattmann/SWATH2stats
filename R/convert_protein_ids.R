@@ -37,6 +37,11 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
   for(i in .ids){
     .Protein <- as.character(data_table[i,column.name])
     .Protein.single <- unlist(strsplit(.Protein, id.separator))
+    
+    # remove number in front of shared peptides
+    if(!is.na(suppressWarnings(as.numeric(.Protein.single[1]))) & nchar(.Protein.single[1]) <= 3){
+      .Protein.single <- .Protein.single[-1]
+    }
     .Protein.new <- .Protein
     for(k in .Protein.single[.Protein.single %in% gene.ID.table[,ID1]]){
       .Protein.new <- gsub(k, gene.ID.table[gene.ID.table[,ID1] == k,ID2], 
@@ -55,7 +60,7 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
   
   #add non converted IDs
   non_converted <- is.na(data_table[,ID2])
-  if(sum(non_converted) & copy_nonconverted){
+  if(sum(non_converted)){
     if(sum(non_converted) > 20){
       message("The following " , sum(non_converted), " identifiers were not converted and will be copied (the first 20 are shown): ", 
               paste(unique(data_table[non_converted,column.name])[seq_len(20)], collapse = ", "))
@@ -63,10 +68,11 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
       message("The following identifiers were not converted and will be copied: ", 
               paste(unique(data_table[non_converted,column.name]), collapse = ", "))
     }
-      
-    for(i in which(non_converted)){
-      data_table[i,ID2] <- data_table[i,column.name]
-    }
+    if(copy_nonconverted){
+      for(i in which(non_converted)){
+        data_table[i,ID2] <- data_table[i,column.name]
+      }
+    }  
   }
  
   #bring gene_symbol column in front

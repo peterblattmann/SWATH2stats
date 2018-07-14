@@ -25,32 +25,32 @@ convert_protein_ids(data_table,
   A data frame or file name.
 }
   \item{column.name}{
-  The column name where the original protein identifiers are present. 
+  The column name where the original protein identifiers are present. Default: "Protein".
 }
   \item{species}{
-  The species of the protein identifiers in the term used by biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl", "drerio_gene_ensembl", etc.)
+  The species of the protein identifiers in the term used by biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl", "drerio_gene_ensembl", etc.). Default: "hsapiens_gene_ensembl".
 }
   \item{host}{
-  Path of the biomaRt database (e.g. "www.ensembl.org", "dec2017.archive.ensembl.org"). 
+  Path of the biomaRt database (e.g. "www.ensembl.org", "dec2017.archive.ensembl.org"). Default: "www.ensembl.org".
 }
   \item{mart}{
-  The type of mart (e.g. "ENSEMBL_MART_ENSEMBL", etc.)
+  The type of mart (e.g. "ENSEMBL_MART_ENSEMBL", etc.). Default: "ENSEMBL_MART_ENSEMBL"
 }
   \item{ID1}{
-  The type of the original protein identifiers (e.g. "uniprotswissprot", "ensembl_peptide_id").
+  The type of the original protein identifiers (e.g. "uniprotswissprot", "ensembl_peptide_id"). Default: "uniprotswissprot".
 }
   \item{ID2}{
-  The type of the converted protein identifiers (e.g. "hgnc_symbol", "mgi_symbol", "external_gene_name").
+  The type of the converted protein identifiers (e.g. "hgnc_symbol", "mgi_symbol", "external_gene_name"). Default: "hgnc_symbol".
 }
   \item{id.separator}{
-  Separator between protein identifiers of shared peptides.
+  Separator between protein identifiers of shared peptides. Default: "/". 
 }
   \item{copy_nonconverted}{
-  Option defining if the identifiers that cannot be converted should be copied.
+  Option defining if the identifiers that cannot be converted should be copied. Default: TRUE.
 }
 
   \item{verbose}{
-  Option to write a file containing the version of the database used. 
+  Option to write a file containing the version of the database used. Default: FALSE.
 }
  
 }
