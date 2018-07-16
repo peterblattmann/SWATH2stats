@@ -29,7 +29,7 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
   }
   gene.ID.table[,ID2] <- as.character(gene.ID.table[,ID2])
   data_table <- merge(data_table, gene.ID.table, 
-                      by.x=column.name, by.y=ID1, all.x=TRUE)
+                      by.x=column.name, by.y=ID1, all.x=TRUE, sort = FALSE)
   #annotate the shared peptides
   .ids <- which(is.na(data_table[,ID2]))
   .ids <- intersect(.ids, grep(id.separator, data_table[,column.name]))
@@ -77,6 +77,7 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
  
   #bring gene_symbol column in front
   data_table <- data_table[,c(ID2, colnames(data_table)[seq(length(colnames(data_table))-1)])]
+  
   return(data_table)
 }
 
