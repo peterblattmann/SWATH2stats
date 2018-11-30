@@ -19,7 +19,7 @@ A data frame containing the SWATH data in transition-level format
 Option to indicate if the data has been annotated, i.e. if the columns Condition, Replicate, Run are present. If option is set to true it will write a new run_id as a string of the combination of these three columns.
 }
   \item{check_transitions}{
-  Option if number of transitions should be checked. As input only transition-level data should be used and therefore this is checked. However, this makes the function slow and herewith be omitted. 
+  Option if number of transitions should be checked. As input only transition-level data should be used and therefore the number of transitions can be checked to spot any irregulatirities. However, this makes the function slow. 
   }
 }
 \value{

@@ -28,6 +28,7 @@ convert4aLFQ <- function(data, annotation=TRUE, check_transitions = TRUE){
   data$transition_id <- factor(data$transition_id)
   
   if(check_transitions){
+    message("Checking the integrity of the transitions takes a lot of time. To speed up consider changing the option.")
     data.agg <- aggregate(data[,c("transition_id")], by=list(data$peptide_id, data$run_id), length)
     if(median(data.agg$x) == 1){
       warning("The aLFQ package should only be used with transition-level data. 
