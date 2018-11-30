@@ -1,9 +1,28 @@
+CHANGES IN VERSION 1.13.1
+-------------------------
+NEW FEATURES
+
+ o Add ImmunoOncology to biocViews
+ 
+
+CHANGES IN VERSION 1.13.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.9 development release
+ 
+
+CHANGES IN VERSION 1.12.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.8 release
+
 CHANGES IN VERSION 1.11.8
 -------------------------
 UPDATE
 
  o updating information on checking transitions in convert4aLFQ function.
-
 
 
 CHANGES IN VERSION 1.11.7
