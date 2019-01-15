@@ -453,14 +453,13 @@ head(PECA.input)
 
 For DIA data, the reproducibility-optimized test statistic (ROTS) is the suggested statistic to be used within PECA (Suomi et al. 2017).
 
-<<>>=
+<<eval=FALSE>>=
 library(PECA)
 group1 <- c("Hela_Control_1", "Hela_Control_2", "Hela_Control_3")
 group2 <- c("Hela_Treatment_1", "Hela_Treatment_2", "Hela_Treatment_3")
 
 # PECA_df
 results <- PECA_df(PECA.input, group1, group2, id="ProteinName", test = "rots")
-head(results)
 @
 
 \subsection{imsbInfer}
