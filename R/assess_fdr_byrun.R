@@ -1,15 +1,20 @@
 utils::globalVariables(c("write.csv"))
 
-assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE, filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001))
+assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", 
+                             plot = TRUE, filename = "FDR_report_byrun", 
+                             output_mscore_levels = c(0.01, 0.001), 
+                             mscore.col = "m_score")
 {
+  mscore.col <- JPP_update(data, mscore.col)
+  
   # create m_score intervals to be tested
   test_levels <- 10^-seq_len(n.range)
 
   ## Identify the minimal m-score cutoff at which all runs still contain decoys
   decoy_count_lengths <- NULL
   for (i in seq_len(n.range)) {
-    decoy_count_lengths[i] <- length(by(data[data$decoy == TRUE & data$m_score <= test_levels[i],
-        c("transition_group_id")], data[data$decoy == TRUE & data$m_score <= test_levels[i], c("run_id")], length))
+    decoy_count_lengths[i] <- length(by(data[data$decoy == TRUE & data[,mscore.col] <= test_levels[i],
+        c("transition_group_id")], data[data$decoy == TRUE & data[,mscore.col] <= test_levels[i], c("run_id")], length))
   }
 
   mscore_limit <- length(decoy_count_lengths[decoy_count_lengths == length(unique(data$run_id))])
@@ -38,28 +43,28 @@ assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", pl
   for (i in seq_len(length(mscore_levels))) {
     # for each run_id, count target (and decoy) assays identified ("id" column entries)
     # and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
-    fdr_cube[1, , i] <- by(data.t[data.t$m_score <= mscore_levels[i], c("transition_group_id")],
-                           data.t[data.t$m_score <= mscore_levels[i],c("run_id")], length)
-    fdr_cube[2, , i] <- by(data.d[data.d$m_score <= mscore_levels[i], c("transition_group_id")],
-                           data.d[data.d$m_score <= mscore_levels[i], c("run_id")], length)
+    fdr_cube[1, , i] <- by(data.t[data.t[,mscore.col] <= mscore_levels[i], c("transition_group_id")],
+                           data.t[data.t[,mscore.col] <= mscore_levels[i],c("run_id")], length)
+    fdr_cube[2, , i] <- by(data.d[data.d[,mscore.col] <= mscore_levels[i], c("transition_group_id")],
+                           data.d[data.d[,mscore.col] <= mscore_levels[i], c("run_id")], length)
     fdr_cube[3, , i] <- fdr_cube[2, , i] * FFT
     fdr_cube[4, , i] <- fdr_cube[3, , i]/fdr_cube[1, , i]
 
     # for each run_id, count target (and decoy) peptides identified (unique "FullPeptideName" column entries)
     # and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
-    fdr_cube[5, , i] <- by(data.t[data.t$m_score <= mscore_levels[i], c("FullPeptideName")],
-                           data.t[data.t$m_score <= mscore_levels[i], c("run_id")], length_unique)
-    fdr_cube[6, , i] <- by(data.d[data.d$m_score <= mscore_levels[i], c("FullPeptideName")],
-                           data.d[data.d$m_score <= mscore_levels[i], c("run_id")], length_unique)
+    fdr_cube[5, , i] <- by(data.t[data.t[,mscore.col] <= mscore_levels[i], c("FullPeptideName")],
+                           data.t[data.t[,mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
+    fdr_cube[6, , i] <- by(data.d[data.d[,mscore.col] <= mscore_levels[i], c("FullPeptideName")],
+                           data.d[data.d[,mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
     fdr_cube[7, , i] <- fdr_cube[6, , i] * FFT
     fdr_cube[8, , i] <- fdr_cube[7, , i]/fdr_cube[5, , i]
 
     # for each run_id, count target (and decoy) proteins identified (unique "ProteinName" column entries)
     # and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
-    fdr_cube[9, , i] <- by(data.t[data.t$m_score <= mscore_levels[i], c("ProteinName")],
-                           data.t[data.t$m_score <= mscore_levels[i], c("run_id")], length_unique)
-    fdr_cube[10, , i] <- by(data.d[data.d$m_score <= mscore_levels[i], c("ProteinName")],
-                            data.d[data.d$m_score <= mscore_levels[i], c("run_id")], length_unique)
+    fdr_cube[9, , i] <- by(data.t[data.t[,mscore.col] <= mscore_levels[i], c("ProteinName")],
+                           data.t[data.t[,mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
+    fdr_cube[10, , i] <- by(data.d[data.d[,mscore.col] <= mscore_levels[i], c("ProteinName")],
+                            data.d[data.d[,mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
     fdr_cube[11, , i] <- fdr_cube[10, , i] * FFT
     fdr_cube[12, , i] <- fdr_cube[11, , i]/fdr_cube[9, , i]
   }

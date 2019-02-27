@@ -1,6 +1,8 @@
 filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02, 
-                              upper_overall_peptide_fdr_limit = 0.05, rm.decoy = TRUE)
+                              upper_overall_peptide_fdr_limit = 0.05, rm.decoy = TRUE, mscore.col = "m_score")
 {
+  mscore.col <- JPP_update(data, mscore.col)
+  
   mscore4protfdr_target <- mscore4protfdr(data, FFT, fdr_target = overall_protein_fdr_target)
   
   if(is.na(mscore4protfdr_target)){
@@ -14,11 +16,11 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02,
   message("-------------------------------------------------------------", "\n")
   message("finding m-score cutoff to achieve desired protein FDR in protein master list..", "\n")
     # Create master list at strict protein level FDR criterion
-  protein_master_list <- unique(subset(data, data$m_score <= mscore4protfdr_target)$ProteinName)
+  protein_master_list <- unique(subset(data, data[,mscore.col] <= mscore4protfdr_target)$ProteinName)
   
   # Pre-Filter data based on upper_overall_peptide_fdr_limit
   message("finding m-score cutoff to achieve desired global peptide FDR..", "\n", "")
-    data.f1 <- subset(data, data$m_score <=
+    data.f1 <- subset(data, data[,mscore.col] <=
     mscore4pepfdr(data, FFT, fdr_target = upper_overall_peptide_fdr_limit))
 
   # Filter prefiltered data down to entries mapping to the protein_master_list
@@ -54,7 +56,7 @@ filter_mscore_fdr <- function(data, FFT = 1, overall_protein_fdr_target = 0.02,
   
   # test if all runs contain a decoy after peptide FDR filering in order to calculate the local FDR
   n.run_id <- length(unique(data.f1$run_id)) 
-  n.run_id_decoy <- length(unique(data.f1[data.f1$decoy == TRUE & data.f1$m_score <= 0.01,]$run_id))
+  n.run_id_decoy <- length(unique(data.f1[data.f1$decoy == TRUE & data.f1[,mscore.col] <= 0.01,]$run_id))
   if(n.run_id == n.run_id_decoy){
 
     fdr_cube <- assess_fdr_byrun(data.f1, FFT, output = "Rconsole", 

@@ -1,13 +1,15 @@
-mscore4protfdr<- function(data, FFT = 1, fdr_target = 0.02)
-{
+mscore4protfdr<- function(data, FFT = 1, fdr_target = 0.02, mscore.col = "m_score"){
+  
+  mscore.col <- JPP_update(data, mscore.col)
+  
   # generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
   mscore_levels_highres=10^-(c(seq(2, 20, 0.05)))
   target.protein.highres<-NULL
   decoy.protein.highres<-NULL
   for (i in seq_len(length(mscore_levels_highres)))
   {  
-    target.protein.highres[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels_highres[i], c("ProteinName")]))
-    decoy.protein.highres[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels_highres[i], c("ProteinName")]))
+    target.protein.highres[i]<-length(unique(data[data$decoy == FALSE & data[,mscore.col] <= mscore_levels_highres[i], c("ProteinName")]))
+    decoy.protein.highres[i]<-length(unique(data[data$decoy == TRUE & data[,mscore.col] <= mscore_levels_highres[i], c("ProteinName")]))
   }
   protein.fdr.highres<-(decoy.protein.highres/target.protein.highres)*FFT
   

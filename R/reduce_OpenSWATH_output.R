@@ -1,6 +1,20 @@
 reduce_OpenSWATH_output <- function(data, column.names=NULL){
   if(is.null(column.names)){
-    column.names <- c('ProteinName', 'FullPeptideName', 'Sequence', 'Charge', 'aggr_Fragment_Annotation', 'aggr_Peak_Area', 'filename', 'm_score', 'decoy', "Intensity", "RT", "run_id", "transition_group_id")
+    if("transition_group_id_m_score" %in% colnames(data)){
+      column.names <- c('ProteinName', 'FullPeptideName', 
+                        'Sequence', 'Charge', 'aggr_Fragment_Annotation', 
+                        'aggr_Peak_Area', 'filename', 'transition_group_id_m_score', 'ProteinName_m_score','decoy', 
+                        "Intensity", "RT", "run_id", "transition_group_id")
+      
+    }
+    if("m_score" %in% colnames(data)){
+      column.names <- c('ProteinName', 'FullPeptideName', 
+                        'Sequence', 'Charge', 'aggr_Fragment_Annotation', 
+                        'aggr_Peak_Area', 'filename', 'm_score', 'decoy', 
+                        "Intensity", "RT", "run_id", "transition_group_id")
+      
+    }
+    
   }
   if(length(column.names) > length(column.names[column.names %in% colnames(data)])){
     col.names.missing <- column.names[!column.names %in% colnames(data)]

@@ -1,7 +1,8 @@
 utils::globalVariables(c("aggr_Peak_Area", "Peptide_Charge", "Peptide_Charge_Condition", ".N"))
 
-filter_mscore_condition <- function(data, mscore, n.replica, rm.decoy=TRUE){
-
+filter_mscore_condition <- function(data, mscore, n.replica, rm.decoy=TRUE, mscore.col = "m_score"){
+  mscore.col <- JPP_update(data, mscore.col)
+  
   data$Peptide_Charge <- paste(data$FullPeptideName, data$Charge) # a column with unique identifiers for each Precurso (e.g. ADFSDF 3) is generated
   data$Peptide_Charge_Condition <- paste(data$Peptide_Charge, data$Condition) # a column with unique identifiers for each Precursor and Condition is genrated ADFSDF 3 Condition 1
   
@@ -13,7 +14,7 @@ filter_mscore_condition <- function(data, mscore, n.replica, rm.decoy=TRUE){
   
   # only data that is below the indicated mscore is selected and then only the unique data selected
   #data.filtered <- subset(data, m_score <= mscore)
-  data.filtered <- data[data$m_score <= mscore,]
+  data.filtered <- data[data[,mscore.col] <= mscore,]
   data.filtered <- unique(data.filtered[,c("Peptide_Charge", "Peptide_Charge_Condition", "aggr_Peak_Area")])
   data.filtered <- data.table(data.filtered)
   

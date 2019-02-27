@@ -1,6 +1,7 @@
 utils::globalVariables(c("par", "pdf", "barplot", "mtext", "dev.off"))
 
-plot.fdr_cube <- function(x, output = "Rconsole", filename = "FDR_report_byrun", plot_mscore_levels = c(0.01, 0.001), ...){
+plot.fdr_cube <- function(x, output = "Rconsole", filename = "FDR_report_byrun", 
+                          plot_mscore_levels = c(0.01, 0.001), ...){
   for(i in plot_mscore_levels){
     k.mscore <- which(dimnames(x)[[3]] == i)  
     k.mscore.label <- as.numeric(dimnames(x)[[3]][k.mscore])

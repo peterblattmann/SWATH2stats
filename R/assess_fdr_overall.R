@@ -1,7 +1,12 @@
 utils::globalVariables(c("write.csv"))
 
-assess_fdr_overall <-function(data, FFT = 1, n.range = 20, output="pdf_csv", plot=TRUE, filename="FDR_report_overall")
+assess_fdr_overall <-function(data, FFT = 1, n.range = 20, 
+                              output="pdf_csv", plot=TRUE, 
+                              filename="FDR_report_overall", 
+                              mscore.col = "m_score")
 {
+  mscore.col <- JPP_update(data, mscore.col)
+  
   mscore_levels<-10^-seq(n.range)
 
   # create vectors to store count results
@@ -15,12 +20,12 @@ assess_fdr_overall <-function(data, FFT = 1, n.range = 20, output="pdf_csv", plo
   # loop over IDs with different m_score thresholds counting targets & decoys
   for (i in seq_len(length(mscore_levels)))
   {
-    target.assays[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels[i], c("transition_group_id")]))
-    decoy.assays[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels[i], c("transition_group_id")]))
-    target.peptides[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels[i], c("FullPeptideName")]))
-    decoy.peptides[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels[i], c("FullPeptideName")]))
-    target.proteins[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels[i], c("ProteinName")]))
-    decoy.proteins[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels[i], c("ProteinName")]))
+    target.assays[i]<-length(unique(data[data$decoy == FALSE & data[,mscore.col] <= mscore_levels[i], c("transition_group_id")]))
+    decoy.assays[i]<-length(unique(data[data$decoy == TRUE & data[,mscore.col] <= mscore_levels[i], c("transition_group_id")]))
+    target.peptides[i]<-length(unique(data[data$decoy == FALSE & data[,mscore.col] <= mscore_levels[i], c("FullPeptideName")]))
+    decoy.peptides[i]<-length(unique(data[data$decoy == TRUE & data[,mscore.col] <= mscore_levels[i], c("FullPeptideName")]))
+    target.proteins[i]<-length(unique(data[data$decoy == FALSE & data[,mscore.col] <= mscore_levels[i], c("ProteinName")]))
+    decoy.proteins[i]<-length(unique(data[data$decoy == TRUE & data[,mscore.col] <= mscore_levels[i], c("ProteinName")]))
   }
 
   # calculate false target fraction at cutoff (FDR) by decoy fraction * FFT

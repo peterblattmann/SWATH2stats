@@ -9,9 +9,11 @@ filter_mscore: Filter openSWATH output table according to mscore
 This function filters the SWATH data according to the m_score value, as well as to the number of occurence in the data (requant) and within a condition (condition)
 }
 \usage{
-filter_mscore(data, mscore, rm.decoy=TRUE)
-filter_mscore_freqobs(data, mscore, percentage=NULL, rm.decoy = TRUE)
-filter_mscore_condition(data, mscore, n.replica, rm.decoy = TRUE)
+filter_mscore(data, mscore, rm.decoy=TRUE, mscore.col = "m_score")
+filter_mscore_freqobs(data, mscore, percentage=NULL, 
+rm.decoy = TRUE, mscore.col = "m_score")
+filter_mscore_condition(data, mscore, n.replica, rm.decoy = TRUE, 
+mscore.col = "m_score")
 }
 \arguments{
   \item{data}{
@@ -29,6 +31,10 @@ Percentage in which replicas the transition has to reach the mscore threshold
   \item{rm.decoy}{
 Option to remove the decoys during filtering.
 }
+  \item{mscore.col}{
+Defines the column from which to retrieve the m_score. If you use JPP (Rosenberger, Bludau et al. 2017) this can be used to select between Protein and transition_group m_score.
+}
+
 }
 \value{Returns a data frame with the filtered data.}
 

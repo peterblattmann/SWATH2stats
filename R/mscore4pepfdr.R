@@ -1,13 +1,15 @@
-mscore4pepfdr<- function(data, FFT = 1, fdr_target = 0.01)
-{
+mscore4pepfdr<- function(data, FFT = 1, fdr_target = 0.01, mscore.col = "m_score"){
+  
+  mscore.col <- JPP_update(data, mscore.col)
+  
   # generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
   mscore_levels_highres=10^-(c(seq(2, 20, 0.05)))
   target.peptides.highres<-NULL
   decoy.peptides.highres<-NULL
   for (i in seq_len(length(mscore_levels_highres)))
   {  
-    target.peptides.highres[i]<-length(unique(data[data$decoy == FALSE & data$m_score <= mscore_levels_highres[i], c("FullPeptideName")]))
-    decoy.peptides.highres[i]<-length(unique(data[data$decoy == TRUE & data$m_score <= mscore_levels_highres[i], c("FullPeptideName")]))
+    target.peptides.highres[i]<-length(unique(data[data$decoy == FALSE & data[,mscore.col] <= mscore_levels_highres[i], c("FullPeptideName")]))
+    decoy.peptides.highres[i]<-length(unique(data[data$decoy == TRUE & data[,mscore.col] <= mscore_levels_highres[i], c("FullPeptideName")]))
   }
   peptide.fdr.highres<-(decoy.peptides.highres/target.peptides.highres)*FFT
   

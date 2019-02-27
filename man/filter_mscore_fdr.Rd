@@ -14,7 +14,7 @@ It further evaluates the individual run FDR qualities of the peptides (and quant
 }
 \usage{
 filter_mscore_fdr(data, FFT = 1, overall_protein_fdr_target = 0.02,
-upper_overall_peptide_fdr_limit = 0.05, rm.decoy = TRUE)
+upper_overall_peptide_fdr_limit = 0.05, rm.decoy = TRUE, mscore.col = "m_score")
 }
 
 \arguments{
@@ -33,6 +33,10 @@ FDR target for the quantitative values kept/reported for all peptides mapping to
   \item{rm.decoy}{
 Logical T/F, whether decoy entries should be removed after the analysis. Defaults to TRUE. Can be useful to disable to track the influence on decoy fraction by further filtering steps such as requiring 2 peptides per protein.
 }
+  \item{mscore.col}{
+Defines the column from which to retrieve the m_score. If you use JPP (Rosenberger, Bludau et al. 2017) this can be used to select between Protein and transition_group m_score.
+}
+
 }
 \value{
 \item{data.filtered}{the filtered data frame}

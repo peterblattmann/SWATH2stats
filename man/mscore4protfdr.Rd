@@ -17,7 +17,7 @@ mscore4assayfdr
 mscore4pepfdr
 }
 \usage{
-mscore4protfdr(data, FFT, fdr_target)
+mscore4protfdr(data, FFT, fdr_target, mscore.col = "m_score")
 }
 \arguments{
   \item{data}{
@@ -30,6 +30,10 @@ Ratio of false positives to true negatives, q-values from [Injection_name]_full_
 FDR target, numeric, defaults to 0.01. An m_score cutoff achieving an FDR < fdr_target will be selected.
 Calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above.
 }
+  \item{mscore.col}{
+Defines the column from which to retrieve the m_score. If you use JPP (Rosenberger, Bludau et al. 2017) this can be used to select between Protein and transition_group m_score.
+}
+
 }
 \value{
 Returns the m_score cutoff selected to arrive at the desired FDR quality

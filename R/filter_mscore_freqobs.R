@@ -1,6 +1,10 @@
 utils::globalVariables(c("Peptide_Charge", ".N"))
 
-filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy = TRUE){
+filter_mscore_freqobs <- function(data, mscore, percentage=NULL, 
+                                  rm.decoy = TRUE, mscore.col = "m_score"){
+  
+  mscore.col <- JPP_update(data, mscore.col)
+  
   data$Peptide_Charge <- paste(data$FullPeptideName, data$Charge)
 
   if(sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)){
@@ -9,7 +13,7 @@ filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy = TRUE
   }
 
   #data.filtered <- subset(data, m_score <= mscore)
-  data.filtered <- data[data$m_score <= mscore,]
+  data.filtered <- data[data[,mscore.col] <= mscore,]
   data.filtered <- data.table(data.filtered)
 
   data.filtered <- data.filtered[,c("Peptide_Charge", "aggr_Peak_Area"), with=FALSE]
@@ -31,7 +35,8 @@ filter_mscore_freqobs <- function(data, mscore, percentage=NULL, rm.decoy = TRUE
           signif(length(unique(peptides.filtered$Peptides_Charge))
                  /length(unique(data$Peptide_Charge)), digits = 2))
 
-  data.filtered <- merge(data, peptides.filtered, by.x="Peptide_Charge", by.y="Peptides_Charge")
+  data.filtered <- merge(data, peptides.filtered, by.x="Peptide_Charge", 
+                         by.y="Peptides_Charge")
 
   message("Dimension difference: ", paste(dim(data)-dim(data.filtered), collapse=", "))
 

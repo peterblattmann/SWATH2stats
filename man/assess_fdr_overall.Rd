@@ -14,7 +14,7 @@ FDR is calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above
 }
 \usage{
 assess_fdr_overall(data, FFT, n.range = 20, output = "pdf_csv", plot = TRUE, 
-filename="FDR_report_overall")
+filename="FDR_report_overall", mscore.col = "m_score")
 }
 \arguments{
   \item{data}{
@@ -36,6 +36,10 @@ Logical, whether or not to create plots from the results (using the associated m
   \item{filename}{
 Optional, modifying the basename of the result files if applicable.
 }
+  \item{mscore.col}{
+Defines the column from which to retrieve the m_score. If you use JPP (Rosenberger, Bludau et al. 2017) this can be used to select between Protein and transition_group m_score.
+}
+
 }
 \value{
 Returns a list of class "fdr_table". If output "pdf_csv" and plot = TRUE were chosen, report files are written to the working folder.

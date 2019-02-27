@@ -15,7 +15,8 @@ FDR is calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above
 }
 \usage{
 assess_fdr_byrun(data, FFT, n.range = 20, output = "pdf_csv", plot = TRUE, 
-filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001))
+filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001),
+mscore.col = "m_score")
 }
 \arguments{
   \item{data}{
@@ -39,6 +40,10 @@ Optional, modifying the basename of the result files if applicable.
 \item{output_mscore_levels}{
 Define m-score levels to plot and write the estimated FDR results. 
 }
+  \item{mscore.col}{
+Defines the column from which to retrieve the m_score. If you use JPP (Rosenberger, Bludau et al. 2017) this can be used to select between Protein and transition_group m_score.
+}
+
 }
 \value{
 Returns an array of target/decoy identification numbers and calculated FDR values at different m-score cutoffs.
