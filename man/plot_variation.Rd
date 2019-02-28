@@ -9,7 +9,8 @@ This function plots the coefficient of variation within replicates for a given v
 \usage{
 plot_variation(data, column.values = "Intensity", 
 Comparison = transition_group_id + Condition ~ BioReplicate,
-fun.aggregate = NULL, label=TRUE, ...)
+fun.aggregate = NULL, label=FALSE, title = "cv across conditions",
+boxplot = TRUE, ...)
 }
 \arguments{
   \item{data}{
@@ -25,6 +26,10 @@ The comparison for assessing the variability. Default is to assess the variabili
 If for the comparison values have to be aggregated one needs to provide the function here.}
   \item{label}{
 Option to print value of median cv.}
+  \item{title}{
+Option to define title of plot.}
+  \item{boxplot}{
+Option to add boxplot.}
   \item{\dots}{
 further arguments passed to method.}
 }

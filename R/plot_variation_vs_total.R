@@ -1,6 +1,11 @@
 utils::globalVariables(c("scope", "cv", "value", "sd", "na.omit", "aggregate", "density"))
 
-plot_variation_vs_total <- function(data, column.values = "Intensity", Comparison1 = transition_group_id  ~ BioReplicate + Condition, Comparison2 = transition_group_id + Condition ~ BioReplicate, fun.aggregate = NULL, label=TRUE,...){
+plot_variation_vs_total <- function(data, column.values = "Intensity", 
+                                    Comparison1 = transition_group_id  ~ BioReplicate + Condition, 
+                                    Comparison2 = transition_group_id + Condition ~ BioReplicate, 
+                                    fun.aggregate = NULL, label=FALSE, 
+                                    title = "coefficient of variation - total versus within replicates",
+                                    boxplot = TRUE,...){
     if(sum(colnames(data) == "decoy") == 1){
     data <- data[data$decoy == 0,]
   }
@@ -32,15 +37,14 @@ plot_variation_vs_total <- function(data, column.values = "Intensity", Compariso
   p <- (ggplot(na.omit(data.comb), aes(x=scope, y=cv))
         + geom_violin(scale="area") + xlab("")
         + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
-        + labs(title= paste(column.values, "coefficient of variation - total versus within replicates")))
+        + labs(title= title))
   if(isTRUE(label)){
-    p <- (ggplot(na.omit(data.comb), aes(x=scope, y=cv))
-          + geom_violin(scale="area") + xlab("")
-          + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
-          + labs(title= paste(column.values, "coefficient of variation - total versus within replicates"))
-          + stat_summary(fun.data = function(x)data.frame(y=median(x),label=paste("median cv:\n", signif(median(x,na.rm=TRUE), digits=2))), geom="text")
-    )
+    p <- p  + stat_summary(fun.data = function(x)data.frame(y=max(x)*0.75,label=paste("median cv:\n", signif(median(x,na.rm=TRUE), digits=2))), geom="text")
   }
+  if(isTRUE(boxplot)){
+    p <- p  + geom_boxplot(width=0.1, outlier.shape = NA)
+  }
+
   print(p)
 
   median <- aggregate(data.comb[,"cv"], by=list(data.comb$scope), FUN=function(x)median(x, na.rm=TRUE))

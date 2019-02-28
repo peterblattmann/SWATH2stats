@@ -10,7 +10,9 @@ This function plots the total variation and the variation within replicates for 
 plot_variation_vs_total(data, column.values = "Intensity", 
 Comparison1 = transition_group_id  ~ BioReplicate + Condition, 
 Comparison2 = transition_group_id + Condition ~ BioReplicate, 
-fun.aggregate = NULL, label=TRUE, ...)
+fun.aggregate = NULL, label=FALSE, 
+title = "coefficient of variation - total versus within replicates",
+boxplot = TRUE,...)
 }
 \arguments{
   \item{data}{
@@ -27,7 +29,10 @@ The comparison for assessing the variability within the replicates. Default is t
 If depending on the comparison values have to be aggregated one needs to provide the function here.}
   \item{label}{
 Option to print value of median cv.}
-
+  \item{title}{
+Option to define title of plot.}
+  \item{boxplot}{
+Option to add boxplot.}
   \item{\dots}{
 further arguments passed to method.
 }
