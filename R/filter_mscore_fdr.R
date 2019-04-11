@@ -38,13 +38,11 @@
 #' @return Returns a data frame with the filtered data.
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.fdr.filtered<-filter_mscore_fdr(data, FFT=0.7, overall_protein_fdr_target=0.02,
 #'                                       upper_overall_peptide_fdr_limit=0.1)
-#' }
 #' @export
 filter_mscore_fdr <- function(data, FFT=1, overall_protein_fdr_target=0.02, mscore_limit=0.01,
                               upper_overall_peptide_fdr_limit=0.05, rm.decoy=TRUE) {

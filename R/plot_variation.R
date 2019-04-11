@@ -21,12 +21,10 @@
 #'   plot with the observed coefficient of variations.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  plot_variation(data)
-#' }
+#'  var_summary <- plot_variation(data)
 #' @export
 plot_variation <- function(data, column.values="intensity",
                            comparison=transition_group_id + condition ~ bioreplicate,

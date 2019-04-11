@@ -13,12 +13,10 @@
 #'   e.g. injection.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  count_analytes(data)
-#' }
+#'  counts <- count_analytes(data)
 #' @export
 count_analytes <- function(data,
                            column_levels=c("transition_group_id", "fullpeptidename", "proteinname"),

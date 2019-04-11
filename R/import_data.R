@@ -42,11 +42,9 @@
 #' @return Returns the data frame in the appropriate format.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data('Spyogenes', package = 'SWATH2stats')
 #'  head(data)
 #'  str(data)
-#' }
 #' @export
 import_data <- function(data) {
   colnames_OpenSWATH <- c("proteinname", "fullpeptidename", "charge", "sequence",

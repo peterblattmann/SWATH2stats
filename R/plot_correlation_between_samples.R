@@ -21,16 +21,15 @@
 #'   used to do the plotting.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  plot_correlation_between_samples(data)
-#' }
+#'  information <- plot_correlation_between_samples(data)
 #' @export
 plot_correlation_between_samples <- function(data, column.values="intensity", size=6,
                                              comparison=transition_group_id ~ condition + bioreplicate,
-                                             fun.aggregate=NULL, label=TRUE, ...) {
+                                             fun.aggregate=NULL, label=TRUE,
+                                             label_chars=10, ...) {
 
   if (sum(colnames(data) == "decoy") == 1) {
     data <- data[data[["decoy"]] == 0, ]
@@ -60,8 +59,16 @@ plot_correlation_between_samples <- function(data, column.values="intensity", si
   data.plot <- rbind(pearson.cor, spearman.cor)
   data.plot <- data.plot[!is.na(data.plot$value), ]
 
+  colnames(data.plot) <- c("samplename_x", "samplename_y", "value", "method")
+  if (!is.null(label_chars) && is.numeric(label_chars)) {
+    data.plot[["samplename_x"]] <- abbreviate(
+      data.plot[["samplename_x"]], minlength=label_chars)
+    data.plot[["samplename_y"]] <- abbreviate(
+      data.plot[["samplename_y"]], minlength=label_chars)
+  }
+
   if (isTRUE(label)) {
-    p <- ggplot(data.plot, aes_string(x="Var2", y="Var1", fill="value")) +
+    p <- ggplot(data.plot, aes_string(x="samplename_x", y="samplename_y", fill="value")) +
       ggplot2::geom_tile() +
       ggplot2::scale_fill_gradient(low="white", high="red", name="Correlation\n[R or rho]") +
       ggplot2::xlab("") +

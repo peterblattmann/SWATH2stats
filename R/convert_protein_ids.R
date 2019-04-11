@@ -12,11 +12,9 @@
 #' @return ensembl connection for performing future queries.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
 #'                           Abundance = c(100, 3390, 43423))
-#'  convert_protein_ids(data_table)
-#' }
+#'  mart <- convert_protein_ids(data_table)
 #' @export
 load_mart <- function(species, ensembl.path, mart, verbose=FALSE) {
   dataset.mart <- species

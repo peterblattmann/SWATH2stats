@@ -39,12 +39,10 @@ In order to keep the peptide-to-protein association, the FullPeptideName is
 joined with the ProteinName.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- write_matrix_peptides(data)
-}
+ written <- write_matrix_peptides(data)
 }
 \author{
 Moritz Heusel

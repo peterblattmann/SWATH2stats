@@ -163,13 +163,14 @@ assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRU
     message(filename, ".csv reports written to working folder.")
   }
 
-  fdr_cube2 <- fdr_cube
-  class(fdr_cube2) <- "fdr_cube"
+  ##fdr_cube2 <- fdr_cube
+  ##class(fdr_cube2) <- "fdr_cube"
+  class(fdr_cube) <- "fdr_cube"
 
   if (isTRUE(plot)) {
-    plot_fdr_cube(fdr_cube2, output=output, filename=filename,
+    plot_fdr_cube(fdr_cube, output=output, filename=filename,
                   plot_mscore_levels=output_mscore_levels)
   }
 
-  return(fdr_cube2)
+  return(fdr_cube)
 }

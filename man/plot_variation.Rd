@@ -38,12 +38,10 @@ This function plots the coefficient of variation within replicates for a
 given value. If decoys are present these are removed before plotting.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- plot_variation(data)
-}
+ var_summary <- plot_variation(data)
 }
 \author{
 Peter Blattmann

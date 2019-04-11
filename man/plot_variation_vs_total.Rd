@@ -42,12 +42,10 @@ This function plots the total variation and the variation within replicates
 for a given value. If decoys are present these are removed before plotting.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- plot_variation_vs_total(data)
-}
+ var_summary <- plot_variation_vs_total(data)
 }
 \author{
 Peter Blattmann

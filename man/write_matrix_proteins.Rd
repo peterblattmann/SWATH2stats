@@ -43,12 +43,10 @@ filter_mscore_requant(), filter_on_max_peptides() and
 filter_on_min_peptides().
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- write_matrix_proteins(data)
-}
+ written <- write_matrix_proteins(data)
 }
 \author{
 Moritz Heusel

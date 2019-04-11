@@ -18,12 +18,10 @@
 #' @return Returns a data frame with the selected columns.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered <- reduce_OpenSWATH_output(data)
-#' }
 #' @export
 reduce_OpenSWATH_output <- function(data, column.names=NULL, data_file_column="filename") {
   colnames(data) <- tolower(colnames(data))

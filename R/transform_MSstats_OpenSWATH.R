@@ -14,10 +14,8 @@
 #'   1;30(17):2524-6. doi: 10.1093/bioinformatics/btu305.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("MSstats_data", package="SWATH2stats")
-#'  transform_MSstats_OpenSWATH(MSstats_data)
-#' }
+#'  transformed <- transform_MSstats_OpenSWATH(MSstats_data)
 #' @export
 transform_MSstats_OpenSWATH <- function(data) {
   colnames(data) <- gsub("\\.", "", colnames(data))

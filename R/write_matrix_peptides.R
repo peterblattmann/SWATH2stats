@@ -23,12 +23,10 @@
 #'   working folder.
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  write_matrix_peptides(data)
-#' }
+#'  written <- write_matrix_peptides(data)
 #' @export
 write_matrix_peptides <- function(data, write.csv=FALSE,
                                   fun.aggregate=sum,

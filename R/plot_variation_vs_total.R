@@ -23,12 +23,10 @@
 #'   mode of the cv for the total or replicate data.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  plot_variation_vs_total(data)
-#' }
+#'  var_summary <- plot_variation_vs_total(data)
 #' @export
 plot_variation_vs_total <- function(data, column.values="intensity",
                                     comparison1=transition_group_id ~ bioreplicate + condition,

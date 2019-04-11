@@ -18,13 +18,11 @@
 #'   I would like to remove the explicit plot() calls in this function).
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  x <- assess_fdr_overall(data, FFT=0.7, output="Rconsole", plot=FALSE)
 #'  plot.fdr_table(x, output="pdf_csv", filename="Assess_fdr_overall_testplot")
-#' }
 #' @export
 plot_fdr_table <- function(x, output="Rconsole", filename="FDR_report_overall", ...) {
   ## Plot and create output from ID-FDR report (x) ##

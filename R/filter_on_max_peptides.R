@@ -12,13 +12,11 @@
 #' @return  Returns a data frame of the filtered data.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered <- filter_mscore_freqobs(data, 0.01,0.8)
 #'  data.max <- filter_on_max_peptides(data.filtered, 5)
-#' }
 #' @export
 filter_on_max_peptides <- function(data, n_peptides=6, rm.decoy=TRUE, column="proteinname") {
   data <- unifyProteinGroupLabels(data)

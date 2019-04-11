@@ -9,13 +9,11 @@
 #' @return Returns a data frame with the unififed protein labels.
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  data.unified <- unifyProteinGroupLabels(data.filtered.decoy)
-#' }
 #' @export
 unifyProteinGroupLabels <- function(data, column="proteinname", keep_colnames=FALSE) {
   original_columns <- colnames(data)

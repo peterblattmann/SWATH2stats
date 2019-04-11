@@ -13,14 +13,12 @@
 #' @return A copy of the data which has been mscore-filtered.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered <- filter_mscore(data, 0.01)
 #'  data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
 #'  data.filtered <- filter_mscore_condition(data, 0.01, 3)
-#' }
 #' @export
 filter_mscore_condition <- function(data, mscore=1.0, n.replica, rm.decoy=TRUE) {
 

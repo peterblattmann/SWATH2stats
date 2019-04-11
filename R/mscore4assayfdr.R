@@ -32,12 +32,10 @@
 #' @return Returns the m_score cutoff selected to arrive at the desired FDR
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  mscore4assayfdr(data, FFT=0.7, fdr_target=0.01)
-#' }
+#'  chosen <- mscore4assayfdr(data, FFT=0.7, fdr_target=0.01)
 #' @export
 mscore4assayfdr <- function(data, FFT=1, fdr_target=0.01) {
   ## generate high resolution mscore levels to assess mscore cutoff for a given fdr_target

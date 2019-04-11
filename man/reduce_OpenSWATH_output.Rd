@@ -33,12 +33,10 @@ The column.names can be omitted and then the following columns are
   the aLFQ or imsbInfer package that needs further columns.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered <- reduce_OpenSWATH_output(data)
-}
 }
 \author{
 Peter Blattmann

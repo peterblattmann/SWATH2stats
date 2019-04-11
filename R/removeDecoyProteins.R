@@ -12,13 +12,11 @@
 #' @return Returns a data frame with changed protein labels
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  data.2 <- removeDecoyProteins(data.filtered.decoy)
-#' }
 #' @export
 removeDecoyProteins <- function(data, column="proteinname") {
   ids <- grep("^[1-9][0-9]*[0-9]*/.*DECOY.*", data[[column]])

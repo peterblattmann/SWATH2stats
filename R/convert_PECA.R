@@ -11,13 +11,11 @@
 #'   statistics for data-independent acquisition proteomics" Scientific Reports
 #'   7, Article number: 5869.doi:10.1038/s41598-017-05949-y
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  data.PECA <- convert_PECA(data.filtered.decoy)
-#' }
 #' @export
 convert_PECA <- function(data) {
   columns <- c("proteinname", "fullpeptidename", "charge", "intensity",

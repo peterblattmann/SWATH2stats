@@ -20,10 +20,8 @@ ProteinName, PeptideSequence, PrecursorCharge, FragmentIon, ProductCharge,
 IsotopeLabelType, Condition, BioReplicate, Run, Intensity.)
 }
 \examples{
-\dontrun{
  data("MSstats_data", package="SWATH2stats")
- transform_MSstats_OpenSWATH(MSstats_data)
-}
+ transformed <- transform_MSstats_OpenSWATH(MSstats_data)
 }
 \references{
 Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek

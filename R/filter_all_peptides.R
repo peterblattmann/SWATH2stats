@@ -12,13 +12,11 @@
 #'   non-proteotypic peptides.
 #' @author Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  data.all <- filter_all_peptides(data.filtered.decoy)
-#' }
 #' @export
 filter_all_peptides <- function(data, column="proteinname", n=6) {
   data_proteins <- gsub(pattern="^[[:digit:]]\\/", replacement="", x=data[[column]])

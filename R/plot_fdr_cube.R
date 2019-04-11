@@ -21,23 +21,20 @@
 #'   I would like to remove the explicit plot() calls in this function).
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  x <- assess_fdr_byrun(data, FFT=0.7, output="Rconsole", plot=FALSE)
-#'  plot.fdr_cube(x, output="pdf_csv", filename="Assess_fdr_byrun_testplot",
-#'                plot_mscore_levels=0.01)
-#' }
+#'  retlist <- plot.fdr_cube(x, output="pdf_csv", filename="Assess_fdr_byrun_testplot",
+#'                           plot_mscore_levels=0.01)
 #' @export
 plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
-                          plot_mscore_levels=c(0.01, 0.001), ...) {
+                          plot_mscore_levels=c(0.01, 0.001), label_chars=10, ...) {
   retlist <- list()
-  count <- 0
-  for (i in plot_mscore_levels) {
-    count <- count + 1
-    retlist[[count]] <- list()
-    k.mscore <- which(dimnames(x)[[3]] == i)
+  for (level in plot_mscore_levels) {
+    level <- as.character(level)
+    retlist[[level]] <- list()
+    k.mscore <- which(dimnames(x)[[3]] == level)
     k.mscore.label <- as.numeric(dimnames(x)[[3]][k.mscore])
     ## write pdf reports
     run_ids <- unlist(dimnames(x)[2])
@@ -58,10 +55,41 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
     ##barplot(x[1:2, , k.mscore], ylim=c(0,1.2*max(x[1:2, , k.mscore], na.rm=TRUE)), ylab = "# of assays",
     ##        legend = TRUE, args.legend = list(x="topleft", cex=0.5),  names.arg=run_ids, cex.names=0.5, las=2,
     ##        main = title)
+
+    ## Create the data frames for plotting and abbreviate the names if necessary.
     assays <- x[1:2, , k.mscore]
     assays_df <- reshape2::melt(assays)
+    colnames(assays_df) <- c("type", "sample", "value")
+    assay_mscores <- x[4, , k.mscore]
+    assay_mscores_df <- reshape2::melt(assay_mscores)
+    peptides <- x[5:6, , k.mscore]
+    peptides_df <- reshape2::melt(peptides)
+    colnames(peptides_df) <- c("type", "sample", "value")
+    peptide_mscores <- x[8, , k.mscore]
+    peptide_mscores_df <- reshape2::melt(peptide_mscores)
+    proteins <- x[9:10, , k.mscore]
+    proteins_df <- reshape2::melt(proteins)
+    colnames(proteins_df) <- c("type", "sample", "value")
+    protein_mscores <- x[12, , k.mscore]
+    protein_mscores_df <- reshape2::melt(protein_mscores)
+    if (!is.null(label_chars) && is.numeric(label_chars)) {
+      assays_df[["sample"]] <- abbreviate(
+        assays_df[["sample"]], minlength=label_chars)
+      rownames(assay_mscores_df) <- abbreviate(
+        rownames(assay_mscores_df), minlength=label_chars)
+      peptides_df[["sample"]] <- abbreviate(
+        peptides_df[["sample"]], minlength=label_chars)
+      rownames(peptide_mscores_df) <- abbreviate(
+        rownames(peptide_mscores_df), minlength=label_chars)
+      proteins_df[["sample"]] <- abbreviate(
+        proteins_df[["sample"]], minlength=label_chars)
+      rownames(protein_mscores_df) <- abbreviate(
+        rownames(protein_mscores_df), minlength=label_chars)
+    }
+
+    ## Now make the plots!
     assay_barplot <- ggplot2::ggplot(data=assays_df,
-                                  ggplot2::aes_string(x="Var2", y="value")) +
+                                  ggplot2::aes_string(x="sample", y="value")) +
       ggplot2::geom_col(position="identity", color="black") +
       ggplot2::xlab("Sample ID") +
       ggplot2::ylab("# of assays") +
@@ -74,8 +102,7 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
 
     ##barplot(x[4, , k.mscore], ylim=c(0,1.2*max(x[4, , k.mscore], na.rm=TRUE)) , ylab = row.names(x)[4],
     ##        names.arg=run_ids, cex.names=0.5, las=2, main = title)
-    assay_mscores <- x[4, , k.mscore]
-    assay_mscores_df <- reshape2::melt(assay_mscores)
+
     assay_mscores_df[["names"]] <- rownames(assay_mscores_df)
     assay_mscores_df[["value"]] <- signif(assay_mscores_df[["value"]], digits=4)
     assay_mscoreplot <- ggplot2::ggplot(data=assay_mscores_df,
@@ -94,10 +121,9 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
     ##barplot(x[5:6, , k.mscore], ylim=c(0,1.2*max(x[5:6, , k.mscore], na.rm=TRUE)), ylab = "# of peptides",
     ##        legend = TRUE, args.legend = list(x="topleft", cex=0.5),  names.arg=run_ids, cex.names=0.5, las=2
     ##        , main = title)
-    peptides <- x[5:6, , k.mscore]
-    peptides_df <- reshape2::melt(peptides)
+
     peptide_barplot <- ggplot2::ggplot(data=peptides_df,
-                                  ggplot2::aes_string(x="Var2", y="value")) +
+                                  ggplot2::aes_string(x="sample", y="value")) +
       ggplot2::geom_col(position="identity", color="black") +
       ggplot2::xlab("Sample ID") +
       ggplot2::ylab("# of peptides") +
@@ -110,8 +136,6 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
 
     ##barplot(x[8, , k.mscore], ylim=c(0,1.2*max(x[8, , k.mscore], na.rm=TRUE)) , ylab = row.names(x)[8],
     ##        names.arg=run_ids, cex.names=0.5, las=2, main = title)
-    peptide_mscores <- x[8, , k.mscore]
-    peptide_mscores_df <- reshape2::melt(peptide_mscores)
     peptide_mscores_df[["names"]] <- rownames(peptide_mscores_df)
     peptide_mscores_df[["value"]] <- signif(peptide_mscores_df[["value"]], digits=4)
     peptide_mscoreplot <- ggplot2::ggplot(data=peptide_mscores_df,
@@ -130,10 +154,8 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
     ##barplot(x[9:10, , k.mscore], ylim=c(0,2*max(x[9:10, , k.mscore], na.rm=TRUE)), ylab = "# of proteins",
     ##        legend = TRUE, args.legend = list(x="topleft", cex=0.5),  names.arg=run_ids, cex.names=0.5, las=2
     ##      , main = title)
-    proteins <- x[9:10, , k.mscore]
-    proteins_df <- reshape2::melt(proteins)
     protein_barplot <- ggplot2::ggplot(data=proteins_df,
-                                       ggplot2::aes_string(x="Var2", y="value")) +
+                                       ggplot2::aes_string(x="sample", y="value")) +
       ggplot2::geom_col(position="identity", color="black") +
       ggplot2::xlab("Sample ID") +
       ggplot2::ylab("# of proteins") +
@@ -146,8 +168,6 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
 
     ##barplot(x[12, , k.mscore], ylim=c(0,1.2*max(x[12, , k.mscore], na.rm=TRUE)) , ylab = row.names(x)[12],
     ##        names.arg=run_ids, cex.names=0.5, las=2, main = title)
-    protein_mscores <- x[12, , k.mscore]
-    protein_mscores_df <- reshape2::melt(protein_mscores)
     protein_mscores_df[["names"]] <- rownames(protein_mscores_df)
     protein_mscores_df[["value"]] <- signif(protein_mscores_df[["value"]], digits=4)
     protein_mscoreplot <- ggplot2::ggplot(data=protein_mscores_df,
@@ -162,12 +182,12 @@ plot_fdr_cube <- function(x, output="Rconsole", filename="FDR_report_byrun",
                      axis.text.x=ggplot2::element_text(angle=90, vjust=0.5)) ##, hjust=1.5, vjust=0.5))
     plot(protein_mscoreplot)
 
-    retlist[[count]][["assay_barplot"]] <- assay_barplot
-    retlist[[count]][["assay_mscore"]] <- assay_mscoreplot
-    retlist[[count]][["peptide_barplot"]] <- peptide_barplot
-    retlist[[count]][["peptide_mscore"]] <- peptide_mscoreplot
-    retlist[[count]][["protein_barplot"]] <- protein_barplot
-    retlist[[count]][["protein_mscore"]] <- protein_mscoreplot
+    retlist[[level]][["assay_barplot"]] <- assay_barplot
+    retlist[[level]][["assay_mscore"]] <- assay_mscoreplot
+    retlist[[level]][["peptide_barplot"]] <- peptide_barplot
+    retlist[[level]][["peptide_mscore"]] <- peptide_mscoreplot
+    retlist[[level]][["protein_barplot"]] <- protein_barplot
+    retlist[[level]][["protein_mscore"]] <- protein_mscoreplot
 
     if (output == "pdf_csv") {
       ##par(mfrow=c(1, 1))

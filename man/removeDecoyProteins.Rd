@@ -23,13 +23,11 @@ calling removeDecoyProteins also changes the nubmer before the protein group
 accordingly.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  data.2 <- removeDecoyProteins(data.filtered.decoy)
-}
 }
 \author{
 Moritz Heusel

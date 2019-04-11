@@ -27,12 +27,10 @@
 #'   working folder
 #' @author Moritz Heusel
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  write_matrix_proteins(data)
-#' }
+#'  written <- write_matrix_proteins(data)
 #' @export
 write_matrix_proteins <- function(data, write.csv=FALSE, fun.aggregate=sum,
                                   filename="SWATH2stats_overview_matrix_proteinlevel.csv",

@@ -11,13 +11,13 @@
 #' creates the 'Condition', 'BioReplicate', and 'Run' columns along with other
 #' columns expected by MSstats/OpenSWATH.
 #'
-#' @param data  A data frame containing SWATH data.
+#' @param data A data frame containing SWATH data.
 #' @param sample_annotation A data frame containing the columns: Filename,
 #'   Condition, BioReplicate, Run. The values contained in the column filename
 #'   have to be present in the filename of the SWATH data.
 #' @param data_type Option to specify the format of the table, if the column
 #'   names from an OpenSWATH output or MSstats table are used.
-#' @param annotation_file_column  Name of the column containing the output file
+#' @param annotation_file_column Name of the column containing the output file
 #'   from the experiment metadata for  each sample.  In my own sample sheet, I keep
 #'   columns for the mzXML files, tric outputs, raw files, and osw outputs from
 #'   OpenSwathWorkFlow; and I cannot be relied upon to remember which is which,
@@ -27,17 +27,17 @@
 #'   data.
 #' @param data_file_column Option to specify the column name where the injection
 #'   file is specified. Default is set to "filename".
-#' @param condition_column  Which column annotates the experimental condition in
+#' @param condition_column Which column annotates the experimental condition in
 #'   the swath data?
-#' @param replicate_column  Which column annotates the replicate in the data?
-#' @param fullpeptidename_column  Character list of possible column names used
+#' @param replicate_column Which column annotates the replicate in the data?
+#' @param fullpeptidename_column Character list of possible column names used
 #'   to define the full peptide name.
-#' @param run_column  Which column annotates the separate runs?
-#' @param change_run_id  Option to choose if the run\_id column shall be
+#' @param run_column Which column annotates the separate runs?
+#' @param change_run_id Option to choose if the run\_id column shall be
 #'   reassigned to a unique value combining the values of Condition,
 #'   BioReplicate and Run. (Option only possible if data is of format
 #'   "OpenSWATH")
-#' @param verbose  Option to turn on reporting on which filename it is working
+#' @param verbose Option to turn on reporting on which filename it is working
 #'   on.
 #' @return Returns a dataframe with each row annotated for the study design
 #' @author Peter Blattman

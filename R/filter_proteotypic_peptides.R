@@ -11,13 +11,11 @@
 #'   peptides.
 #' @author  Peter Blattmann
 #' @examples
-#' \dontrun{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  data.all <- filter_proteotypic_peptides(data.filtered.decoy)
-#' }
 #' @export
 filter_proteotypic_peptides <- function(data, rm.decoy=TRUE, column="proteinname") {
   data <- unifyProteinGroupLabels(data, column=column)
