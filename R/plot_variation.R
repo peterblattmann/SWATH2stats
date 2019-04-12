@@ -28,7 +28,8 @@
 #' @export
 plot_variation <- function(data, column.values="intensity",
                            comparison=transition_group_id + condition ~ bioreplicate,
-                           fun.aggregate=NULL, label=TRUE, ...) {
+                           fun.aggregate=NULL, label=TRUE, title="cv across conditions",
+                           boxplot=TRUE, ...) {
   if (sum(colnames(data) == "decoy") == 1) {
     data <- data[data[["decoy"]] == 0, ]
   }
@@ -37,13 +38,11 @@ plot_variation <- function(data, column.values="intensity",
   data.c[data.c == 0] <- NA
 
   n_vars <- length(all.vars(comparison))
-
   data.sd <- apply(data.c[, n_vars:dim(data.c)[2]], 1, function(x) sd(x, na.rm=TRUE))
   data.mean <- apply(data.c[, n_vars:dim(data.c)[2]], 1, function(x) mean(x, na.rm=TRUE))
   data.c[["cv"]] <- data.sd / data.mean
   mean.cv <- mean(data.c[["cv"]], na.rm=TRUE)
   median.cv <- median(data.c[["cv"]], na.rm=TRUE)
-
   data.cv <- data.c[, c(colnames(data.c)[2], "cv")]
 
   if (isTRUE(label)) {
@@ -61,6 +60,10 @@ plot_variation <- function(data, column.values="intensity",
           ggplot2::geom_violin(scale="area") +
           ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
           ggplot2::labs(title="cv across conditions"))
+  }
+
+  if (isTRUE(boxplot)) {
+    p <- p + geom_boxplot(width=.1, outlier.shape=NA)
   }
 
   print(p)

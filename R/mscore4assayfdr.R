@@ -29,6 +29,7 @@
 #' @param fdr_target  Assay FDR target, numeric, defaults to 0.01. An m_score
 #'   cutoff achieving an FDR < fdr_target will be selected.
 #' Calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above.
+#' @param mscore.col Column name containing the computed m scores.
 #' @return Returns the m_score cutoff selected to arrive at the desired FDR
 #' @author Moritz Heusel
 #' @examples
@@ -37,17 +38,19 @@
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  chosen <- mscore4assayfdr(data, FFT=0.7, fdr_target=0.01)
 #' @export
-mscore4assayfdr <- function(data, FFT=1, fdr_target=0.01) {
+mscore4assayfdr <- function(data, FFT=1, fdr_target=0.01, mscore.col="m_score") {
+  mscore.col <- JPP_update(data, mscore.col)
   ## generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
   mscore_levels_highres <- 10 ^ -(c(seq(2, 20, 0.05)))
   target_assays_highres <- NULL
   decoy_assays_highres <- NULL
   for (i in 1:length(mscore_levels_highres)) {
-    target_assays_highres[i] <- length(unique(data[data[["decoy"]] == FALSE &
-                                                   data[["m_score"]] <= mscore_levels_highres[i],
-                                                   c("transition_group_id")]))
-    decoy_assays_highres[i] <- length(unique(data[data[["decoy"]] == TRUE &
-                                                  data[["m_score"]] <= mscore_levels_highres[i], c("transition_group_id")]))
+    target_assays_highres[i] <- length(
+      unique(data[data[["decoy"]] == FALSE &
+                  data[[mscore.col]] <= mscore_levels_highres[i], c("transition_group_id")]))
+    decoy_assays_highres[i] <- length(
+      unique(data[data[["decoy"]] == TRUE &
+                  data[[mscore.col]] <= mscore_levels_highres[i], c("transition_group_id")]))
   }
   assay_fdr_highres <- (decoy_assays_highres / target_assays_highres) * FFT
 

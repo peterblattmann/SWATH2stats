@@ -7,7 +7,9 @@
 plot_variation_vs_total(data, column.values = "intensity",
   comparison1 = transition_group_id ~ bioreplicate + condition,
   comparison2 = transition_group_id + condition ~ bioreplicate,
-  fun.aggregate = NULL, label = TRUE, ...)
+  fun.aggregate = NULL, label = TRUE,
+  title = "coefficient of variation - total vs within replicates",
+  boxplot = TRUE, ...)
 }
 \arguments{
 \item{data}{Data table that is produced by the OpenSWATH/pyProphet workflow.}

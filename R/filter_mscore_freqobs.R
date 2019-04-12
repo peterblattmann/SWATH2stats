@@ -22,7 +22,9 @@
 #'  data.filtered <- filter_mscore_condition(data, 0.01, 3)
 #' @export
 filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
-                                  rm.decoy=TRUE, file_column="filename") {
+                                  rm.decoy=TRUE, file_column="filename",
+                                  mscore.col="m_score") {
+  mscore.col <- JPP_update(data, mscore.col)
   data[["peptide_charge"]] <- paste(data[["fullpeptidename"]], data[["charge"]])
 
   if (sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)) {
@@ -30,7 +32,7 @@ filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
   }
 
   data.filtered <- data.table::as.data.table(data)
-  filter_idx <- data[["m_score"]] <= mscore
+  filter_idx <- data[[mscore.col]] <= mscore
   data.filtered <- data.filtered[filter_idx, ]
 
   ##data.filtered <- data[data[["m_score"]] <= mscore, ]
@@ -58,7 +60,6 @@ filter_mscore_freqobs <- function(data, mscore=0.01, percentage=NULL,
   message("Fraction of peptides selected: ",
           signif(length(unique(peptides.filtered[["peptide_charge"]]))
                  / length(unique(data[["peptide_charge"]])), digits=2))
-
   ## This is effectively doing a subset for data[["charge"]] != weakly supported
   ## It seems like it would be clearer to write it as:
   ## keep_idx <- data[["charge"]] %in% remaining_charges

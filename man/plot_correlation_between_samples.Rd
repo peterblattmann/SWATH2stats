@@ -5,8 +5,9 @@
 \title{Plots the correlation between injections.}
 \usage{
 plot_correlation_between_samples(data, column.values = "intensity",
-  size = 6, comparison = transition_group_id ~ condition + bioreplicate,
-  fun.aggregate = NULL, label = TRUE, ...)
+  size = 6, comparison = transition_group_id ~ condition +
+  bioreplicate, fun.aggregate = NULL, label = TRUE, label_chars = 10,
+  ...)
 }
 \arguments{
 \item{data}{Data frame that is produced by the OpenSWATH/pyProphet workflow.}
@@ -39,12 +40,10 @@ This function plots the Pearson's and Spearman correlation between
 samples. If decoys are present these are removed before plotting.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- plot_correlation_between_samples(data)
-}
+ information <- plot_correlation_between_samples(data)
 }
 \author{
 Peter Blattmann

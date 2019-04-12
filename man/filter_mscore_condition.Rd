@@ -4,7 +4,8 @@
 \alias{filter_mscore_condition}
 \title{Filter openSWATH output table according to mscore.}
 \usage{
-filter_mscore_condition(data, mscore = 1, n.replica, rm.decoy = TRUE)
+filter_mscore_condition(data, mscore = 1, n.replica, rm.decoy = TRUE,
+  mscore.col = "m_score")
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}
@@ -26,14 +27,12 @@ as to the number of occurence in the data (requant) and within a condition
 (condition).
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered <- filter_mscore(data, 0.01)
  data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
  data.filtered <- filter_mscore_condition(data, 0.01, 3)
-}
 }
 \author{
 Peter Blattmann

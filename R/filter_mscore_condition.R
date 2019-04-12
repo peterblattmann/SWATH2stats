@@ -20,8 +20,9 @@
 #'  data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
 #'  data.filtered <- filter_mscore_condition(data, 0.01, 3)
 #' @export
-filter_mscore_condition <- function(data, mscore=1.0, n.replica, rm.decoy=TRUE) {
-
+filter_mscore_condition <- function(data, mscore=1.0, n.replica,
+                                    rm.decoy=TRUE, mscore.col="m_score") {
+  mscore.col <- JPP_update(data, mscore.col)
   ## a column with unique identifiers for each Precursor (e.g. ADFSDF 3) is generated
   data[["peptide_charge"]] <- paste(data[["fullpeptidename"]], data[["charge"]])
   ## a column with unique identifiers for each Precursor and Condition is genrated ADFSDF 3 Condition 1
@@ -30,16 +31,17 @@ filter_mscore_condition <- function(data, mscore=1.0, n.replica, rm.decoy=TRUE) 
   # decoys are removed if present
   if(sum(colnames(data) == "decoy") == 1 & isTRUE(rm.decoy)){
     data <- data[data[["decoy"]] == 0,]
-    #data <- subset(data, decoy == 0)
   }
 
   # only data that is below the indicated mscore is selected and then only the unique data selected
   #data.filtered <- subset(data, m_score <= mscore)
-  data.filtered <- data[data[["m_score"]] <= mscore,]
-  data.filtered <- unique(data.filtered[,c("peptide_charge", "peptide_charge_condition", "aggr_peak_area")])
+  data.filtered <- data[data[[mscore.col]] <= mscore, ]
+  data.filtered <- unique(data.filtered[, c("peptide_charge", "peptide_charge_condition",
+                                            "aggr_peak_area")])
   data.filtered <- data.table::data.table(data.filtered)
 
-  data.table::setkeyv(data.filtered, cols=c("peptide_charge", "peptide_charge_condition", "aggr_peak_area"))
+  data.table::setkeyv(data.filtered, cols=c("peptide_charge", "peptide_charge_condition",
+                                            "aggr_peak_area"))
   ## number of occurences of Precursor per Condition is calculated
   ## .N is data.table's shorthand for counting subsets
   .N <- NULL

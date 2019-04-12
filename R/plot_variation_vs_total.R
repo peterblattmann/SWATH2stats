@@ -31,7 +31,9 @@
 plot_variation_vs_total <- function(data, column.values="intensity",
                                     comparison1=transition_group_id ~ bioreplicate + condition,
                                     comparison2=transition_group_id + condition ~ bioreplicate,
-                                    fun.aggregate=NULL, label=TRUE, ...) {
+                                    fun.aggregate=NULL, label=TRUE,
+                                    title="coefficient of variation - total vs within replicates",
+                                    boxplot=TRUE, ...) {
   if (sum(colnames(data) == "decoy") == 1) {
     data <- data[data[["decoy"]] == 0,]
   }
@@ -67,19 +69,19 @@ plot_variation_vs_total <- function(data, column.values="intensity",
     ggplot2::geom_violin(scale="area") +
     ggplot2::xlab("") +
     ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
-    ggplot2::labs(title=paste(column.values,
-                              "coefficient of variation - total versus within replicates"))
+    ggplot2::labs(title=title)
 
   if (isTRUE(label)) {
-    p <- ggplot(na.omit(data.comb), aes_string(x="scope", y="cv")) +
-      ggplot2::geom_violin(scale="area") +
-      ggplot2::xlab("") +
-      ggplot2::theme(axis.text.x=ggplot2::element_text(size=8, angle=90, hjust=1, vjust=0.5)) +
-      ggplot2::labs(title=paste(column.values,
-                                "coefficient of variation - total versus within replicates")) +
+    p <- p +
       ggplot2::stat_summary(
-                 fun.data=function(x) data.frame(y=median(x), label=paste("median cv:\n", signif(median(x,na.rm=TRUE), digits=2))),
+                 fun.data=function(x) data.frame(
+                                        y=median(x),
+                                        label=paste("median cv:\n",
+                                                    signif(median(x,na.rm=TRUE), digits=2))),
                  geom="text")
+  }
+  if (isTRUE(boxplot)) {
+    p <- p + geom_boxplot(width=0.1, outlier.shape=NA)
   }
   print(p)
 

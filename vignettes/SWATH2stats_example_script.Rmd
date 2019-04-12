@@ -18,6 +18,7 @@ is the publicly available dataset of *S.pyogenes* (Röst et al. 2014)
 This is a R Markdown file, showing the result of processing this data. The lines
 shaded in grey represent the R code executed during this analysis.
 
+<<<<<<< HEAD
 The stable release package SWATH2stats can be directly installed from
 Bioconductor using the commands below. This file here was generated using the
 current development release SWATH2stats v.1.1.14 that can be downloaded from
@@ -31,6 +32,15 @@ biocLite('SWATH2stats')
 
 ## Conversely, install from github
 devtools::install_github("abelew/SWATH2stats")
+=======
+The SWATH2stats package can be directly installed from Bioconductor using the commands below (http://bioconductor.org/packages/devel/bioc/html/SWATH2stats.html).
+
+
+```{r, eval=FALSE}
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("SWATH2stats")
+>>>>>>> upstream/master
 ```
 
 # Part 1: Loading and annotation

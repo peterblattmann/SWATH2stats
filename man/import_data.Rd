@@ -53,11 +53,9 @@ Columns needed for conversion to transition-level format (needed for MSStats
   and mapDIA input): aggr_Fragment_Annotation, aggr_Peak_Are
 }
 \examples{
-\dontrun{
  data('Spyogenes', package = 'SWATH2stats')
  head(data)
  str(data)
-}
 }
 \author{
 Peter Blattmann

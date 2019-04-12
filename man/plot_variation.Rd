@@ -6,7 +6,8 @@
 \usage{
 plot_variation(data, column.values = "intensity",
   comparison = transition_group_id + condition ~ bioreplicate,
-  fun.aggregate = NULL, label = TRUE, ...)
+  fun.aggregate = NULL, label = TRUE, title = "cv across conditions",
+  boxplot = TRUE, ...)
 }
 \arguments{
 \item{data}{Data frame that is produced by the OpenSWATH/pyProphet workflow.}

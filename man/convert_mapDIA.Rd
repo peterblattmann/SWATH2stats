@@ -23,14 +23,12 @@ The table must not contain any technical replica, the intensity of
   reshape2.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  raw <- disaggregate(data.filtered.decoy)
  data.mapDIA <- convert_mapDIA(raw, RT=TRUE)
-}
 }
 \references{
 Teo, G., et al. (2015). "mapDIA: Preprocessing and statistical

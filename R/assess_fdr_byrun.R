@@ -50,7 +50,10 @@
 #'  summary(assessed)
 #' @export
 assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRUE,
-                             filename="FDR_report_byrun", output_mscore_levels=c(0.01, 0.001)) {
+                             filename="FDR_report_byrun",
+                             output_mscore_levels=c(0.01, 0.001),
+                             mscore.col="m_score") {
+  mscore.col <- JPP_update(data, mscore.col)
   ## create m_score intervals to be tested
   test_levels <- 10 ^ -seq(1:n_range)
 
@@ -90,29 +93,33 @@ assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRU
   data.t <- data[data[["decoy"]] == 0, ]
   data.d <- data[data[["decoy"]] == 1, ]
 
-  ## for each m_score cutoff in mscore_levels, count targets and decoys and calculate false targets and fdr
+  ## for each m_score cutoff in mscore_levels, count targets and decoys and
+  ## calculate false targets and fdr
   for (i in seq_len(length(mscore_levels))) {
     ## for each run_id, count target (and decoy) assays identified ("id" column entries)
-    ## and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
-    fdr_cube[1, , i] <- by(data.t[data.t[["m_score"]] <= mscore_levels[i], c("transition_group_id")],
-                           data.t[data.t[["m_score"]] <= mscore_levels[i], c("run_id")], length)
-    fdr_cube[2, , i] <- by(data.d[data.d[["m_score"]] <= mscore_levels[i], c("transition_group_id")],
-                           data.d[data.d[["m_score"]] <= mscore_levels[i], c("run_id")], length)
+    ## and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false
+    ## targets & fdr based on FFT
+    fdr_cube[1, , i] <- by(
+      data.t[data.t[[mscore.col]] <= mscore_levels[i], c("transition_group_id")],
+      data.t[data.t[[mscore.col]] <= mscore_levels[i], c("run_id")], length)
+    fdr_cube[2, , i] <- by(
+      data.d[data.d[[mscore.col]] <= mscore_levels[i], c("transition_group_id")],
+      data.d[data.d[[mscore.col]] <= mscore_levels[i], c("run_id")], length)
 
     fdr_cube[3, , i] <- fdr_cube[2, , i] * FFT
     fdr_cube[4, , i] <- fdr_cube[3, , i] / fdr_cube[1, , i]
 
-    ## for each run_id, count target (and decoy) peptides identified (unique "FullPeptideName" column entries)
-    ## and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false targets & fdr based on FFT
-    fdr_cube[5, , i] <- by(data.t[data.t[["m_score"]] <= mscore_levels[i],
-                                  c("fullpeptidename")],
-                           data.t[data.t[["m_score"]] <= mscore_levels[i],
-                                  c("run_id")], length_unique)
+    ## for each run_id, count target (and decoy) peptides identified (unique
+    ## "FullPeptideName" column entries)
+    ## and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false
+    ## targets & fdr based on FFT
+    fdr_cube[5, , i] <- by(
+      data.t[data.t[[mscore.col]] <= mscore_levels[i], c("fullpeptidename")],
+      data.t[data.t[[mscore.col]] <= mscore_levels[i], c("run_id")], length_unique)
     if (nrow(data.d) > 0) {
-      fdr_cube[6, , i] <- by(data.d[data.d[["m_score"]] <= mscore_levels[i],
-                                    c("fullpeptidename")],
-                             data.d[data.d[["m_score"]] <= mscore_levels[i],
-                                    c("run_id")], length_unique)
+      fdr_cube[6, , i] <- by(
+        data.d[data.d[[mscore.col]] <= mscore_levels[i], c("fullpeptidename")],
+        data.d[data.d[[mscore.col]] <= mscore_levels[i], c("run_id")], length_unique)
     } else {
       tmp_cube <- fdr_cube[5, , i]
       for (c in 1:length(tmp_cube)) {
@@ -125,14 +132,14 @@ assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRU
 
     ## for each run_id, count target (and decoy) proteins identified (unique "ProteinName" column entries)
     ## and store in pane i / row 1 (targets) / row 2 (decoys) & calculate false targets & fdr based on FFT
-    fdr_cube[9, , i] <- by(data.t[data.t[["m_score"]] <= mscore_levels[i],
+    fdr_cube[9, , i] <- by(data.t[data.t[[mscore.col]] <= mscore_levels[i],
                                   c("proteinname")],
-                           data.t[data.t[["m_score"]] <= mscore_levels[i],
+                           data.t[data.t[[mscore.col]] <= mscore_levels[i],
                                   c("run_id")], length_unique)
     if (nrow(data.d) > 0) {
-      fdr_cube[10, , i] <- by(data.d[data.d[["m_score"]] <= mscore_levels[i],
+      fdr_cube[10, , i] <- by(data.d[data.d[[mscore.col]] <= mscore_levels[i],
                                      c("proteinname")],
-                              data.d[data.d[["m_score"]] <= mscore_levels[i],
+                              data.d[data.d[[mscore.col]] <= mscore_levels[i],
                                      c("run_id")], length_unique)
     } else {
       tmp_cube <- fdr_cube[9, , i]
@@ -146,9 +153,12 @@ assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRU
   }
 
   ## print fdr values to console (m_score cutoff 1e-2)
-  message("The average FDR by run on assay level is ", round(mean(fdr_cube[4, , 1], na.rm=TRUE), digits=3))
-  message("The average FDR by run on peptide level is ", round(mean(fdr_cube[8, , 1], na.rm=TRUE), digits=3))
-  message("The average FDR by run on protein level is ", round(mean(fdr_cube[12, , 1], na.rm=TRUE), digits=3))
+  message("The average FDR by run on assay level is ",
+          round(mean(fdr_cube[4, , 1], na.rm=TRUE), digits=3))
+  message("The average FDR by run on peptide level is ",
+          round(mean(fdr_cube[8, , 1], na.rm=TRUE), digits=3))
+  message("The average FDR by run on protein level is ",
+          round(mean(fdr_cube[12, , 1], na.rm=TRUE), digits=3))
 
   if (output == "pdf_csv") {
     message("Individual run FDR qualities can be retrieved from ", paste0(filename, ".csv"))
@@ -157,8 +167,9 @@ assess_fdr_byrun <- function(data, FFT=1, n_range=20, output="pdf_csv", plot=TRU
     for (i in output_mscore_levels) {
       k.mscore <- which(dimnames(fdr_cube)[[3]] == i)
       k.mscore.label <- as.numeric(dimnames(fdr_cube)[[3]][k.mscore])
-      write.csv(fdr_cube[, , k.mscore], file=paste0(filename, "table_mscore_",
-                                                    format(k.mscore.label, scientific=TRUE), ".csv"))
+      write.csv(
+        fdr_cube[, , k.mscore], file=paste0(filename, "table_mscore_",
+                                            format(k.mscore.label, scientific=TRUE), ".csv"))
     }
     message(filename, ".csv reports written to working folder.")
   }

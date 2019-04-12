@@ -4,7 +4,8 @@
 \alias{unifyProteinGroupLabels}
 \title{Unify the protein group labels.}
 \usage{
-unifyProteinGroupLabels(data, column = "proteinname", keep_colnames = FALSE)
+unifyProteinGroupLabels(data, column = "proteinname",
+  keep_colnames = FALSE)
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}

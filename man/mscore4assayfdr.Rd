@@ -5,7 +5,8 @@
 \title{Find m_score cutoff to reach a desired FDR on assay level (over the entire
 OpenSWATH/pyProphet output table)}
 \usage{
-mscore4assayfdr(data, FFT = 1, fdr_target = 0.01)
+mscore4assayfdr(data, FFT = 1, fdr_target = 0.01,
+  mscore.col = "m_score")
 }
 \arguments{
 \item{data}{Annotated OpenSWATH/pyProphet data table. See function
@@ -20,6 +21,8 @@ value (1 Decoy indicates 1 False target).}
 \item{fdr_target}{Assay FDR target, numeric, defaults to 0.01. An m_score
   cutoff achieving an FDR < fdr_target will be selected.
 Calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above.}
+
+\item{mscore.col}{Column name containing the computed m scores.}
 }
 \value{
 Returns the m_score cutoff selected to arrive at the desired FDR
@@ -44,12 +47,10 @@ For FDR evaluations on peptide and protein level, please refer to functions
 mscore4pepfdr and mscore4protfdr.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
- mscore4assayfdr(data, FFT=0.7, fdr_target=0.01)
-}
+ chosen <- mscore4assayfdr(data, FFT=0.7, fdr_target=0.01)
 }
 \author{
 Moritz Heusel

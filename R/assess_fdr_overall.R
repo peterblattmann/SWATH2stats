@@ -43,7 +43,9 @@
 #'                     filename="Testoutput_assess_fdr_overall")
 #' @export
 assess_fdr_overall <-function(data, FFT=1, n_range=20, output="pdf_csv",
-                              plot=TRUE, filename="FDR_report_overall") {
+                              plot=TRUE, filename="FDR_report_overall",
+                              mscore.col="m_score") {
+  mscore.col <- JPP_update(data, mscore.col)
   mscore_levels <- 10 ^ - seq(n_range)
   ## create vectors to store count results
   target_assays <- NULL
@@ -56,22 +58,22 @@ assess_fdr_overall <-function(data, FFT=1, n_range=20, output="pdf_csv",
   # loop over IDs with different m_score thresholds counting targets & decoys
   for (i in seq_len(length(mscore_levels))) {
     target_assays[i] <- length(unique(data[data[["decoy"]] == FALSE &
-                                           data[["m_score"]] <= mscore_levels[i],
+                                           data[[mscore.col]] <= mscore_levels[i],
                                            c("transition_group_id")]))
     decoy_assays[i] <- length(unique(data[data[["decoy"]] == TRUE &
-                                          data[["m_score"]] <= mscore_levels[i],
+                                          data[[mscore.col]] <= mscore_levels[i],
                                           c("transition_group_id")]))
     target_peptides[i] <- length(unique(data[data[["decoy"]] == FALSE &
-                                             data[["m_score"]] <= mscore_levels[i],
+                                             data[[mscore.col]] <= mscore_levels[i],
                                              c("fullpeptidename")]))
     decoy_peptides[i] <- length(unique(data[data[["decoy"]] == TRUE &
-                                            data[["m_score"]] <= mscore_levels[i],
+                                            data[[mscore.col]] <= mscore_levels[i],
                                             c("fullpeptidename")]))
     target_proteins[i] <- length(unique(data[data[["decoy"]] == FALSE &
-                                             data[["m_score"]] <= mscore_levels[i],
+                                             data[[mscore.col]] <= mscore_levels[i],
                                              c("proteinname")]))
     decoy_proteins[i] <- length(unique(data[data[["decoy"]] == TRUE &
-                                            data[["m_score"]] <= mscore_levels[i],
+                                            data[[mscore.col]] <= mscore_levels[i],
                                             c("proteinname")]))
   }
 

@@ -7,7 +7,7 @@ separately) in OpenSWATH output table}
 \usage{
 assess_fdr_byrun(data, FFT = 1, n_range = 20, output = "pdf_csv",
   plot = TRUE, filename = "FDR_report_byrun",
-  output_mscore_levels = c(0.01, 0.001))
+  output_mscore_levels = c(0.01, 0.001), mscore.col = "m_score")
 }
 \arguments{
 \item{data}{Annotated OpenSWATH/pyProphet output table. Refer to function

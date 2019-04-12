@@ -18,12 +18,13 @@
 #'  data.filtered <- filter_mscore_freqobs(data, 0.01, 0.8)
 #'  data.filtered <- filter_mscore_condition(data, 0.01, 3)
 #' @export
-filter_mscore <- function(data, mscore=1.0, rm.decoy=TRUE) {
+filter_mscore <- function(data, mscore=1.0, rm.decoy=TRUE, mscore.col="m_score") {
   if (sum(colnames(data) == "decoy") == 1 & rm.decoy == TRUE) {
     data <- data[data[["decoy"]] == 0, ]
   }
+  mscore.col <- JPP_update(data, mscore.col)
 
-  data.filtered <- data[data[["m_score"]] <= mscore, ]
+  data.filtered <- data[data[[mscore.col]] <= mscore, ]
   message("Original dimension: ", nrow(data), ", new dimension: ", nrow(data.filtered),
           ", difference: ", nrow(data) - nrow(data.filtered), ".")
   return(data.filtered)

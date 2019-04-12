@@ -4,7 +4,8 @@
 \alias{filter_proteotypic_peptides}
 \title{Filter for proteins that are supported by proteotypic peptides.}
 \usage{
-filter_proteotypic_peptides(data, rm.decoy = TRUE, column = "proteinname")
+filter_proteotypic_peptides(data, rm.decoy = TRUE,
+  column = "proteinname")
 }
 \arguments{
 \item{data}{A data frame containing SWATH data.}
@@ -23,13 +24,11 @@ peptides, peptides that are only contained in one protein are
 selected. Additionally the number of proteins are counted and printed.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  data.all <- filter_proteotypic_peptides(data.filtered.decoy)
-}
 }
 \author{
 Peter Blattmann

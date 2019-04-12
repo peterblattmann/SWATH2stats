@@ -4,7 +4,8 @@
 \alias{plot_fdr_table}
 \title{Plot functionality for results of class "fdr_table" as produced by e.g. the function assess_fdr_overall()}
 \usage{
-plot_fdr_table(x, output = "Rconsole", filename = "FDR_report_overall", ...)
+plot_fdr_table(x, output = "Rconsole", filename = "FDR_report_overall",
+  ...)
 }
 \arguments{
 \item{x}{List of class "fdr_table" as produced e.g. by the function
@@ -31,13 +32,11 @@ dependence of estimated FDR and also estimated FDR in dependence of m_score
 cutoff.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  x <- assess_fdr_overall(data, FFT=0.7, output="Rconsole", plot=FALSE)
  plot.fdr_table(x, output="pdf_csv", filename="Assess_fdr_overall_testplot")
-}
 }
 \author{
 Moritz Heusel

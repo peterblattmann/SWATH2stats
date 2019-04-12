@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CHANGES IN VERSION 1.11.3
 -------------------------
 BUG FIXES
@@ -435,3 +436,525 @@ NEW FEATURES
  o SWATH2stats package accepted to Bioconductor
  
 
+=======
+CHANGES IN VERSION 1.13.5
+-------------------------
+NEW FEATURES
+
+ o Update plot_variation and plot_variation_vs_total function
+ 
+ 
+CHANGES IN VERSION 1.13.4
+-------------------------
+NEW FEATURES
+
+ o Update version for JPP (new version of pyprophet)
+ 
+
+CHANGES IN VERSION 1.13.3
+-------------------------
+UPDATE
+
+ o DESCRIPTION: move PECA to enhances 
+
+
+CHANGES IN VERSION 1.13.2
+-------------------------
+UPDATE
+
+ o Vignette: make PECA chunk eval=FALSE to prevent error when the PECA package is not available on BioC 
+
+
+CHANGES IN VERSION 1.13.1
+-------------------------
+NEW FEATURES
+
+ o Add ImmunoOncology to biocViews
+ 
+
+CHANGES IN VERSION 1.13.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.9 development release
+ 
+
+CHANGES IN VERSION 1.12.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.8 release
+
+CHANGES IN VERSION 1.11.8
+-------------------------
+UPDATE
+
+ o updating information on checking transitions in convert4aLFQ function.
+
+
+CHANGES IN VERSION 1.11.7
+-------------------------
+UPDATE
+
+ o avoid sorting when adding gene symbols in add_gene_symbol
+
+
+CHANGES IN VERSION 1.11.6
+-------------------------
+BUG FIXES
+
+ o fix manual page and function in convert_protein_ids to copy non-converted IDs
+
+
+CHANGES IN VERSION 1.11.5
+-------------------------
+UDPATE
+
+ o move from bioclite to BiocManager
+
+
+CHANGES IN VERSION 1.11.4
+-------------------------
+BUG FIXES
+
+ o fix manual page to convert_protein_ids
+
+
+CHANGES IN VERSION 1.11.3
+-------------------------
+BUG FIXES
+
+ o updates to convert_protein_ids, see that convert4aLFQ outputs character vectors
+
+
+CHANGES IN VERSION 1.11.2
+-------------------------
+NEW FEATURES
+
+ o add functions convert_protein_ids, load_mart, add_genesymbol
+
+CHANGES IN VERSION 1.11.1
+-------------------------
+BUG FIXES
+
+ o remove links from manual page SWATH2stats-package
+
+
+CHANGES IN VERSION 1.11.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.8 development release
+ 
+
+CHANGES IN VERSION 1.10.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.7 release
+
+CHANGES IN VERSION 1.9.3
+-------------------------
+BUG FIXES
+
+ o removed aLFQ direct link in manual
+
+
+CHANGES IN VERSION 1.9.2
+-------------------------
+NEW FEATURES
+
+ o add option check_tranisitions to convert_aLFQ function
+ o replace align_orig_filename column with filename
+
+
+CHANGES IN VERSION 1.9.1
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.7 development release
+ 
+
+CHANGES IN VERSION 1.8.1
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.6 release
+ 
+
+CHANGES IN VERSION 1.7.7
+-------------------------
+BUG FIXES
+
+ o update vignette to prevent misunderstanding what data to load
+
+
+CHANGES IN VERSION 1.7.6
+-------------------------
+BUG FIXES
+
+ o manual convert4PECA
+
+CHANGES IN VERSION 1.7.5
+-------------------------
+BUG FIXES
+
+ o library not recognized in vignette
+
+CHANGES IN VERSION 1.7.4
+-------------------------
+NEW FEATURES
+
+ o add function convert4PECA
+
+CHANGES IN VERSION 1.7.3
+-------------------------
+NEW FEATURES
+
+ o add option to keep all columns to disaggregate function
+
+
+CHANGES IN VERSION 1.7.2
+-------------------------
+NEW FEATURES
+
+ o add option to no not remove decoys to filter_proteotypic_peptides(), 
+   filter_on_max_peptides(), and filter_on_min_peptides()
+
+CHANGES IN VERSION 1.7.1
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.6 development release
+
+
+CHANGES IN VERSION 1.6.1
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.5 release
+
+
+CHANGES IN VERSION 1.5.8
+-------------------------
+NEW FEATURES
+
+ o filter_on_max_peptides: add removeDecoyProteins and unifyProteinGroupLabels to function
+ o filter_on_min_peptides: add removeDecoyProteins and unifyProteinGroupLabels to function
+
+BUG FIXES
+
+ o filter_on_max_peptides: unique selected peptides to prevent duplication of rows
+
+
+CHANGES IN VERSION 1.5.7
+-------------------------
+NEW FEATURES
+
+ o featurealigner2msstats_withRT.py: reads now csv and tab delimited file and checks for right data structure
+
+CHANGES IN VERSION 1.5.6
+-------------------------
+NEW FEATURES
+
+ o plot.fdr_cube: add option to select mscore levels to plot FDR estimation.
+ o assess_fdr_byrun: add option to select mscore levels to plot FDR estimation.
+
+CHANGES IN VERSION 1.5.5
+-------------------------
+NEW FEATURES
+
+ o sample_annotation: added "fixed" option to grep function to increase speed.
+
+BUG FIXES
+
+ o convert4mapDIA: diagnostic output in case there were several values was not displaying correct rows.
+
+CHANGES IN VERSION 1.5.4
+-------------------------
+BUG FIXES
+
+ o removeDecoyProteins and unifyProteinGroupLabels: fixed bug that affected protein groups of 10-19 proteins.
+
+
+CHANGES IN VERSION 1.5.3
+-------------------------
+NEW FEATURES
+
+ o plot_variation: make function to work also if comparison contains more than 3 elements
+ o plot_variation_vs_total: make function to work also if comparison contains more than 3 elements
+ o sample_annotation: introduce fail-safe if input data is in the data.table format.
+
+CHANGES IN VERSION 1.5.2
+-------------------------
+NEW FEATURES
+
+ o unifyProteinGroupLabels: unifies different ProteinGroupLabels
+ o removeDecoyProteins, rmDecoyProt: Removes decoy protein labels from protein Group label
+
+CHANGES IN VERSION 1.5.1
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.5 development release
+
+
+CHANGES IN VERSION 1.4.1
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.4 release
+ 
+
+CHANGES IN VERSION 1.3.10
+-------------------------
+BUG FIXES
+
+ o sample_annotation: add stop if column for files is not present, instead of printing a warning
+ o convert4aLFQ: improve warning message
+ o tests: add tests
+
+
+CHANGES IN VERSION 1.3.9
+-------------------------
+NEW FEATURES
+
+ o sample_annotation: improved architecture of function
+ o tests: add tests
+ o MSstats_data: add data in MSstats format to use for testing
+ o assess_decoy_rate: add stop instead of warnings if no decoy column is present
+ o mscore4pepfdr, mscore4assayfdr: add default value in function description
+
+
+CHANGES IN VERSION 1.3.8
+-------------------------
+BUG FIXES
+
+ o DESCRIPTION: move MSstats from suggests to enhances
+
+
+CHANGES IN VERSION 1.3.7 
+-------------------------
+BUG FIXES
+
+ o test_filtering: tests for count_analytes
+
+
+CHANGES IN VERSION 1.3.6 
+-------------------------
+NEW FEATURES
+
+ o filter_all_peptides: Improvement in display of protein Names using collapse
+
+DOCUMENTATION
+
+ o Vignette: make MSstats and aLFQ eval=FALSE to prevent error when these are not build properly 
+ 
+ 
+CHANGES IN VERSION 1.3.5
+-------------------------
+NEW FEATURES
+
+ o filter_mscore_fdr: add fail-safe in case target protein FDR cannot be reached.
+ o plot_variation, plot_variation_vs_total, plot_correlation_between_samples, count_analytes: add tests
+
+
+CHANGES IN VERSION 1.3.4
+-------------------------
+NEW FEATURES
+
+ o convert4mapDIA: improve error message in the case that multiple values exist per condition
+ o plot_correlation_between_samples: add option to not write any labels
+
+BUG FIXES
+
+ o plot_variation: improved function to also deal with data that did not have the same size in the different conditions
+
+DOCUMENTATION
+ o DESCRIPTION: update packages to import
+ o convert4MSstats: updated warning message
+
+
+CHANGES IN VERSION 1.3.3
+-------------------------
+BUG FIXES
+
+ o Add fail-safe functionality to sample_annotation function for non-unique file names.
+
+CHANGES IN VERSION 1.3.0
+-------------------------
+NEW FEATURES
+
+ o Development version of SWATH2stats in BioC 3.4
+
+
+CHANGES IN VERSION 1.2.3
+-------------------------
+BUG FIXES
+
+ o Add fail-safe functionality to sample_annotation function for non-unique file names.
+
+
+CHANGES IN VERSION 1.2.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.3 release
+
+
+CHANGES IN Version 1.1.17
+-------------------------
+DOCUMENTATION
+
+ o updated NEWS file
+
+
+CHANGES IN Version 1.1.16
+-------------------------
+BUG FIXES
+
+ o Error fix in test_convert.R
+
+
+CHANGES IN Version 1.1.15
+-------------------------
+DOCUMENTATION
+
+ o Add Citation of PLoS ONE publication of SWATH2stats
+
+
+CHANGES IN VERSION 1.1.14
+-------------------------
+DOCUMENTATION
+
+ o import_data: minor changes in documentation
+ o defining several functions at the beginning of function script
+
+
+CHANGES IN VERSION 1.1.13
+-------------------------
+DOCUMENTATION
+
+ o assess_fdr_byrun, assess_fdr_overall, filter_mscore_fdr: add sentence to manual page about FFT
+ o vignettes: Add/change title
+ 
+BUG FIXES
+
+ o DESCRIPTION: add knitr to Suggests and VignetteBuilder, add R>=2.10.0 to Depends 
+
+
+CHANGES IN VERSION 1.1.12
+-------------------------
+NEW FEATURES
+
+ o sample_annotation: remove option column.runid.
+ o assess_fdr_byrun and assess_fdr_overall: add option to set range of plotting with n.range
+
+DOCUMENTATION
+
+ o SWATH2stats_example_script, Spyogenes data: added Example script and S.pyogenes data
+
+
+CHANGES IN VERSION 1.1.11
+-------------------------
+NEW FEATURES
+
+ o plot_correlation_between_samples: import cor function from stats package and reorder y axis.
+
+
+CHANGES IN VERSION 1.1.10
+-------------------------
+BUG FIXES
+
+ o test for FDR filtering: bug fix due to fix in mscore4assayfdr
+
+
+CHANGES IN VERSION 1.1.9
+-------------------------
+DOCUMENTATION
+
+ o Update vignette
+
+DEPRECATED AND DEFUNCT
+
+ o remove function: filter_all_peptides
+
+BUG FIXES
+
+ o mscore4assayfdr: bug fix
+
+
+CHANGES IN VERSION 1.1.8
+-------------------------
+BUG FIXES
+
+ o add functions that were not updated
+
+
+CHANGES IN VERSION 1.1.7
+-------------------------
+NEW FEATURES
+
+ o added functions: count_analytes, plot_correlation_between_samples, plot_variation, plot_variation_vs_total, transform_MSstats_OpenSWATH.
+ o filter_mscore_requant renamed to filter_mscore_freqobs
+
+
+BUG FIXES
+
+ o sample_annotation: Bug fix - it reported upon error different conditions instead of filenames.
+ o assess_fdr_overall: Correction of transition level column name from "id" to "transition_group_id"
+ o assess_fdr_byrun: Correction of transition level column name from "id" to "transition_group_id"
+ o plot.fdr_cube: added na.rm=TRUE to plotting functions
+
+
+CHANGES IN VERSION 1.1.6
+-------------------------
+BUG FIXES
+
+ o Correction of typographical error in Vignette for Wolski et al.
+
+
+CHANGES IN VERSION 1.1.5
+-------------------------
+BUG FIXES
+
+ o Bug fixes for assess_fdr_byrun that was also introduced into version v1.0.2 at the same time. It fixes problems with labelling the runs correctly in some cases.
+
+
+CHANGES IN VERSION 1.1.4
+-------------------------
+BUG FIXES
+
+ o Bug fixes in test_convert.
+
+
+CHANGES IN VERSION 1.1.1
+-------------------------
+NEW FEATURES
+
+ o Improved the function disaggregate() that also data with different number of transitions per precursor than 6 can be used
+ o Added tests for disaggregate.R and convert4pythonscript.R
+
+
+CHANGES IN VERSION 1.1.0
+-------------------------
+NEW FEATURES
+
+ o Development version of SWATH2stats in BioC 3.3
+
+
+CHANGES IN VERSION 1.0.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.2 release
+
+
+CHANGES IN VERSION 0.99.5
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats package accepted to Bioconductor
+ 
+
+>>>>>>> upstream/master

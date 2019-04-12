@@ -35,14 +35,12 @@ Charge -> PrecursorCharge
 filename -> File
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  raw <- disaggregate(data.filtered.decoy)
  data.mapDIA <- convert4MSstats(raw)
-}
 }
 \references{
 Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek

@@ -24,11 +24,9 @@ ensembl connection for performing future queries.
 This function renames protein ids in a data frame or file.
 }
 \examples{
-\dontrun{
  data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
                           Abundance = c(100, 3390, 43423))
- convert_protein_ids(data_table)
-}
+ mart <- convert_protein_ids(data_table)
 }
 \author{
 Peter Blattmann

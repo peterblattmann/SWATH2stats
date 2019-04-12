@@ -25,14 +25,12 @@ Returns a data frame in the appropriate format for aLFQ.
 This functions selects the columns necessary for the aLFQ R package.
 }
 \examples{
-\dontrun{
  data("OpenSWATH_data", package="SWATH2stats")
  data("Study_design", package="SWATH2stats")
  data <- sample_annotation(OpenSWATH_data, Study_design)
  data.filtered.decoy <- filter_mscore(data, 0.01)
  raw <- disaggregate(data.filtered.decoy)
  data.aLFQ <- convert_aLFQ(raw)
-}
 }
 \references{
 Rosenberger G, Ludwig C, Rost HL, Aebersold R, Malmstrom L. aLFQ:

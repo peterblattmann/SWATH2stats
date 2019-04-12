@@ -28,7 +28,8 @@
 #'   value (1 Decoy indicates 1 False target).
 #' @param fdr_target  FDR target, numeric, defaults to 0.01. An m_score cutoff
 #'   achieving an FDR < fdr_target will be selected.
-#' Calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above.
+#'   Calculated as FDR = (TN*FFT/T); TN=decoys, T=targets, FFT=see above.
+#' @param mscore.col column in the data containing the m score data.
 #' @return Returns the m_score cutoff selected to arrive at the desired FDR
 #' @author Moritz Heusel
 #' @examples
@@ -37,18 +38,19 @@
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  chosen <- mscore4pepfdr(data, FFT=0.7, fdr_target=0.01)
 #' @export
-mscore4pepfdr <- function(data, FFT=1, fdr_target=0.01) {
+mscore4pepfdr <- function(data, FFT=1, fdr_target=0.01, mscore.col="m_score") {
   ## generate high resolution mscore levels to assess mscore cutoff for a given fdr_target
+  mscore.col <- JPP_update(data, mscore.col)
   mscore_levels_highres <- 10 ^ -(c(seq(2, 20, 0.05)))
   target_peptides_highres <- NULL
   decoy_peptides_highres <- NULL
   for (i in 1:length(mscore_levels_highres)) {
     target_peptides_highres[i] <- length(
       unique(data[data[["decoy"]] == FALSE &
-                  data[["m_score"]] <= mscore_levels_highres[i], c("fullpeptidename")]))
+                  data[[mscore.col]] <= mscore_levels_highres[i], c("fullpeptidename")]))
     decoy_peptides_highres[i] <- length(
       unique(data[data[["decoy"]] == TRUE &
-                  data[["m_score"]] <= mscore_levels_highres[i], c("fullpeptidename")]))
+                  data[[mscore.col]] <= mscore_levels_highres[i], c("fullpeptidename")]))
   }
   peptide_fdr_highres <- (decoy_peptides_highres / target_peptides_highres) * FFT
 
