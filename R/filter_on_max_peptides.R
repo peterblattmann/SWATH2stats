@@ -1,5 +1,3 @@
-utils::globalVariables(c("PROTEIN", "PEPTIDE", "Intensity", ".SD", "head"))
-
 #' Filter only for the highest intense peptides
 #'
 #' In order to reduce the data, the data is filtered only for the proteins with
@@ -26,7 +24,7 @@ filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE) {
         data <- removeDecoyProteins(data)
     }
 
-    data <- data.table(data)
+    data <- data.table::data.table(data)
     if (length(grep("ProteinName", colnames(data))) > 0) {
         setnames(data, "ProteinName", "PROTEIN")
     }
@@ -36,8 +34,9 @@ filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE) {
 
 
     data.peptides <- data[, c("PROTEIN", "PEPTIDE", "Intensity"), with = FALSE]
-    setkey(data, PROTEIN, PEPTIDE)
+    data.table::setkeyv(data, cols = c("PROTEIN", "PEPTIDE"))
 
+    Intensity <- NULL
     data.peptides.int <- data.peptides[, sum(Intensity), by = "PROTEIN,PEPTIDE"]
     setnames(data.peptides.int, "V1", "SUM.INTENSITY")
 
@@ -45,6 +44,7 @@ filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE) {
     data.peptides.int <- data.peptides.int[order(data.peptides.int$SUM.INTENSITY,
         decreasing = TRUE), ]
 
+    .SD <- NULL
     peptides.sel <- unique(data.peptides.int[, head(.SD, n_peptides), by = PROTEIN])
 
     data.filtered <- data.frame(data[PEPTIDE %in% peptides.sel$PEPTIDE, ])

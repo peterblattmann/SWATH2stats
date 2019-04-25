@@ -1,5 +1,3 @@
-utils::globalVariables(c("write.csv"))
-
 #' Assess overall FDR in annotated OpenSWATH/pyProphet output table in
 #' dependence of m_score cutoff
 #'

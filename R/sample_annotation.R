@@ -47,11 +47,12 @@
 #'  data <- SWATH2stats::sample_annotation(OpenSWATH_data, Study_design, verbose=TRUE)
 #'  summary(data)
 #' @export
-sample_annotation <- function(data, sample.annotation, data.type = "OpenSWATH", column.file = "filename",
-    change.run.id = TRUE, verbose = FALSE) {
-    #### annotate sample needs a txt file with the columns Filename, Condition,
-    #### BioReplicate, Run. In Filename a unique string contained in File must be
-    #### contained.
+sample_annotation <- function(data, sample.annotation, data.type = "OpenSWATH",
+                              column.file = "filename",
+                              change.run.id = TRUE, verbose = FALSE) {
+    ## annotate sample needs a txt file with the columns Filename, Condition,
+    ## BioReplicate, Run. In Filename a unique string contained in File must be
+    ## contained.
     if (!isTRUE(class(data) == "data.frame")) {
         stop("Input data is not a data.frame")
     }

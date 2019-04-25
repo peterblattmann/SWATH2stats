@@ -1,5 +1,3 @@
-utils::globalVariables(c("par", "pdf", "barplot", "mtext", "dev.off"))
-
 #' Plot functionality for FDR assessment result arrays as produced by e.g. the
 #' function assess_fdr_byrun()
 #'

@@ -1,5 +1,3 @@
-utils::globalVariables(c("select.list"))
-
 #' Transforms the column names from a data frame to the required format.
 #'
 #' This functions transforms the column names from a data frame from another
@@ -49,32 +47,33 @@ utils::globalVariables(c("select.list"))
 #'  str(data)
 #' @export
 import_data <- function(data) {
-    colnames_OpenSWATH <- c("ProteinName", "FullPeptideName", "Charge", "Sequence",
-        "aggr_Fragment_Annotation", "aggr_Peak_Area", "transition_group_id", "decoy",
-        "m_score", "RT", "filename", "Intensity", "not applicable")
+  colnames_OpenSWATH <- c("ProteinName", "FullPeptideName", "Charge", "Sequence",
+                          "aggr_Fragment_Annotation", "aggr_Peak_Area", "transition_group_id", "decoy",
+                          "m_score", "RT", "filename", "Intensity", "not applicable")
 
-    message("When reading in data, please specify to which column in the OpenSWATH data they correspond.
+  message("When reading in data, please specify to which column in the OpenSWATH data they correspond.
 For columns that do not correspond to any OpenSWATH column, choose \"not applicable\".
-Explanation of the OpenSWATH columns can be found in the manual page.\n")
+Explanation of the OpenSWATH columns can be found in the manual page.")
 
-    # Dialogue to map columns
-    for (i in colnames(data)) {
-        value <- select.list(colnames_OpenSWATH, title = paste("Select a column from the OpenSWATH output that the column ",
-            i, "corresponds to."))
-        if (value != "not applicable") {
-            colnames(data) <- gsub(i, value, colnames(data))
-            message("Column name ", i, " was substituted by ", value, "\n")
-        }
-
+                                        # Dialogue to map columns
+  for (i in colnames(data)) {
+    value <- utils::select.list(
+      colnames_OpenSWATH,
+      title = paste0("Select a column from the OpenSWATH output that the column ",
+                     i, "corresponds to."))
+    if (value != "not applicable") {
+      colnames(data) <- gsub(i, value, colnames(data))
+      message("Column name ", i, " was substituted by ", value, "\n")
     }
+  }
 
-    # add NA to colnames that were not mapped
-    add.colnames <- colnames(data)[!(colnames(data) %in% colnames_OpenSWATH)]
-    if (length(add.colnames > 0)) {
-        for (i in add.colnames) data[, i] <- NA
-        warning("Not all columns required within SWATH2stats were mapped: The columns ",
+  ## add NA to colnames that were not mapped
+  add.colnames <- colnames(data)[!(colnames(data) %in% colnames_OpenSWATH)]
+  if (length(add.colnames > 0)) {
+    for (i in add.colnames) data[, i] <- NA
+    warning("Not all columns required within SWATH2stats were mapped: The columns ",
             paste(add.colnames, collapse = ", "), " were added with NA as value.")
-    }
+  }
 
-    return(data)
+  return(data)
 }

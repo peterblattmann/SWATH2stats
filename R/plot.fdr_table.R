@@ -1,7 +1,5 @@
-utils::globalVariables(c("par", "pdf", "plot", "lines", "legend", "mtext", "points",
-    "axis", "grid", "abline", "dev.off"))
-
-#' Plot functionality for results of class "fdr_table" as produced by e.g. the function assess_fdr_overall()
+#' Plot functionality for results of class "fdr_table" as produced by e.g. the
+#' function assess_fdr_overall()
 #'
 #' This function created standard plots from results of class "fdr_table" as
 #' produced by e.g. the function assess_fdr_overall() visualizig ID numbers in
@@ -28,7 +26,7 @@ utils::globalVariables(c("par", "pdf", "plot", "lines", "legend", "mtext", "poin
 #'  plot.fdr_table(x, output="pdf_csv", filename="Assess_fdr_overall_testplot")
 #' @export
 plot.fdr_table <- function(x, output = "Rconsole", filename = "FDR_report_overall",
-    ...) {
+                           ...) {
     ## Plot and create output from ID-FDR report (x) ## Plot 1: Target/true target
     ## curves as estimated by decoy counting + FFT-correction
 
@@ -111,5 +109,4 @@ plot.fdr_table <- function(x, output = "Rconsole", filename = "FDR_report_overal
         dev.off()
         message(filename, ".pdf written to working folder", "\n")
     }
-
 }

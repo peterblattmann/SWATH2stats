@@ -1,5 +1,3 @@
-utils::globalVariables(c("aggregate"))
-
 #' Writes out an overview matrix of summed signals per protein identifier
 #' (lines) over run_id(columns).
 #'

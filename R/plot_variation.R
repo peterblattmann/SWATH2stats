@@ -1,5 +1,3 @@
-utils::globalVariables(c("sd", "na.omit", "aggregate", "density"))
-
 #' Plots the coefficient of variation for different replicates.
 #'
 #' This function plots the coefficient of variation within replicates for a

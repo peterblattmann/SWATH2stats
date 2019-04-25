@@ -1,5 +1,3 @@
-utils::globalVariables(c("scope", "cv", "value", "sd", "na.omit", "aggregate", "density"))
-
 #' Plots the total variation versus variation within replicates
 #'
 #' This function plots the total variation and the variation within replicates
@@ -64,34 +62,40 @@ plot_variation_vs_total <- function(data, column.values = "Intensity", Compariso
     data.comb <- rbind(data1.c[, c("rep", "cv", "scope")], data2.c[, c("rep", "cv",
         "scope")])
     data.comb$scope <- factor(data.comb$scope, levels = c("total", "replicate"))
-    p <- (ggplot(na.omit(data.comb), aes(x = scope, y = cv)) + geom_violin(scale = "area") +
-        xlab("") + theme(axis.text.x = element_text(size = 8, angle = 90, hjust = 1,
-        vjust = 0.5)) + labs(title = title))
+    p <- (ggplot(na.omit(data.comb), aes_string(x = "scope", y = "cv")) +
+          geom_violin(scale = "area") +
+          xlab("") +
+          theme(axis.text.x = element_text(size = 8, angle = 90, hjust = 1,
+                                           vjust = 0.5)) +
+          labs(title = title))
     if (isTRUE(label)) {
-        p <- p + stat_summary(fun.data = function(x) data.frame(y = max(x) * 0.75,
-            label = paste("median cv:\n", signif(median(x, na.rm = TRUE), digits = 2))),
+        p <- p +
+          stat_summary(
+            fun.data = function(x) data.frame(
+                                     "y" = max(x) * 0.75,
+                                     label = paste("median cv:\n",
+                                                   signif(median(x, na.rm = TRUE), digits = 2))),
             geom = "text")
     }
     if (isTRUE(boxplot)) {
         p <- p + geom_boxplot(width = 0.1, outlier.shape = NA)
     }
-
     print(p)
 
-    median <- aggregate(data.comb[, "cv"], by = list(data.comb$scope), FUN = function(x) median(x,
-        na.rm = TRUE))
+    median <- aggregate(data.comb[, "cv"], by = list(data.comb$scope),
+                        FUN = function(x) median(x, na.rm = TRUE))
     colnames(median) <- c("scope", "median_cv")
-    mean <- aggregate(data.comb[, "cv"], by = list(data.comb$scope), FUN = function(x) mean(x,
-        na.rm = TRUE))
+    mean <- aggregate(data.comb[, "cv"], by = list(data.comb$scope),
+                      FUN = function(x) mean(x, na.rm = TRUE))
     colnames(mean) <- c("scope", "mean_cv")
-    mode <- aggregate(data.comb[, "cv"], by = list(data.comb$scope), FUN = function(x) {
-        d <- density(x, na.rm = TRUE)
-        i <- which.max(d$y)
-        return(d$x[i])
-    })
+    mode <- aggregate(data.comb[, "cv"], by = list(data.comb$scope),
+                      FUN = function(x) {
+                        d <- density(x, na.rm = TRUE)
+                        i <- which.max(d$y)
+                        return(d$x[i])
+                      })
     colnames(mode) <- c("scope", "mode_cv")
 
     cv_table <- merge(mode, merge(mean, median, by = "scope"), by = "scope")
-
     return(list(data.comb, cv_table))
 }

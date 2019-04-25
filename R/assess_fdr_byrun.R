@@ -1,5 +1,3 @@
-utils::globalVariables(c("write.csv"))
-
 #' Assess assay, peptide and protein level FDR by run (for each MS_injection
 #' separately) in OpenSWATH output table
 #'

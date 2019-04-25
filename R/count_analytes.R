@@ -1,5 +1,3 @@
-utils::globalVariables(c("aggregate"))
-
 #' Counts analytes in different injections
 #'
 #' This functions counts the number of different peakgroups, peptides and

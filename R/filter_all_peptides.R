@@ -1,5 +1,3 @@
-utils::globalVariables(c("head"))
-
 #' Select all proteins that are supported by peptides.
 #'
 #' This functions counts all proteins that are supported by peptides (including

@@ -1,5 +1,3 @@
-utils::globalVariables(c("aggregate", "head"))
-
 #' Convert table into the format for mapDIA
 #'
 #' This functions selects the columns necessary for mapDIA.

@@ -1,5 +1,3 @@
-utils::globalVariables(c("aggregate", "median"))
-
 #' Convert table into the format expected by aLFQ.
 #'
 #' This function selects the columns necessary for the aLFQ R package.

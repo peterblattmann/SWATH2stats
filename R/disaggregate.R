@@ -1,4 +1,3 @@
-
 #' Transforms the SWATH data from a peptide- to a transition-level table.
 #'
 #' If the SWATH data should be analyzed on transition-level the data needs to be
