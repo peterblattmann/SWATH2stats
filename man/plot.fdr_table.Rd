@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot.fdr_table.R
 \name{plot.fdr_table}
 \alias{plot.fdr_table}
-\title{Plot functionality for results of class "fdr_table" as produced by e.g. the function assess_fdr_overall()}
+\title{Plot functionality for results of class "fdr_table" as produced by e.g. the
+function assess_fdr_overall()}
 \usage{
 \method{plot}{fdr_table}(x, output = "Rconsole",
   filename = "FDR_report_overall", ...)
