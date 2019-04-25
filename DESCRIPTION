@@ -18,3 +18,4 @@ biocViews: Proteomics, Annotation, ExperimentalDesign, Preprocessing,
         MassSpectrometry, ImmunoOncology
 NeedsCompilation: no
 VignetteBuilder: knitr
+RoxygenNote: 6.1.1
