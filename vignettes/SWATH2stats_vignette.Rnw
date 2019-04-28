@@ -417,7 +417,7 @@ quantData <- dataProcess(MSstats.input)
 The package \texttt{aLFQ} (Rosenberger et al. 2014) can read the original OpenSWATH output. Alternatively the  \texttt{aLFQ} package can also be applied to the filtered and annotated data from the  \texttt{SWATH2stats} package.
 To convert the data after filtering to the format for aLFQ, the function \texttt{convert4aLFQ} is applied to the transition-level data.
 
-<<>>=
+<<eval=FALSE>>=
 aLFQ.input <- convert4aLFQ(data.transition)
 
 library(aLFQ)
