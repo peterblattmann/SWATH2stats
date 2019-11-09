@@ -62,11 +62,12 @@ add_genesymbol <- function(data_table, gene.ID.table, column.name = "Protein",
   non_converted <- is.na(data_table[,ID2])
   if(sum(non_converted)){
     if(sum(non_converted) > 20){
+      non_converted_ids <- unique(data_table[non_converted,column.name])
       message("The following " , sum(non_converted), " identifiers were not converted and will be copied (the first 20 are shown): ", 
-              paste(unique(data_table[non_converted,column.name])[seq_len(20)], collapse = ", "))
+              paste(non_converted_ids[seq_len(20)], collapse = ", "))
     } else {
       message("The following identifiers were not converted and will be copied: ", 
-              paste(unique(data_table[non_converted,column.name]), collapse = ", "))
+              paste(non_converted_ids, collapse = ", "))
     }
     if(copy_nonconverted){
       for(i in which(non_converted)){
