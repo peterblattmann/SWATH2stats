@@ -1,8 +1,21 @@
-CHANGES IN VERSION 1.15.1
+CHANGES IN VERSION 1.17.1
 -------------------------
 UPDATE
 
  o convert_protein_ids: count unique non-mapped IDs.
+
+CHANGES IN VERSION 1.17.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.11 development release
+ 
+
+CHANGES IN VERSION 1.16.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.10 release
 
 
 CHANGES IN VERSION 1.15.0
@@ -17,7 +30,6 @@ CHANGES IN VERSION 1.14.0
 NEW FEATURES
 
  o SWATH2stats in BioC 3.9 release
-
 
 
 CHANGES IN VERSION 1.13.6
