@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.17.3
+-------------------------
+update
+
+ o plot_correlation_between_samples.R, plot_variation.R, plot_variation_vs_total.R: improve plots and do theme_bw
+
+
+
 CHANGES IN VERSION 1.17.2
 -------------------------
 NEW FEATURES

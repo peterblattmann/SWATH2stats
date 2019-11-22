@@ -2,7 +2,9 @@ utils::globalVariables(c("sd", "na.omit", "aggregate", "density"))
 
 plot_variation <- function(data, column.values = "Intensity", 
                            Comparison = transition_group_id + Condition ~ BioReplicate, 
-                           fun.aggregate = NULL, label=FALSE, title = "cv across conditions",
+                           fun.aggregate = NULL, 
+                           label=FALSE, 
+                           title = "cv across conditions",
                            boxplot = TRUE, ...){
   if(sum(colnames(data) == "decoy") == 1){
     data <- data[data$decoy == 0,]
@@ -20,10 +22,11 @@ plot_variation <- function(data, column.values = "Intensity",
 
   data.cv <- data.c[,c(colnames(data.c)[2], "cv")]
   
-  p <- (ggplot(na.omit(data.cv), aes_string(x=colnames(data.cv)[1], y="cv"))
-        + geom_violin(scale="area")
-        + theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5))
-        + labs(title= title))
+  p <- ggplot(na.omit(data.cv), aes_string(x=colnames(data.cv)[1], y="cv")) + 
+    geom_violin(scale="area") + 
+    theme_bw() +
+    theme(axis.text.x = element_text(size= 8, angle = 90, hjust = 1, vjust = 0.5)) + 
+    labs(title= title)
   
   
   if(isTRUE(label)){
