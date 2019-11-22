@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.17.2
+-------------------------
+NEW FEATURES
+
+ o filter_on_min_peptides.R: add ability to deal with PeptideSequence column 
+ o filter_on_max_peptides.R: add ability to deal with PeptideSequence column
+
+
 CHANGES IN VERSION 1.17.1
 -------------------------
 UPDATE

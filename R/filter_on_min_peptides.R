@@ -4,6 +4,11 @@ filter_on_min_peptides <- function(data, n_peptides, rm.decoy = TRUE){
     data <- removeDecoyProteins(data)
   }
   
+  if(length(grep("PeptideSequence", colnames(data))) > 0){
+    PepSeq <- TRUE
+    data$FullPeptideName <- data$PeptideSequence
+  } else(PepSeq = FALSE)
+  
   data.prot.pep <- unique(data[,c("ProteinName", "FullPeptideName")])
 
   data.prot.pep.n <- tapply(data.prot.pep$FullPeptideName, data.prot.pep$ProteinName, length)
@@ -19,6 +24,10 @@ filter_on_min_peptides <- function(data, n_peptides, rm.decoy = TRUE){
           "  Number of proteins: ", length(unique(data.filtered$ProteinName)), "\n",
           "  Number of peptides: ", length(unique(data.filtered$FullPeptideName)), "\n")
 
+  if(PepSeq){
+    data$PeptideSequence <- data.filtered$FullPeptideName
+    data$FullPeptideName <- NULL
+  }
 
   return(data.filtered)
 }

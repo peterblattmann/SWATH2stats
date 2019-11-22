@@ -10,12 +10,16 @@ filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE){
   if(length(grep("ProteinName", colnames(data))) > 0){
     setnames(data, "ProteinName", "PROTEIN")
   }
+  if(length(grep("FullPeptideName", colnames(data))) > 0){
+    Peptide_col <- "FullPeptideName"
+    setnames(data, "FullPeptideName", "PEPTIDE")
+  }
+  if(length(grep("PeptideSequence", colnames(data))) > 0){
+    Peptide_col <- "PeptideSequence"
+    setnames(data, "PeptideSequence", "PEPTIDE")
+  }
   
-  #data$PEPTIDE <- paste(data$PeptideSequence, data$PrecursorCharge, sep="_")
-  data$PEPTIDE <- data$FullPeptideName
-
-
-  data.peptides <- data[,c("PROTEIN", "PEPTIDE", "Intensity"), with=FALSE]
+   data.peptides <- data[,c("PROTEIN", "PEPTIDE", "Intensity"), with=FALSE]
   setkey(data, PROTEIN, PEPTIDE) 
 
   data.peptides.int <- data.peptides[, sum(Intensity), by="PROTEIN,PEPTIDE"]
@@ -38,7 +42,7 @@ filter_on_max_peptides <- function(data, n_peptides, rm.decoy = TRUE){
           "  Number of peptides: ", length(unique(data.filtered$PEPTIDE)), "\n")
 
   colnames(data.filtered) <- gsub("PROTEIN", "ProteinName", colnames(data.filtered))
-  data.filtered <- data.filtered[,-which(colnames(data.filtered) == "PEPTIDE")]
+  colnames(data.filtered) <- gsub("PEPTIDE", Peptide_col, colnames(data.filtered))
 
   return(data.filtered)
 }
