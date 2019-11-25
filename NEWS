@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.17.4
+-------------------------
+update
+
+ o convert_protein_ids: Also count empty strings as NA and count unique non-mapped identifiers.
+
+
 CHANGES IN VERSION 1.17.3
 -------------------------
 update
