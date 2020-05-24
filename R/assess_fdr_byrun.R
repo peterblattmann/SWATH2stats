@@ -49,8 +49,15 @@
 #'                               filename="Testoutput_assess_fdr_byrun")
 #'  summary(assessed)
 #' @export
-assess_fdr_byrun <- function(data, FFT = 1, n.range = 20, output = "pdf_csv", plot = TRUE,
-    filename = "FDR_report_byrun", output_mscore_levels = c(0.01, 0.001), mscore.col = "m_score") {
+
+assess_fdr_byrun <- function(data, 
+                             FFT = 1, 
+                             n.range = 20, 
+                             output = "pdf_csv", 
+                             plot = TRUE,
+                             filename = "FDR_report_byrun", 
+                             output_mscore_levels = c(0.01, 0.001), 
+                             mscore.col = "m_score") {
     mscore.col <- JPP_update(data, mscore.col)
 
     # create m_score intervals to be tested
