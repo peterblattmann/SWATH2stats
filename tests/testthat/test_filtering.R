@@ -17,8 +17,8 @@ test_that("filtering", {
   
   ## assess_decoy_rate
   assess_decoy_rate(data)
-  expect_that(assess_decoy_rate(data), shows_message("Number of non-decoy peptides: 273"))
-  expect_that(assess_decoy_rate(data), shows_message("Number of decoy peptides: 11"))
+  expect_that(assess_decoy_rate(data), shows_message("Number of non-decoy identifiers: 273"))
+  expect_that(assess_decoy_rate(data), shows_message("Number of decoy identifiers: 11"))
   expect_that(assess_decoy_rate(data), shows_message("Decoy rate: 0.0403"))
 
   # test if no decoys present
@@ -28,7 +28,7 @@ test_that("filtering", {
   # test if no decoys present
   data2 <- data
   data2$FullPeptideName <- NULL
-  expect_error(assess_decoy_rate(data2), "There is no FullPeptideName column in the table")
+  expect_error(assess_decoy_rate(data2))
   
   ## filter_mscore
   data.filtered.mscore <- filter_mscore(data, 0.01)
@@ -58,10 +58,10 @@ test_that("filtering", {
   shows_message("been removed from the returned data"))
   
   # test if remove decoy works
-  data2 <- filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm.decoy=FALSE)
-  data3 <- filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm.decoy=TRUE)
+  data2 <- filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm_decoy=FALSE)
+  data3 <- filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm_decoy=TRUE)
   
-  expect_message(filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm.decoy=FALSE),
+  expect_message(filter_mscore_fdr(data, FFT = 0.7, overall_protein_fdr_target=0.1, upper_overall_peptide_fdr_limit=0.05, rm_decoy=FALSE),
                  "The decoys have NOT been removed from the returned data")
   expect_true(length(grep("DECOY", data2$ProteinName)) > 1)
   expect_false(length(grep("DECOY", data3$ProteinName)) > 1)
@@ -100,6 +100,9 @@ test_that("count_analytes", {
   expect_that(analysis[analysis$run_id == "0_177","transition_group_id"], equals(388))
   expect_that(analysis[analysis$run_id == "0_29","ProteinName"], equals(10))
 })
+
+
+
 
 
 

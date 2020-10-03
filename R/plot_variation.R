@@ -11,36 +11,42 @@
 #'   assess the variability per transition_group_id and Condition over the
 #'   different Replicates. Comparison is performed using the dcast() function of
 #'   the reshape2 package.
-#' @param fun.aggregate If for the comparison values have to be aggregated one
+#' @param fun_aggregate If for the comparison values have to be aggregated one
 #'   needs to provide the function here.
 #' @param label  Option to print value of median cv.
+#' @param title Title of plot. Default: "cv across conditions"
+#' @param boxplot   Logical. If boxplot should be plotted. Default: TRUE
 #' @param ... further arguments passed to method.
 #' @return Returns a list with the data and calculated cv and a table that
 #'   summarizes the mean, median and mode cv per Condition (if Condition is
 #'   contained in the comparison). In addition it plots in Rconsole a violin
 #'   plot with the observed coefficient of variations.
 #' @author Peter Blattmann
-#' @examples
+#' @examples{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  var_summary <- plot_variation(data)
+#'  }
+#' @importFrom reshape2 dcast
+#' @importFrom stats sd na.omit aggregate density
+#' @importFrom ggplot2 stat_summary
 #' @export
 plot_variation <- function(data, 
                            column.values = "Intensity", 
-                           Comparison = transition_group_id + Condition ~ BioReplicate, 
-                           fun.aggregate = NULL, 
+                           comparison = transition_group_id + Condition ~ BioReplicate, 
+                           fun_aggregate = NULL, 
                            label = FALSE, 
                            title = "cv across conditions",
                            boxplot = TRUE, ...) {
     if (sum(colnames(data) == "decoy") == 1) {
         data <- data[data$decoy == 0, ]
     }
-    data.c <- dcast(data, Comparison, value.var = column.values, 
-                    fun.aggregate = fun.aggregate)
+    data.c <- dcast(data, comparison, value.var = column.values, 
+                    fun.aggregate = fun_aggregate)
     data.c[data.c == 0] <- NA
 
-    n_vars <- length(all.vars(Comparison))
+    n_vars <- length(all.vars(comparison))
 
     data.sd <- apply(data.c[, n_vars:dim(data.c)[2]], 1, 
                      function(x) sd(x, na.rm = TRUE))

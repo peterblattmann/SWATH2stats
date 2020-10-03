@@ -28,7 +28,7 @@
 #'   argument FFT. Numeric from 0 to 1. Defaults to 1, the most conservative
 #'   value (1 Decoy indicates 1 False target).
 #' @param n_range  Option to set the number of magnitude for which the m_score
-#'   threshold is decreased (e.g. n.range = 10, m-score from 0.1 until
+#'   threshold is decreased (e.g. n_range = 10, m-score from 0.1 until
 #'   10^-10)^.
 #' @param output Choose output type. "pdf_csv" creates the output as files in
 #'   the working directory, "Rconsole" triggers delivery of the output to the
@@ -38,36 +38,39 @@
 #' @param filename  Modify the basename of the result files if set.
 #' @param output_mscore_levels Define m-score levels to plot and write the
 #'   estimated FDR results.
+#' @param score_col Column that contains the score. Default. m_score 
 #' @return Returns an array of target/decoy identification numbers and
 #'   calculated FDR values at different m-score cutoffs.
 #' @author Moritz Heusel
-#' @examples
+#' @examples{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
-#'  assessed <- assess_fdr_byrun(data, FFT=0.7, output="pdf_csv", plot=TRUE,
+#'  assessed <- assess_fdr_byrun(data, FFT=0.7, output="Rconsole", plot=TRUE,
 #'                               filename="Testoutput_assess_fdr_byrun")
 #'  summary(assessed)
+#'  }
+#' @importFrom utils write.csv
 #' @export
 
 assess_fdr_byrun <- function(data, 
                              FFT = 1, 
-                             n.range = 20, 
+                             n_range = 20, 
                              output = "pdf_csv", 
                              plot = TRUE,
                              filename = "FDR_report_byrun", 
                              output_mscore_levels = c(0.01, 0.001), 
-                             mscore.col = "m_score") {
-    mscore.col <- JPP_update(data, mscore.col)
+                             score_col = "m_score") {
+    score_col <- JPP_update(data, score_col)
 
     # create m_score intervals to be tested
-    test_levels <- 10^-seq_len(n.range)
+    test_levels <- 10^-seq_len(n_range)
 
     ## Identify the minimal m-score cutoff at which all runs still contain decoys
     decoy_count_lengths <- NULL
-    for (i in seq_len(n.range)) {
-    decoy_count_lengths[i] <- length(by(data[data$decoy == TRUE & data[,mscore.col] <= test_levels[i],
-        c("transition_group_id")], data[data$decoy == TRUE & data[,mscore.col] <= test_levels[i], c("run_id")], length))
+    for (i in seq_len(n_range)) {
+    decoy_count_lengths[i] <- length(by(data[data$decoy == TRUE & data[,score_col] <= test_levels[i],
+        c("transition_group_id")], data[data$decoy == TRUE & data[,score_col] <= test_levels[i], c("run_id")], length))
     }
 
     mscore_limit <- length(decoy_count_lengths[decoy_count_lengths == length(unique(data$run_id))])
@@ -98,30 +101,30 @@ assess_fdr_byrun <- function(data,
         # for each run_id, count target (and decoy) assays identified ('id' column
         # entries) and store in pane i /row 1 (targets) /row 2 (decoys) & calculate false
         # targets & fdr based on FFT
-        fdr_cube[1, , i] <- by(data.t[data.t[, mscore.col] <= mscore_levels[i], c("transition_group_id")],
-            data.t[data.t[, mscore.col] <= mscore_levels[i], c("run_id")], length)
-        fdr_cube[2, , i] <- by(data.d[data.d[, mscore.col] <= mscore_levels[i], c("transition_group_id")],
-            data.d[data.d[, mscore.col] <= mscore_levels[i], c("run_id")], length)
+        fdr_cube[1, , i] <- by(data.t[data.t[, score_col] <= mscore_levels[i], c("transition_group_id")],
+            data.t[data.t[, score_col] <= mscore_levels[i], c("run_id")], length)
+        fdr_cube[2, , i] <- by(data.d[data.d[, score_col] <= mscore_levels[i], c("transition_group_id")],
+            data.d[data.d[, score_col] <= mscore_levels[i], c("run_id")], length)
         fdr_cube[3, , i] <- fdr_cube[2, , i] * FFT
         fdr_cube[4, , i] <- fdr_cube[3, , i]/fdr_cube[1, , i]
 
         # for each run_id, count target (and decoy) peptides identified (unique
         # 'FullPeptideName' column entries) and store in pane i /row 1 (targets) /row 2
         # (decoys) & calculate false targets & fdr based on FFT
-        fdr_cube[5, , i] <- by(data.t[data.t[, mscore.col] <= mscore_levels[i], c("FullPeptideName")],
-            data.t[data.t[, mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
-        fdr_cube[6, , i] <- by(data.d[data.d[, mscore.col] <= mscore_levels[i], c("FullPeptideName")],
-            data.d[data.d[, mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
+        fdr_cube[5, , i] <- by(data.t[data.t[, score_col] <= mscore_levels[i], c("FullPeptideName")],
+            data.t[data.t[, score_col] <= mscore_levels[i], c("run_id")], length_unique)
+        fdr_cube[6, , i] <- by(data.d[data.d[, score_col] <= mscore_levels[i], c("FullPeptideName")],
+            data.d[data.d[, score_col] <= mscore_levels[i], c("run_id")], length_unique)
         fdr_cube[7, , i] <- fdr_cube[6, , i] * FFT
         fdr_cube[8, , i] <- fdr_cube[7, , i]/fdr_cube[5, , i]
 
         # for each run_id, count target (and decoy) proteins identified (unique
         # 'ProteinName' column entries) and store in pane i /row 1 (targets) /row 2
         # (decoys) & calculate false targets & fdr based on FFT
-        fdr_cube[9, , i] <- by(data.t[data.t[, mscore.col] <= mscore_levels[i], c("ProteinName")],
-            data.t[data.t[, mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
-    fdr_cube[10, , i] <- by(data.d[data.d[,mscore.col] <= mscore_levels[i], c("ProteinName")],
-                            data.d[data.d[,mscore.col] <= mscore_levels[i], c("run_id")], length_unique)
+        fdr_cube[9, , i] <- by(data.t[data.t[, score_col] <= mscore_levels[i], c("ProteinName")],
+            data.t[data.t[, score_col] <= mscore_levels[i], c("run_id")], length_unique)
+    fdr_cube[10, , i] <- by(data.d[data.d[,score_col] <= mscore_levels[i], c("ProteinName")],
+                            data.d[data.d[,score_col] <= mscore_levels[i], c("run_id")], length_unique)
         fdr_cube[11, , i] <- fdr_cube[10, , i] * FFT
         fdr_cube[12, , i] <- fdr_cube[11, , i]/fdr_cube[9, , i]
     }

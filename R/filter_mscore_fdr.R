@@ -26,16 +26,13 @@
 #' @param overall_protein_fdr_target FDR target for the protein master list for
 #'   which quantitative values down to the less strict peptide_fdr criterion
 #'   will be kept/reported. Defaults to 0.02.
-#' @param mscore_limit  FDR target for the quantitative values kept/reported for
-#'   all peptides mapping to the high-confidence protein master list. Defaults
-#'   to 0.05. If all values up to m_score 0.01 shall be kept, set = 1.
 #' @param upper_overall_peptide_fdr_limit  Option to relax or tighten the false
 #'   discovery rate limit.
-#' @param rm.decoy Logical T/F, whether decoy entries should be removed after
+#' @param rm_decoy Logical T/F, whether decoy entries should be removed after
 #'   the analysis. Defaults to TRUE. Can be useful to disable to track the
 #'   influence on decoy fraction by further filtering steps such as requiring 2
 #'   peptides per protein.
-#' @param mscore.col Defines the column from which to retrieve the m_score. 
+#' @param score_col Defines the column from which to retrieve the m_score. 
 #'    If you use JPP (Rosenberger, Bludau et al. 2017) this can be used to 
 #'    select between Protein and transition_group m_score.
 #' @return Returns a data frame with the filtered data.
@@ -52,9 +49,9 @@ filter_mscore_fdr <- function(data,
                               FFT = 1, 
                               overall_protein_fdr_target = 0.02, 
                               upper_overall_peptide_fdr_limit = 0.05,
-                              rm.decoy = TRUE, 
-                              mscore.col = "m_score") {
-    mscore.col <- JPP_update(data, mscore.col)
+                              rm_decoy = TRUE, 
+                              score_col = "m_score") {
+    score_col <- JPP_update(data, score_col)
 
     mscore4protfdr_target <- mscore4protfdr(data, FFT, fdr_target = overall_protein_fdr_target)
 
@@ -70,11 +67,11 @@ filter_mscore_fdr <- function(data,
     message("finding m-score cutoff to achieve desired protein FDR in protein master list..",
         "\n")
     # Create master list at strict protein level FDR criterion
-    protein_master_list <- unique(subset(data, data[, mscore.col] <= mscore4protfdr_target)$ProteinName)
+    protein_master_list <- unique(subset(data, data[, score_col] <= mscore4protfdr_target)$ProteinName)
 
     # Pre-Filter data based on upper_overall_peptide_fdr_limit
     message("finding m-score cutoff to achieve desired global peptide FDR..", "\n")
-    data.f1 <- subset(data, data[, mscore.col] <= mscore4pepfdr(data, FFT, fdr_target = upper_overall_peptide_fdr_limit))
+    data.f1 <- subset(data, data[, score_col] <= mscore4pepfdr(data, FFT, fdr_target = upper_overall_peptide_fdr_limit))
 
     # Filter prefiltered data down to entries mapping to the protein_master_list
     data.f2 <- subset(data.f1, data.f1$ProteinName %in% protein_master_list)
@@ -107,7 +104,7 @@ filter_mscore_fdr <- function(data,
     # test if all runs contain a decoy after peptide FDR filering in order to
     # calculate the local FDR
     n.run_id <- length(unique(data.f1$run_id))
-    n.run_id_decoy <- length(unique(data.f1[data.f1$decoy == TRUE & data.f1[, mscore.col] <=
+    n.run_id_decoy <- length(unique(data.f1[data.f1$decoy == TRUE & data.f1[, score_col] <=
         0.01, ]$run_id))
     if (n.run_id == n.run_id_decoy) {
 
@@ -124,7 +121,7 @@ filter_mscore_fdr <- function(data,
     }
 
     # return filtered data with or without decoy entries
-    if (rm.decoy == FALSE) {
+    if (rm_decoy == FALSE) {
         message("The decoys have NOT been removed from the returned data", "\n")
         return(data.f2)
     } else {

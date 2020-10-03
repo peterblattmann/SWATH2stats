@@ -1,5 +1,4 @@
-#' S3 plot function for FDR assessment result arrays as produced by e.g. the
-#' function assess_fdr_byrun()
+#' S3 plot function for FDR assessment result arrays 
 #'
 #' This function creates standard plots from result arrays as produced by
 #' e.g. the function assess_fdr_byrun(), visualizig assay, peptide and protein
@@ -7,27 +6,32 @@
 #' and Decoy ID numbers are visualized.
 #'
 #' @param x Array of by-run FDR assessment results as produced e.g. by the
-#'   function assess_fdr_byrun() from this package.
+#'  function assess_fdr_byrun() from this package.
 #' @param output Choose output type. "pdf_csv" creates the output as files in
-#'   the working directory, "Rconsole" triggers delivery of the output to the
-#'   console enabling further computation and/or custom plotting / output.
+#'  the working directory, "Rconsole" triggers delivery of the output to the
+#'  console enabling further computation and/or custom plotting / output.
 #' @param filename  Basename for output files to be created (if output =
-#'   "pdf_csv" has been selected).
+#'  "pdf_csv" has been selected).
 #' @param plot_mscore_levels  Define m-score levels to plot the estimated FDR
-#'   results.
+#'  results.
 #' @param ...  Extra arguments passed on to functions inside this.
-#' @return  Plots in Rconsole or report files.
+#' @return Plots in Rconsole or report files.
 #' @author Moritz Heusel
-#' @examples
+#' @examples{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  x <- assess_fdr_byrun(data, FFT=0.7, output="Rconsole", plot=FALSE)
-#'  retlist <- plot.fdr_cube(x, output="pdf_csv", filename="Assess_fdr_byrun_testplot",
+#'  retlist <- plot(x, output="Rconsole", filename="Assess_fdr_byrun_testplot",
 #'                           plot_mscore_levels=0.01)
+#'  }
+#' @importFrom graphics par barplot mtext
+#' @importFrom grDevices pdf dev.off
 #' @export
-plot.fdr_cube <- function(x, output = "Rconsole", filename = "FDR_report_byrun",
-    plot_mscore_levels = c(0.01, 0.001), ...) {
+plot.fdr_cube <- function(x, 
+                          output = "Rconsole", 
+                          filename = "FDR_report_byrun",
+                          plot_mscore_levels = c(0.01, 0.001), ...){
     for (i in plot_mscore_levels) {
         k.mscore <- which(dimnames(x)[[3]] == i)
         k.mscore.label <- as.numeric(dimnames(x)[[3]][k.mscore])

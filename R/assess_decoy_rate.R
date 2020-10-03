@@ -8,9 +8,11 @@
 #' a precursor with different charge states is counted as one peptide. In the
 #' column "decoy" the values need to be 1,0 or TRUE and FALSE.
 #'
-#' @param data A data frame that contains at least a column named "FullPeptideName" and "decoy".
-#' @param column.ids The column name of the Peptide identifier. Default: FullPeptideName.
-#' @param column.decoy The column name of the decoy column. Default: decoy.
+#' @param data A data frame that contains at least a column named 
+#'     "FullPeptideName" and "decoy".
+#' @param column The column name of the Peptide identifier. 
+#'     Default: FullPeptideName.
+#' @param column_decoy The column name of the decoy column. Default: decoy.
 #' @return Message detailing the number of decoys, non-decoys, and the ratio.
 #' @author Peter Blattmann
 #' @examples
@@ -20,22 +22,20 @@
 #' @export
 
 assess_decoy_rate <- function(data, 
-                              column.ids = "FullPeptideName",
-                              column.decoy = "decoy") {
-    if (sum(colnames(data) == column.decoy) < 1) {
+                              column = "FullPeptideName",
+                              column_decoy = "decoy") {
+    if (sum(colnames(data) == column_decoy) < 1) {
         stop("There is no decoy column in the table")
     }
-    if (sum(colnames(data) == column.ids) < 1) {
+    if (sum(colnames(data) == column) < 1) {
         stop("There is no column in the table for identifiers (e.g. peptides).")
     }
 
-    add.colnames <- colnames(data)
-    add.colnames <- add.colnames[add.colnames != column.decoy]
+    .non_decoy_peptides <- unique(data[data$decoy == FALSE, c(column)])
+    .decoy_peptides <- unique(data[data$decoy == TRUE, c(column)])
 
-    .non_decoy.peptides <- unique(data[data$decoy == FALSE, c(column.ids)])
-    .decoy.peptides <- unique(data[data$decoy == TRUE, c(column.ids)])
-
-    message("Number of non-decoy identifiers: ", length(.non_decoy.peptides), "\n",
-        "Number of decoy identifiers: ", length(.decoy.peptides), "\n", 
-        "Decoy rate: ", sprintf("%.4f", (length(.decoy.peptides)/length(.non_decoy.peptides))))
+    message("Number of non-decoy identifiers: ",length(.non_decoy_peptides),"\n",
+        "Number of decoy identifiers: ", length(.decoy_peptides), "\n", 
+        "Decoy rate: ", 
+        sprintf("%.4f", (length(.decoy_peptides)/length(.non_decoy_peptides))))
 }

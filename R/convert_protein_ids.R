@@ -3,21 +3,24 @@
 #' This function establishes a connection to a biomart database.
 #'
 #' @param species  The species of the protein identifiers in the term used by
-#'  biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl",
-#' "drerio_gene_ensembl", etc.)
+#'   biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl",
+#'   "drerio_gene_ensembl", etc.)
 #' @param ensembl.path  Ensembl host to connect to. Default: www.ensembl.org
 #' @param mart   The type of mart (e.g. "ENSEMBL_MART_ENSEMBL", etc.)
 #' @param verbose print a summary of the ensembl connection.
 #' @return Connection for performing biomart queries.
 #' @author Peter Blattmann
-#' @examples
+#' @examples{
 #'  data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"),
 #'                           Abundance = c(100, 3390, 43423))
 #'  mart <- convert_protein_ids(data_table)
+#'  }
+#' @importFrom biomaRt useMart listDatasets listMarts
 #' @export
 load_mart <- function(species, 
                       ensembl.path = "www.ensembl.org", 
-                      mart, verbose = FALSE) {
+                      mart, 
+                      verbose = FALSE) {
     dataset.mart <- species
     ensembl.mart <- useMart(mart, dataset = dataset.mart, host = ensembl.path)
 
@@ -48,8 +51,8 @@ load_mart <- function(species,
 #' (e.g. "dec2017.archive.ensembl.org")
 #'
 #' @param data_table A data frame or file name.
-#' @param gene.ID.table A table to match gene identifiers against
-#' @param column.name The column name where the original protein identifiers
+#' @param gene_ID_table A table to match gene identifiers against
+#' @param column_name The column name where the original protein identifiers
 #'   are present.
 #' @param ID1 The type of the original protein identifiers
 #'   (e.g. "uniprotswissprot", "ensembl_peptide_id").
@@ -62,13 +65,19 @@ load_mart <- function(species,
 #' @return Returns the data frame with an added column of the converted protein identifiers.
 #' @author Peter Blattmann
 #' @examples {
-#' gene.ID.table <- data.frame(uniprotswissprot = c("Q01581", "P49327", "P60709"), hgnc_symbol = c("HMGCS1", "FASN", "ACTB"))
-#' data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"), Abundance = c(100, 3390, 43423))
-#' add_genesymbol(data_table, gene.ID.table)
+#'   gene_ID_table <- data.frame(uniprotswissprot = c("Q01581", "P49327", "P60709"), 
+#'                               hgnc_symbol = c("HMGCS1", "FASN", "ACTB"))
+#'   data_table <- data.frame(Protein = c("Q01581", "P49327", "2/P63261/P60709"), 
+#'                            Abundance = c(100, 3390, 43423))
+#'   add_genesymbol(data_table, gene_ID_table)
+#'   }
+#' @importFrom data.table fread
+#' @importFrom biomaRt getBM
+#' @importFrom utils write.table
 #' @export
 add_genesymbol <- function(data_table, 
-                           gene.ID.table, 
-                           column.name = "Protein", 
+                           gene_ID_table, 
+                           column_name = "Protein", 
                            ID1 = "uniprotswissprot",
                            ID2 = "hgnc_symbol", 
                            id.separator = "/", 
@@ -77,15 +86,15 @@ add_genesymbol <- function(data_table,
     if (ID2 %in% colnames(data_table)) {
         data_table[, ID2] <- NULL
     }
-    gene.ID.table[, ID2] <- as.character(gene.ID.table[, ID2])
-    data_table <- merge(data_table, gene.ID.table, by.x = column.name, 
+    gene_ID_table[, ID2] <- as.character(gene_ID_table[, ID2])
+    data_table <- merge(data_table, gene_ID_table, by.x = column_name, 
                         by.y = ID1,all.x = TRUE, sort = FALSE)
     # annotate the shared peptides
     .ids <- which(is.na(data_table[, ID2]))
-    .ids <- intersect(.ids, grep(id.separator, data_table[, column.name]))
+    .ids <- intersect(.ids, grep(id.separator, data_table[, column_name]))
 
     for (i in .ids) {
-        .Protein <- as.character(data_table[i, column.name])
+        .Protein <- as.character(data_table[i, column_name])
         .Protein.single <- unlist(strsplit(.Protein, id.separator))
 
         # remove number in front of shared peptides
@@ -94,25 +103,25 @@ add_genesymbol <- function(data_table,
             .Protein.single <- .Protein.single[-1]
         }
         .Protein.new <- .Protein
-        for (k in .Protein.single[.Protein.single %in% gene.ID.table[, ID1]]) {
-            .Protein.new <- gsub(k, gene.ID.table[gene.ID.table[, ID1] == k, ID2],
+        for (k in .Protein.single[.Protein.single %in% gene_ID_table[, ID1]]) {
+            .Protein.new <- gsub(k, gene_ID_table[gene_ID_table[, ID1] == k, ID2],
                 .Protein.new)
         }
-        data_table[data_table[, column.name] == .Protein, ID2] <- .Protein.new
+        data_table[data_table[, column_name] == .Protein, ID2] <- .Protein.new
 
         if (!copy_nonconverted) {
-            for (k in .Protein.single[!(.Protein.single %in% gene.ID.table[, ID1])]) {
+            for (k in .Protein.single[!(.Protein.single %in% gene_ID_table[, ID1])]) {
                 .Protein.new <- gsub(paste(id.separator, k, sep = ""), "", .Protein.new)
                 .Protein.new <- gsub(paste(k, id.separator, sep = ""), "", .Protein.new)
             }
-            data_table[data_table[, column.name] == .Protein, ID2] <- .Protein.new
+            data_table[data_table[, column_name] == .Protein, ID2] <- .Protein.new
         }
     }
 
     # add non converted IDs
-    non_converted <- is.na(data_table[,ID2] | data_table[,ID2] =="")
+    non_converted <- (is.na(data_table[,ID2]) | data_table[,ID2] =="")
     if (sum(non_converted)) {
-        non_converted_ids <- unique(data_table[non_converted,column.name])
+        non_converted_ids <- unique(data_table[non_converted,column_name])
         if (sum(non_converted) > 20) {
             message("The following ", sum(non_converted), 
                     " identifiers were not converted and will be copied (the first 20 are shown): ",
@@ -123,7 +132,7 @@ add_genesymbol <- function(data_table,
         }
         if (copy_nonconverted) {
             for (i in which(non_converted)) {
-                data_table[i, ID2] <- data_table[i, column.name]
+                data_table[i, ID2] <- data_table[i, column_name]
             }
         }
     }
@@ -139,7 +148,7 @@ add_genesymbol <- function(data_table,
 #' This function renames protein ids in a data frame or file
 #'
 #' @param data_table   A data frame or file name.
-#' @param column.name  The column name where the original protein identifiers are present.
+#' @param column_name  The column name where the original protein identifiers are present.
 #' @param species  The species of the protein identifiers in the term used by
 #'   biomaRt (e.g. "hsapiens_gene_ensembl", "mmusculus_gene_ensembl",
 #'   "drerio_gene_ensembl", etc.)
@@ -169,9 +178,10 @@ add_genesymbol <- function(data_table,
 #'        "Abundance" = c(100, 3390, 43423))
 #'   convert_protein_ids(data_table)
 #' }
+#' @importFrom methods is
 #' @export
 convert_protein_ids <- function(data_table, 
-                                column.name = "Protein", 
+                                column_name = "Protein", 
                                 species = "hsapiens_gene_ensembl",
                                 host = "www.ensembl.org", 
                                 mart = "ENSEMBL_MART_ENSEMBL", 
@@ -181,20 +191,20 @@ convert_protein_ids <- function(data_table,
                                 copy_nonconverted = TRUE, 
                                 verbose = FALSE) {
 
-    if (class(data_table) == "data.frame") {
+    if (is(data_table, "data.frame")) {
         type <- "data.frame"
     } else {
         type <- "file"
         data_table <- data.frame(fread(file, sep = "\t", header = TRUE))
     }
 
-    if (!(column.name %in% colnames(data_table))) {
+    if (!(column_name %in% colnames(data_table))) {
         stop("Column name does not exist in data. ", paste(colnames(data_table),
             collapse = ", "))
     }
 
     # obtain Identifiers to map
-    IDs <- unique(as.character(data_table[, column.name]))
+    IDs <- unique(as.character(data_table[, column_name]))
 
     # separate non-proteotypic peptides
     IDs.np <- IDs[grep(id.separator, IDs)]
@@ -209,22 +219,22 @@ convert_protein_ids <- function(data_table,
     length(IDs)
 
     organism.mart <- load_mart(species, host, mart)
-    gene.ID.table <- getBM(attributes = c(ID2, ID1), filters = c(ID1), 
+    gene_ID_table <- getBM(attributes = c(ID2, ID1), filters = c(ID1), 
                            values = IDs, mart = organism.mart)
 
-    n.ids <- table(gene.ID.table[, ID1])
+    n.ids <- table(gene_ID_table[, ID1])
     n.ids.multiple <- names(n.ids[n.ids > 1])
     for (i in n.ids.multiple) {
-        new.id <- paste(gene.ID.table[gene.ID.table[, ID1] == i, ID2], 
+        new.id <- paste(gene_ID_table[gene_ID_table[, ID1] == i, ID2], 
                         collapse = id.separator)
-        gene.ID.table <- gene.ID.table[gene.ID.table[, ID1] != i, ]
+        gene_ID_table <- gene_ID_table[gene_ID_table[, ID1] != i, ]
         new.id.df <- data.frame(uniprotswissprot = i, hgnc_symbol = new.id)
         colnames(new.id.df) <- c(ID1, ID2)
-        gene.ID.table <- rbind(gene.ID.table, new.id.df)
+        gene_ID_table <- rbind(gene_ID_table, new.id.df)
     }
 
-    data_table_output <- add_genesymbol(data_table, gene.ID.table, 
-                                        column.name, ID1, ID2, 
+    data_table_output <- add_genesymbol(data_table, gene_ID_table, 
+                                        column_name, ID1, ID2, 
                                         id.separator, copy_nonconverted)
 
     if (type == "file") {

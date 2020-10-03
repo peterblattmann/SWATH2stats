@@ -8,7 +8,7 @@
 #' accordingly.
 #'
 #' @param data A data frame containing SWATH data.
-#' @param column Column to query
+#' @param column Column to query for decoy string
 #' @param decoy_string String defining a decoy. Default: DECOY
 #' @return Returns a data frame with changed protein labels
 #' @author Moritz Heusel
@@ -20,7 +20,7 @@
 #'  data.2 <- removeDecoyProteins(data.filtered.decoy)
 #' @export
 removeDecoyProteins <- function(data,
-                                column = "ProteinName"
+                                column = "ProteinName",
                                 decoy_string = "DECOY") {
     ids <- grep(decoy_string, data[,column])
     identifiers <- data[ids, column]
@@ -37,6 +37,7 @@ removeDecoyProteins <- function(data,
 #'
 #' @param x proteinname string to query.
 #' @param decoy_string String defining a decoy
+#' @return returns string without elements containing the decoy string
 rmDecoyProt <- function(x,
                         decoy_string = "DECOY") {
     ids <- grep(decoy_string, x)

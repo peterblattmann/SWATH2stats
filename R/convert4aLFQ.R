@@ -14,13 +14,15 @@
 #'   slow and herewith be omitted.
 #' @return Returns a data frame in the appropriate format for aLFQ.
 #' @author Peter Blattmann
-#' @examples
+#' @examples{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- SWATH2stats::sample_annotation(OpenSWATH_data, Study_design, verbose=TRUE)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  raw <- disaggregate(data.filtered.decoy)
 #'  data.aLFQ <- convert4aLFQ(raw)
+#'  }
+#' @importFrom stats aggregate median
 #' @export
 
 convert4aLFQ <- function(data, 

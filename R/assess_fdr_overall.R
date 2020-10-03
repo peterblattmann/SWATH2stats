@@ -22,7 +22,7 @@
 #'   approximation, the q-values of multiple runs are averaged and supplied as
 #'   argument FFT. Numeric from 0 to 1. Defaults to 1, the most conservative
 #'   value (1 Decoy indicates 1 False target).
-#' @param  n_range  I am also not certain what this is, nor why 20 is the
+#' @param n_range  I am also not certain what this is, nor why 20 is the
 #'   optimal default value, but I think the idea is to set up a series of mscore
 #'   thresholds.
 #' @param output Choose output type. "pdf_csv" creates the output as files in
@@ -32,27 +32,30 @@
 #'   the associated method plot.fdr_table()
 #' @param filename  Optional, modifying the basename of the result files if
 #'   applicable.
+#' @param score_col Column that contains the score. Default. m_score 
 #' @return Returns a list of class "fdr_table". If output "pdf_csv" and plot =
 #'   TRUE were chosen, report files are written to the working folder.
 #' @author Moritz Heusel
-#' @examples
+#' @examples{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  assess_fdr_overall(data, FFT=0.7, output="Rconsole", plot=TRUE,
 #'                     filename="Testoutput_assess_fdr_overall")
+#' }
+#' @importFrom utils write.csv
 #' @export
 
 assess_fdr_overall <- function(data, 
                                FFT = 1, 
-                               n.range = 20, 
+                               n_range = 20, 
                                output = "pdf_csv", 
                                plot = TRUE,
                                filename = "FDR_report_overall", 
-                               mscore.col = "m_score") {
-    mscore.col <- JPP_update(data, mscore.col)
+                               score_col = "m_score") {
+    score_col <- JPP_update(data, score_col)
 
-    mscore_levels <- 10^-seq(n.range)
+    mscore_levels <- 10^-seq(n_range)
 
     # create vectors to store count results
     target.assays <- NULL
@@ -64,17 +67,17 @@ assess_fdr_overall <- function(data,
 
     # loop over IDs with different m_score thresholds counting targets & decoys
     for (i in seq_len(length(mscore_levels))) {
-        target.assays[i] <- length(unique(data[data$decoy == FALSE & data[, mscore.col] <=
+        target.assays[i] <- length(unique(data[data$decoy == FALSE & data[, score_col] <=
             mscore_levels[i], c("transition_group_id")]))
-        decoy.assays[i] <- length(unique(data[data$decoy == TRUE & data[, mscore.col] <=
+        decoy.assays[i] <- length(unique(data[data$decoy == TRUE & data[, score_col] <=
             mscore_levels[i], c("transition_group_id")]))
-        target.peptides[i] <- length(unique(data[data$decoy == FALSE & data[, mscore.col] <=
+        target.peptides[i] <- length(unique(data[data$decoy == FALSE & data[, score_col] <=
             mscore_levels[i], c("FullPeptideName")]))
-        decoy.peptides[i] <- length(unique(data[data$decoy == TRUE & data[, mscore.col] <=
+        decoy.peptides[i] <- length(unique(data[data$decoy == TRUE & data[, score_col] <=
             mscore_levels[i], c("FullPeptideName")]))
-        target.proteins[i] <- length(unique(data[data$decoy == FALSE & data[, mscore.col] <=
+        target.proteins[i] <- length(unique(data[data$decoy == FALSE & data[, score_col] <=
             mscore_levels[i], c("ProteinName")]))
-        decoy.proteins[i] <- length(unique(data[data$decoy == TRUE & data[, mscore.col] <=
+        decoy.proteins[i] <- length(unique(data[data$decoy == TRUE & data[, score_col] <=
             mscore_levels[i], c("ProteinName")]))
     }
 

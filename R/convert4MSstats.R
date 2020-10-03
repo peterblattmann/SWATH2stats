@@ -33,42 +33,42 @@
 #' @export
 
 convert4MSstats <- function(data, 
-                            replace.values = TRUE, 
-                            replace.colnames = TRUE,
-                            replace.Unimod = TRUE) {
+                            replace_values = TRUE, 
+                            replace_colnames = TRUE,
+                            replace_unimod = TRUE) {
 
-    MSstats.columns <- c("ProteinName", "PeptideSequence", "PrecursorCharge", 
+    MSstats_columns <- c("ProteinName", "PeptideSequence", "PrecursorCharge", 
                          "FragmentIon", "ProductCharge", "IsotopeLabelType", 
                          "Intensity", "BioReplicate", "Condition", "Run")
 
-    if (isTRUE(replace.colnames)) {
+    if (isTRUE(replace_colnames)) {
         colnames(data) <- gsub("FullPeptideName", "PeptideSequence", colnames(data))
         colnames(data) <- gsub("^Charge$", "PrecursorCharge", colnames(data))
         colnames(data) <- gsub("filename", "File", colnames(data))
     }
-    col.names.missing <- MSstats.columns[!(MSstats.columns %in% colnames(data))]
-    if (length(col.names.missing) > 0) {
+    missing_columns <- MSstats_columns[!(MSstats_columns %in% colnames(data))]
+    if (length(missing_columns) > 0) {
         message("One or several columns required by MSstats were not in the data. 
                 The columns were created and filled with NAs.\nMissing columns: ",
-            paste(unlist(col.names.missing), collapse = ", "))
+            paste(unlist(missing_columns), collapse = ", "))
 
-        if ("IsotopeLabelType" %in% col.names.missing) {
+        if ("IsotopeLabelType" %in% missing_columns) {
             message("IsotopeLabelType was filled with light.")
         }
 
-        data[, col.names.missing] <- NA
+        data[, missing_columns] <- NA
 
-        if ("IsotopeLabelType" %in% col.names.missing) {
+        if ("IsotopeLabelType" %in% missing_columns) {
             data[, "IsotopeLabelType"] <- "light"
         }
-        if ("PrecursorCharge" %in% col.names.missing) {
+        if ("PrecursorCharge" %in% missing_columns) {
             data[, "PrecursorCharge"] <- gsub(".*_([[:digit:]])$", "\\1", 
                                               data[,"FragmentIon"])
         }
     }
-    data <- data[, MSstats.columns]
+    data <- data[, MSstats_columns]
 
-    if (isTRUE(replace.values)) {
+    if (isTRUE(replace_values)) {
         # replace negative values to 0 and 0 to NA
         if (sum(data$Intensity < 0, na.rm = TRUE) > 0) {
             data[data$Intensity < 0, "Intensity"] <- 0
@@ -80,7 +80,7 @@ convert4MSstats <- function(data,
         }
     }
 
-    if (isTRUE(replace.Unimod)) {
+    if (isTRUE(replace_unimod)) {
         # replace UniMod: to UniMod_
         data$PeptideSequence <- gsub("UniMod:", "UniMod_", data$PeptideSequence)
         data$FragmentIon <- gsub("UniMod:", "UniMod_", data$FragmentIon)

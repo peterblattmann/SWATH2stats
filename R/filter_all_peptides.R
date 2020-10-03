@@ -12,12 +12,14 @@
 #' @return  Returns a data frame with the data from both proteotypic and
 #'   non-proteotypic peptides.
 #' @author Peter Blattmann
-#' @examples
+#' @examples{
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")
 #'  data <- sample_annotation(OpenSWATH_data, Study_design)
 #'  data.filtered.decoy <- filter_mscore(data, 0.01)
 #'  data.all <- filter_all_peptides(data.filtered.decoy)
+#'  }
+#' @importFrom utils head
 #' @export
 filter_all_peptides <- function(data) {
 
