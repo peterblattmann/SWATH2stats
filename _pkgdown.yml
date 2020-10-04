@@ -1,0 +1,10 @@
+home:
+  title: Transform and Filter SWATH/DIA Data for Statistical Packages
+
+template:
+  param:
+    bootswatch: flatly
+  opengraph:
+    twitter:
+      creator: "@peterblattmann"
+      card: summary_large_image

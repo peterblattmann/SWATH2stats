@@ -3,7 +3,16 @@ Type: Package
 Title: Transform and Filter SWATH Data for Statistical Packages
 Version: 1.19.1
 Date: 2020-10-4
-Author: Peter Blattmann, Moritz Heusel and Ruedi Aebersold
+Authors@R: c(person("Peter", "Blattmann", role = c("aut", "cre"),
+                    email="blattmann@imsb.biol.ethz.ch",
+                    comment = c(ORCID = "0000-0001-9105-6381")), 
+             person("Moritz", "Heusel", role = c("aut"),
+                    comment = c(ORCID = "0000-0002-8506-530X")),
+             person("Ruedi", "Aebersold", role = c("aut"),
+                    comment = c(ORCID = "0000-0002-9576-3267")))
+Author: Peter Blattmann [aut, cre]
+  Moritz Heusel [aut]
+  Ruedi Aebersold [aut]
 Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
 Description: This package is intended to transform SWATH data from the
     OpenSWATH software into a format readable by other statistics
@@ -20,3 +29,4 @@ NeedsCompilation: no
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+BugReports: https://github.com/peterblattmann/SWATH2stats
