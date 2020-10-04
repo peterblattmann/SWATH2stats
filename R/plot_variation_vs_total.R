@@ -43,8 +43,8 @@ plot_variation_vs_total <- function(data,
                                     fun_aggregate = NULL, 
                                     label = FALSE, 
                                     title = "coefficient of variation - total versus within replicates",
-                                    boxplot = TRUE, ...) {
-    if (sum(colnames(data) == "decoy") == 1) {
+                                    boxplot = TRUE, ...){
+    if (sum(colnames(data) == "decoy") == 1){
         data <- data[data$decoy == 0, ]
     }
     data1.c <- dcast(data, comparison1, value.var = column.values, 
@@ -87,7 +87,7 @@ plot_variation_vs_total <- function(data,
           theme(axis.text.x = element_text(size = 8, angle = 90, hjust = 1,
                                            vjust = 0.5)) +
           labs(title = title))
-    if (isTRUE(label)) {
+    if (label) {
         p <- p +
           stat_summary(
             fun.data = function(x) data.frame("y" = max(x) * 0.75,
@@ -96,7 +96,7 @@ plot_variation_vs_total <- function(data,
                                                                    digits = 2))),
             geom = "text")
     }
-    if (isTRUE(boxplot)) {
+    if (boxplot) {
         p <- p + geom_boxplot(width = 0.1, outlier.shape = NA)
     }
     print(p)

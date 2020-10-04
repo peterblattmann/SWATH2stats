@@ -30,7 +30,7 @@
 #'  }
 #' @importFrom reshape2 dcast
 #' @importFrom stats sd na.omit aggregate density
-#' @importFrom ggplot2 stat_summary
+#' @importFrom ggplot2 stat_summary aes_string geom_violin theme labs
 #' @export
 plot_variation <- function(data, 
                            column.values = "Intensity", 

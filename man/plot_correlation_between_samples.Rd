@@ -6,9 +6,9 @@
 \usage{
 plot_correlation_between_samples(
   data,
-  column.values = "Intensity",
+  column_values = "Intensity",
   comparison = transition_group_id ~ Condition + BioReplicate,
-  fun.aggregate = NULL,
+  fun_aggregate = NULL,
   label = TRUE,
   ...
 )
@@ -16,7 +16,7 @@ plot_correlation_between_samples(
 \arguments{
 \item{data}{Data frame that is produced by the OpenSWATH/pyProphet workflow.}
 
-\item{column.values}{Indicates the columns for which the correlation is
+\item{column_values}{Indicates the columns for which the correlation is
 assessed. This can be the Intensity or Signal, but also the retention
 time.}
 
@@ -25,7 +25,7 @@ to assess the variability per transition_group_id over the different
 Condition and Replicates. Comparison is performed using the dcast()
 function of the reshape2 package.}
 
-\item{fun.aggregate}{If for the comparison values have to be aggregated one
+\item{fun_aggregate}{If for the comparison values have to be aggregated one
 needs to provide the function here.}
 
 \item{label}{Option to print correlation value in the plot.}

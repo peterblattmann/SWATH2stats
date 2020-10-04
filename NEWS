@@ -1,3 +1,29 @@
+CHANGES IN VERSION 1.19.1
+-------------------------
+NEW FEATURES
+
+ o validate_columns
+ 
+update
+ 
+ o update documentation to roxygen2 (many thanks to Ashton Trey Belew (abelew) for starting this and doing most of the work)
+ 
+ 
+
+CHANGES IN VERSION 1.19.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.12 development release
+ 
+
+CHANGES IN VERSION 1.18.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.11 release
+
+
 CHANGES IN VERSION 1.17.5
 -------------------------
 update

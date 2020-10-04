@@ -8,7 +8,7 @@ plot_variation(
   data,
   column.values = "Intensity",
   comparison = transition_group_id + Condition ~ BioReplicate,
-  fun.aggregate = NULL,
+  fun_aggregate = NULL,
   label = FALSE,
   title = "cv across conditions",
   boxplot = TRUE,
@@ -27,7 +27,7 @@ assess the variability per transition_group_id and Condition over the
 different Replicates. Comparison is performed using the dcast() function of
 the reshape2 package.}
 
-\item{fun.aggregate}{If for the comparison values have to be aggregated one
+\item{fun_aggregate}{If for the comparison values have to be aggregated one
 needs to provide the function here.}
 
 \item{label}{Option to print value of median cv.}

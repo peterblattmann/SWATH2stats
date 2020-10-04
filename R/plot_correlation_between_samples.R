@@ -27,6 +27,8 @@ utils::globalVariables(c("Var1", "Var2", "value"))
 #'  information <- plot_correlation_between_samples(data)
 #' }
 #' @importFrom reshape2 dcast melt
+#' @importFrom ggplot2 aes geom_tile scale_fill_gradient xlab ylab labs 
+#'  geom_text theme theme_bw scale_x_discrete scale_y_discrete
 #' @importFrom stats cor
 #' @export
 plot_correlation_between_samples <- function(data, 
