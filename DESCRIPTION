@@ -6,15 +6,17 @@ Date: 2019-12-10
 Author: Peter Blattmann, Moritz Heusel and Ruedi Aebersold
 Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
 Description: This package is intended to transform SWATH data from the
-        OpenSWATH software into a format readable by other statistics
-        packages while performing filtering, annotation and FDR
-        estimation.
+    OpenSWATH software into a format readable by other statistics
+    packages while performing filtering, annotation and FDR estimation.
 License: GPL-3
 Depends: R(>= 2.10.0)
-Imports: data.table, reshape2, grid, ggplot2, stats, grDevices, graphics, utils, biomaRt
+Imports: data.table, reshape2, grid, ggplot2, stats, grDevices, graphics, 
+    utils, biomaRt, methods
 Suggests: testthat, knitr
-Enhances: imsbInfer, MSstats, PECA, aLFQ
+Enhances: MSstats, PECA, aLFQ
 biocViews: Proteomics, Annotation, ExperimentalDesign, Preprocessing,
-        MassSpectrometry, ImmunoOncology
+    MassSpectrometry, ImmunoOncology
 NeedsCompilation: no
 VignetteBuilder: knitr
+RoxygenNote: 7.1.1
+Encoding: UTF-8

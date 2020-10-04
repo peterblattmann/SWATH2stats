@@ -44,13 +44,13 @@ Study_design <- data.frame(Filename = unique(data$align_origfilename))
 Study_design$Filename <- gsub('.*strep_align/(.*)_all_peakgroups.*', '\\1', Study_design$Filename)
 Study_design$Condition <- gsub('(Strep.*)_Repl.*', '\\1', Study_design$Filename)
 Study_design$BioReplicate <- gsub('.*Repl([[:digit:]])_.*', '\\1', Study_design$Filename)
-Study_design$Run <- seq(1:nrow(Study_design))
+Study_design$Run <- seq_len(nrow(Study_design))
 head(Study_design)
 ```
 
 The SWATH-MS data is annotated using the study design table.
 ```{r}
-data.annotated <- sample_annotation(data, Study_design, column.file = "align_origfilename")
+data.annotated <- sample_annotation(data, Study_design, column_file = "align_origfilename")
 ```
 
 Remove the decoy peptides for a subsequent inspection of the data.
@@ -104,7 +104,8 @@ head(protein_signal)
 Estimate the overall FDR across runs using a target decoy strategy.
 ```{r, fig.height = 3.5}
 par(mfrow = c(1, 3))
-fdr_target_decoy <- assess_fdr_overall(data.annotated, n.range = 10, FFT = 0.25, output = 'Rconsole')
+fdr_target_decoy <- assess_fdr_overall(data.annotated, n_range = 10, 
+                                       FFT = 0.25, output = 'Rconsole')
 
 ```
 According to this FDR estimation one would need to filter the data with a lower mscore threshold to reach an overall protein FDR of 5%. 
@@ -115,7 +116,7 @@ mscore4protfdr(data, FFT = 0.25, fdr_target = 0.05)
 # Part 4: Filtering
 Filter data for values that pass the 0.001 mscore criteria in at least two replicates of one condition.
 ```{r}
-data.filtered <- filter_mscore_condition(data.annotated, 0.001, n.replica = 2)
+data.filtered <- filter_mscore_condition(data.annotated, 0.001, n_replica = 2)
 ```
 
 Select only the 10 peptides showing strongest signal per protein.

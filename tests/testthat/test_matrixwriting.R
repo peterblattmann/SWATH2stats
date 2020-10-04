@@ -13,12 +13,12 @@ test_that("Overview matrix writing", {
               equals(86041))
 
   # test rm.decoy option
-  peptide_matrix2 <- write_matrix_peptides(data, rm.decoy=TRUE)
+  peptide_matrix2 <- write_matrix_peptides(data, rm_decoy=TRUE)
   expect_true(length(grep("DECOY", peptide_matrix$ProteinName_FullPeptideName)) > 0)
   expect_false(length(grep("DECOY", peptide_matrix2$ProteinName_FullPeptideName)) > 0)
   
   # test write.csv option
-  expect_message(write_matrix_peptides(data, write.csv = TRUE),
+  expect_message(write_matrix_peptides(data, write_csv = TRUE),
                  "Peptide overview matrix SWATH2stats_overview_matrix_peptidelevel.csv written to working folder.")
   
   
@@ -29,11 +29,11 @@ test_that("Overview matrix writing", {
                                 "Hela_Control_1_1"], equals(1538879))
 
   # test rm.decoy option
-  protein_matrix2 <- write_matrix_proteins(data, rm.decoy=TRUE)
+  protein_matrix2 <- write_matrix_proteins(data, rm_decoy=TRUE)
   expect_true(length(grep("DECOY", protein_matrix$ProteinName)) > 0)
   expect_false(length(grep("DECOY", protein_matrix2$ProteinName)) > 0)
   
   # test write.csv option
-  expect_message(write_matrix_proteins(data, write.csv = TRUE),
+  expect_message(write_matrix_proteins(data, write_csv = TRUE),
                  "Protein overview matrix SWATH2stats_overview_matrix_proteinlevel.csv written to working folder")
 })

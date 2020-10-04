@@ -9,7 +9,7 @@ test_that("data conversion", {
   data.filtered.mscore <- filter_mscore_freqobs(data, 0.01, 0.8)
 
   # test if gives warning when data is in data.table format
-  data2 <- data.table(data)
+  data2 <- data.table::data.table(data)
   expect_error(sample_annotation(data2, Study_design))
 
   data.proteotypic <- filter_proteotypic_peptides(data.filtered.mscore)
@@ -74,8 +74,7 @@ test_that("data conversion", {
   # test if warning is displayed when column is missing
   raw2 <- raw
   raw2$RT <- NULL
-  expect_warning(convert4mapDIA(raw2, RT = TRUE), 
-                 "One or several columns required by mDIA were not in the data and filled with NAs")
+  expect_warning(convert4mapDIA(raw2, RT = TRUE))
   
   # test if extraction of Precursor charge works
   raw2 <- raw
