@@ -6,3 +6,10 @@ template:
     bootswatch: flatly
     ganalytics: UA-179575761-1
 
+navbar:
+  structure:
+    right: [twitter, github]
+  components:
+    twitter:
+      icon: "fab fa-twitter fa-lg"
+      href: https://twitter.com/peterblattmann
