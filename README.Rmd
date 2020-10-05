@@ -23,17 +23,17 @@ How to extract SWATH/DIA data before using SWATH2stats with OpenSWATH can be fou
 
 ## Usage
 
-SWATH2stats is a Bioconductor package. Go to <https://www.bioconductor.org/packages/release/bioc/html/SWATH2stats.html> to see all information related to installation. Importantly there exists both a release and development version. 
+SWATH2stats is a Bioconductor package. Go to <https://www.bioconductor.org/packages/release/bioc/html/SWATH2stats.html> to see all information related to installation. Importantly, there exist both a release and development version of every Bioconductor R package. 
 
 
 ## Contribution
 
-Please feel free to comment and post issues or pull requests on github. 
+Please feel free to comment and post issues or pull requests on github (direct link in upper right corner). 
 
 
 ## Publication
 
-For the publication describing this package, see: <https://doi.org/10.1371/journal.pone.0153160>
+The publication describing this package you can find here: <https://doi.org/10.1371/journal.pone.0153160>
 
 
 

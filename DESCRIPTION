@@ -1,8 +1,8 @@
 Package: SWATH2stats
 Type: Package
 Title: Transform and Filter SWATH Data for Statistical Packages
-Version: 1.19.1
-Date: 2020-10-4
+Version: 1.19.2
+Date: 2020-10-5
 Authors@R: c(person("Peter", "Blattmann", role = c("aut", "cre"),
                     email="blattmann@imsb.biol.ethz.ch",
                     comment = c(ORCID = "0000-0001-9105-6381")), 
@@ -19,7 +19,7 @@ Description: This package is intended to transform SWATH data from the
     packages while performing filtering, annotation and FDR estimation.
 License: GPL-3
 Depends: R(>= 2.10.0)
-Imports: data.table, reshape2, grid, ggplot2, stats, grDevices, graphics, 
+Imports: data.table, reshape2, ggplot2, stats, grDevices, graphics, 
     utils, biomaRt, methods
 Suggests: testthat, knitr
 Enhances: MSstats, PECA, aLFQ

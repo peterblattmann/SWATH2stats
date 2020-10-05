@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.19.2
+-------------------------
+BUG FIXES
+
+ o remove grid from Description
+ 
+
+
 CHANGES IN VERSION 1.19.1
 -------------------------
 NEW FEATURES
@@ -6,7 +14,9 @@ NEW FEATURES
  
 update
  
- o update documentation to roxygen2 (many thanks to Ashton Trey Belew (abelew) for starting this and doing most of the work)
+ o update documentation to roxygen2 (many thanks to Ashton Trey Belew (abelew) for starting this and doing most of the work) (IS#1, PR#2, PR#3)
+ 
+ o Some parameters were renamed to omit having a dot. E.g. rm.decoy is now called rm_decoy. If you want the previous names use SWATH2stats up to version 1.19.0
  
  
 
