@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SWATH2stats</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.19.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.19.3</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
 <a href="#part-1-loading-and-annotation" class="anchor"></a>Part 1: Loading and annotation</h1>
 <p>Load the SWATH-MS example data from the package, this is a reduced file in order to limit the file size of the package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SWATH2stats</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://peterblattmann.github.io/SWATH2stats/">SWATH2stats</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-datatable.com">data.table</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/OpenSWATH_data.html">data</a></span><span class="op">(</span><span class="st">'Spyogenes'</span>, package <span class="op">=</span> <span class="st">'SWATH2stats'</span><span class="op">)</span></pre></div>
 <p>Alternatively the original file downloaded from the Peptide Atlas can be loaded from the working directory.</p>
@@ -332,9 +332,9 @@
 <p>Session info on the R version and packages used.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>## R version 4.0.2 (2020-06-22)
+<pre><code>## R version 4.0.3 (2020-10-10)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.6
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
@@ -347,33 +347,33 @@
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] data.table_1.13.0  SWATH2stats_1.19.2
+## [1] data.table_1.13.0  SWATH2stats_1.19.3
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] progress_1.2.2       tidyselect_1.1.0     xfun_0.18           
-##  [4] reshape2_1.4.4       purrr_0.3.4          colorspace_1.4-1    
-##  [7] vctrs_0.3.4          generics_0.0.2       htmltools_0.5.0     
-## [10] stats4_4.0.2         BiocFileCache_1.12.1 yaml_2.2.1          
-## [13] blob_1.2.1           XML_3.99-0.5         rlang_0.4.7         
-## [16] pkgdown_1.6.1        pillar_1.4.6         glue_1.4.2          
-## [19] DBI_1.1.0            rappdirs_0.3.1       BiocGenerics_0.34.0 
-## [22] bit64_4.0.5          dbplyr_1.4.4         plyr_1.8.6          
-## [25] lifecycle_0.2.0      stringr_1.4.0        munsell_0.5.0       
-## [28] gtable_0.3.0         ragg_0.3.1           memoise_1.1.0       
-## [31] evaluate_0.14        labeling_0.3         Biobase_2.48.0      
-## [34] knitr_1.30           IRanges_2.22.2       biomaRt_2.44.1      
-## [37] parallel_4.0.2       curl_4.3             AnnotationDbi_1.50.3
-## [40] Rcpp_1.0.5           scales_1.1.1         openssl_1.4.3       
-## [43] backports_1.1.10     S4Vectors_0.26.1     desc_1.2.0          
-## [46] farver_2.0.3         systemfonts_0.3.2    fs_1.5.0            
-## [49] bit_4.0.4            ggplot2_3.3.2        hms_0.5.3           
-## [52] askpass_1.1          digest_0.6.25        stringi_1.5.3       
-## [55] dplyr_1.0.2          grid_4.0.2           rprojroot_1.3-2     
-## [58] tools_4.0.2          magrittr_1.5         RSQLite_2.2.1       
-## [61] tibble_3.0.3         crayon_1.3.4         pkgconfig_2.0.3     
-## [64] ellipsis_0.3.1       prettyunits_1.1.1    assertthat_0.2.1    
-## [67] rmarkdown_2.4        httr_1.4.2           R6_2.4.1            
-## [70] compiler_4.0.2</code></pre>
+##  [1] Rcpp_1.0.5           prettyunits_1.1.1    assertthat_0.2.1    
+##  [4] rprojroot_1.3-2      digest_0.6.26        BiocFileCache_1.12.1
+##  [7] R6_2.4.1             plyr_1.8.6           backports_1.1.10    
+## [10] stats4_4.0.3         RSQLite_2.2.1        evaluate_0.14       
+## [13] httr_1.4.2           ggplot2_3.3.2        pillar_1.4.6        
+## [16] rlang_0.4.8          progress_1.2.2       curl_4.3            
+## [19] blob_1.2.1           S4Vectors_0.26.1     rmarkdown_2.4       
+## [22] pkgdown_1.6.1        labeling_0.3         textshaping_0.1.2   
+## [25] desc_1.2.0           stringr_1.4.0        bit_4.0.4           
+## [28] biomaRt_2.44.4       munsell_0.5.0        compiler_4.0.3      
+## [31] xfun_0.18            pkgconfig_2.0.3      askpass_1.1         
+## [34] systemfonts_0.3.2    BiocGenerics_0.34.0  htmltools_0.5.0     
+## [37] openssl_1.4.3        tidyselect_1.1.0     tibble_3.0.4        
+## [40] IRanges_2.22.2       XML_3.99-0.5         crayon_1.3.4        
+## [43] dplyr_1.0.2          dbplyr_1.4.4         rappdirs_0.3.1      
+## [46] grid_4.0.3           gtable_0.3.0         lifecycle_0.2.0     
+## [49] DBI_1.1.0            magrittr_1.5         scales_1.1.1        
+## [52] stringi_1.5.3        farver_2.0.3         reshape2_1.4.4      
+## [55] fs_1.5.0             xml2_1.3.2           ellipsis_0.3.1      
+## [58] ragg_0.4.0           generics_0.0.2       vctrs_0.3.4         
+## [61] tools_4.0.3          bit64_4.0.5          Biobase_2.48.0      
+## [64] glue_1.4.2           purrr_0.3.4          hms_0.5.3           
+## [67] parallel_4.0.3       yaml_2.2.1           AnnotationDbi_1.50.3
+## [70] colorspace_1.4-1     memoise_1.1.0        knitr_1.30</code></pre>
 </div>
   </div>
 
