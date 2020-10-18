@@ -1,8 +1,8 @@
 Package: SWATH2stats
 Type: Package
 Title: Transform and Filter SWATH Data for Statistical Packages
-Version: 1.19.2
-Date: 2020-10-5
+Version: 1.19.3
+Date: 2020-10-18
 Authors@R: c(person("Peter", "Blattmann", role = c("aut", "cre"),
                     email="blattmann@imsb.biol.ethz.ch",
                     comment = c(ORCID = "0000-0001-9105-6381")), 
@@ -29,4 +29,5 @@ NeedsCompilation: no
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+URL: https://peterblattmann.github.io/SWATH2stats/
 BugReports: https://github.com/peterblattmann/SWATH2stats
