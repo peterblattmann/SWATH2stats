@@ -81,12 +81,13 @@ plot_variation_vs_total <- function(data,
         "scope")])
     data.comb$scope <- factor(data.comb$scope, 
                               levels = c("total", "replicate"))
-    p <- (ggplot(na.omit(data.comb), aes_string(x = "scope", y = "cv")) +
-          geom_violin(scale = "area") +
-          xlab("") +
-          theme(axis.text.x = element_text(size = 8, angle = 90, hjust = 1,
-                                           vjust = 0.5)) +
-          labs(title = title))
+    p <- ggplot(na.omit(data.comb), aes_string(x = "scope", y = "cv")) +
+        geom_violin(scale = "area") +
+        xlab("") +
+        theme(axis.text.x = element_text(size = 8, angle = 90, hjust = 1,
+                                         vjust = 0.5)) +
+        labs(title = title) +
+        theme_bw()
     if (label) {
         p <- p +
           stat_summary(

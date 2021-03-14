@@ -74,7 +74,7 @@ plot_correlation_between_samples <- function(data,
                                    expand = c(0, 0)) +
                   theme_bw() +
                   theme(plot.title = element_text(hjust = 0.5, vjust = 1),
-                        axis.text = element_text(angle = 90, hjust = 1)))
+                        axis.text.x = element_text(angle = 90, hjust = 1)))
     } else {
         p <- (ggplot(data.plot, aes_string(x = "Var2", y = "Var1", fill = "value")) +
                   geom_tile() +
@@ -87,7 +87,7 @@ plot_correlation_between_samples <- function(data,
                   scale_y_discrete(limits = rev(levels(data.plot$Var1)), expand = c(0, 0)) +
                   theme_bw() +
                   theme(plot.title = element_text(hjust = 0.5, vjust = 1),
-                        axis.text = element_text(angle = 90, hjust = 1)))
+                        axis.text.x = element_text(angle = 90, hjust = 1)))
     }
     print(p)
     return(data.plot)

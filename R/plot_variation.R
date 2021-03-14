@@ -58,10 +58,12 @@ plot_variation <- function(data,
 
     data.cv <- data.c[, c(colnames(data.c)[2], "cv")]
 
-    p <- (ggplot(na.omit(data.cv), aes_string(x = colnames(data.cv)[1], y = "cv")) +
-        geom_violin(scale = "area") + theme(axis.text.x = element_text(size = 8,
-        angle = 90, hjust = 1, vjust = 0.5)) + labs(title = title))
-
+    p <- ggplot(na.omit(data.cv), aes_string(x = colnames(data.cv)[1], y = "cv")) +
+        geom_violin(scale = "area") + 
+        theme(axis.text.x = element_text(size = 8, angle = 90, hjust = 1, vjust = 0.5)) + 
+        labs(title = title) +
+        theme_bw()
+    
     if (isTRUE(label)) {
         p <- p + stat_summary(fun.data = function(x) data.frame(y = max(x) * 0.75,
             label = paste("median cv:\n", signif(median(x, na.rm = TRUE), digits = 2))),
