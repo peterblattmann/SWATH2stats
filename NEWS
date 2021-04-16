@@ -1,3 +1,18 @@
+CHANGES IN VERSION 1.20.1
+-------------------------
+BUG FIXES
+
+ o add rmarkdown to DESCRIPTION
+
+
+
+CHANGES IN VERSION 1.20.0
+-------------------------
+NEW FEATURES
+
+ o SWATH2stats in BioC 3.12 release
+
+
 CHANGES IN VERSION 1.19.3
 -------------------------
 UPDATE
@@ -28,11 +43,8 @@ update
  
  
 
-CHANGES IN VERSION 1.19.0
--------------------------
-NEW FEATURES
 
- o SWATH2stats in BioC 3.12 development release
+
  
 
 CHANGES IN VERSION 1.18.0
