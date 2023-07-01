@@ -27,6 +27,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,23 +41,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">SWATH2stats</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.21.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.31.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -69,13 +65,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://twitter.com/peterblattmann">
+  <a href="https://twitter.com/peterblattmann" class="external-link">
     <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/peterblattmann/SWATH2stats/">
+  <a href="https://github.com/peterblattmann/SWATH2stats/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,40 +88,40 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="swath2stats" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#swath2stats" class="anchor"></a>SWATH2stats</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="swath2stats">SWATH2stats<a class="anchor" aria-label="anchor" href="#swath2stats"></a>
+</h1></div>
 <p>This package is intended to transform extracted SWATH/DIA data from the OpenSWATH or other (e.g. Spectronaut) software into a format directly-usable by statistics packages (e.g. mapDIA, PECA, MSstats) while performing filtering, annotation and FDR assessment if necessary.</p>
-<div id="analyzing-swathdia-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#analyzing-swathdia-data" class="anchor"></a>Analyzing SWATH/DIA data</h2>
-<p>How to extract SWATH/DIA data before using SWATH2stats with OpenSWATH can be found here: <a href="http://openswath.org" class="uri">http://openswath.org</a></p>
+<div class="section level2">
+<h2 id="analyzing-swathdia-data">Analyzing SWATH/DIA data<a class="anchor" aria-label="anchor" href="#analyzing-swathdia-data"></a>
+</h2>
+<p>How to extract SWATH/DIA data before using SWATH2stats with OpenSWATH can be found here: <a href="http://openswath.org" class="external-link uri">http://openswath.org</a></p>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>SWATH2stats is a Bioconductor package. Go to <a href="https://www.bioconductor.org/packages/release/bioc/html/SWATH2stats.html" class="uri">https://www.bioconductor.org/packages/release/bioc/html/SWATH2stats.html</a> to see all information related to installation. Importantly there exists both a release and development version.</p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>SWATH2stats is a Bioconductor package. Go to <a href="https://www.bioconductor.org/packages/release/bioc/html/SWATH2stats.html" class="external-link uri">https://www.bioconductor.org/packages/release/bioc/html/SWATH2stats.html</a> to see all information related to installation. Importantly there exists both a release and development version.</p>
 </div>
-<div id="contribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contribution" class="anchor"></a>Contribution</h2>
+<div class="section level2">
+<h2 id="contribution">Contribution<a class="anchor" aria-label="anchor" href="#contribution"></a>
+</h2>
 <p>Please feel free to comment and post issues or pull requests on github.</p>
 </div>
-<div id="publication" class="section level2">
-<h2 class="hasAnchor">
-<a href="#publication" class="anchor"></a>Publication</h2>
-<p>For the publication describing this package, see: <a href="https://doi.org/10.1371/journal.pone.0153160" class="uri">https://doi.org/10.1371/journal.pone.0153160</a></p>
+<div class="section level2">
+<h2 id="publication">Publication<a class="anchor" aria-label="anchor" href="#publication"></a>
+</h2>
+<p>For the publication describing this package, see: <a href="https://doi.org/10.1371/journal.pone.0153160" class="external-link uri">https://doi.org/10.1371/journal.pone.0153160</a></p>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <ul>
 <li><p>Blattmann P, Heusel M, Aebersold R. SWATH2stats: An R/Bioconductor Package to Process and Convert Quantitative SWATH-MS Proteomics Data for Downstream Analysis Tools. PLoS ONE 11(4): e0153160 (2016). doi: 10.1371/journal.pone.0153160.</p></li>
 <li><p>Rost HL, Rosenberger G, Navarro P, Gillet L, Miladinovic SM, Schubert OT, Wolski W, Collins BC, Malmstrom J, Malmstrom L, Aebersold R. OpenSWATH enables automated, targeted analysis of data-independent acquisition MS data. Nature Biotechnology. 2014 Mar;32(3):219-23. doi: 10.1038/nbt.2841.</p></li>
 <li><p>Choi M, Chang CY, Clough T, Broudy D, Killeen T, MacLean B, Vitek O. MSstats: an R package for statistical analysis of quantitative mass spectrometry-based proteomic experiments.Bioinformatics. 2014 Sep 1;30(17):2524-6. doi: 10.1093/bioinformatics/btu305.</p></li>
 <li><p>Rosenberger G, Ludwig C, Rost HL, Aebersold R, Malmstrom L. aLFQ: an R-package for estimating absolute protein quantities from label-free LC-MS/MS proteomics data. Bioinformatics. 2014 Sep 1;30(17):2511-3. doi: 10.1093/bioinformatics/btu200.</p></li>
 <li><p>Suomi T., Corthals G., Nevalainen O.S., and Elo L.L. (2015). Using Peptide-Level Proteomics Data for Detecting Differentially Expressed Proteins. J Proteome Res. Nov 6;14(11):4564-70. doi: 10.1021/acs.jproteome.5b00363.</p></li>
-<li><p>Suomi, T. and Elo L.L. (2017). Enhanced differential expression statistics for data-independent acquisition proteomics" Scientific Reports 7, Article number: 5869.doi:10.1038/s41598-017-05949-y</p></li>
+<li><p>Suomi, T. and Elo L.L. (2017). Enhanced differential expression statistics for data-independent acquisition proteomics” Scientific Reports 7, Article number: 5869.doi:10.1038/s41598-017-05949-y</p></li>
 </ul>
 </div>
 </div>
@@ -133,47 +129,52 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/SWATH2stats">https://​www.bioconductor.org/​packages/​SWATH2stats</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/peterblattmann/SWATH2stats/">https://​github.com/​peterblattmann/​SWATH2stats/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/peterblattmann/SWATH2stats">https://​github.com/​peterblattmann/​SWATH2stats</a>
-</li>
+<li><a href="https://www.bioconductor.org/packages/SWATH2stats" class="external-link">View on Bioconductor</a></li>
+<li><a href="https://github.com/peterblattmann/SWATH2stats/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/peterblattmann/SWATH2stats" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing SWATH2stats</a></li>
+<li><a href="authors.html#citation">Citing SWATH2stats</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Peter Blattmann <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-9105-6381" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Moritz Heusel <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8506-530X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Ruedi Aebersold <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9576-3267" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Peter Blattmann <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-9105-6381" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Moritz Heusel <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8506-530X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Ruedi Aebersold <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9576-3267" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Peter Blattmann, Moritz Heusel, Ruedi Aebersold.</p>
+  <p></p>
+<p>Developed by Peter Blattmann, Moritz Heusel, Ruedi Aebersold.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -181,6 +182,8 @@
 
   
 
+
+  
 
   </body>
 </html>

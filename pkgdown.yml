@@ -1,7 +1,7 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   SWATH2stats_example_script: SWATH2stats_example_script.html
-last_built: 2021-04-16T13:50Z
+last_built: 2023-07-01T15:12Z
 
