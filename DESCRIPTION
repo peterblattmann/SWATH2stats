@@ -1,10 +1,10 @@
 Package: SWATH2stats
 Type: Package
 Title: Transform and Filter SWATH Data for Statistical Packages
-Version: 1.31.0
-Date: 2021-04-16
+Version: 1.31.1
+Date: 2023-07-01
 Authors@R: c(person("Peter", "Blattmann", role = c("aut", "cre"),
-                    email="blattmann@imsb.biol.ethz.ch",
+                    email="peter_blattmann@bluewin.ch",
                     comment = c(ORCID = "0000-0001-9105-6381")), 
              person("Moritz", "Heusel", role = c("aut"),
                     comment = c(ORCID = "0000-0002-8506-530X")),
@@ -13,7 +13,7 @@ Authors@R: c(person("Peter", "Blattmann", role = c("aut", "cre"),
 Author: Peter Blattmann [aut, cre]
   Moritz Heusel [aut]
   Ruedi Aebersold [aut]
-Maintainer: Peter Blattmann <blattmann@imsb.biol.ethz.ch>
+Maintainer: Peter Blattmann <peter_blattmann@bluewin.ch>
 Description: This package is intended to transform SWATH data from the
     OpenSWATH software into a format readable by other statistics
     packages while performing filtering, annotation and FDR estimation.
