@@ -19,14 +19,14 @@
 #'   names from an OpenSWATH output or MSstats table are used.
 #' @param column_file Option to specify the column name where the injection 
 #'    file is specified. Default is set to "filename".
-#' @param change_run_id Option to choose if the run\_id column shall be
+#' @param change_run_id Option to choose if the run_id column shall be
 #'   reassigned to a unique value combining the values of Condition,
 #'   BioReplicate and Run. (Option only possible if data is of format
 #'   "OpenSWATH")
 #' @param verbose Option to turn on reporting on which filename it is working
 #'   on.
 #' @return Returns a dataframe with each row annotated for the study design
-#' @author Peter Blattman
+#' @author Peter Blattmann
 #' @examples
 #'  data("OpenSWATH_data", package="SWATH2stats")
 #'  data("Study_design", package="SWATH2stats")

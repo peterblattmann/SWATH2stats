@@ -8,7 +8,7 @@ convert_protein_ids(
   data_table,
   column_name = "Protein",
   species = "hsapiens_gene_ensembl",
-  host = "www.ensembl.org",
+  host = "https://www.ensembl.org",
   mart = "ENSEMBL_MART_ENSEMBL",
   ID1 = "uniprotswissprot",
   ID2 = "hgnc_symbol",

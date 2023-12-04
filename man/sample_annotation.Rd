@@ -26,7 +26,7 @@ names from an OpenSWATH output or MSstats table are used.}
 \item{column_file}{Option to specify the column name where the injection 
 file is specified. Default is set to "filename".}
 
-\item{change_run_id}{Option to choose if the run\_id column shall be
+\item{change_run_id}{Option to choose if the run_id column shall be
 reassigned to a unique value combining the values of Condition,
 BioReplicate and Run. (Option only possible if data is of format
 "OpenSWATH")}
@@ -57,5 +57,5 @@ columns expected by MSstats/OpenSWATH.
  summary(data)
 }
 \author{
-Peter Blattman
+Peter Blattmann
 }

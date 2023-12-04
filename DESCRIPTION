@@ -27,7 +27,7 @@ biocViews: Proteomics, Annotation, ExperimentalDesign, Preprocessing,
     MassSpectrometry, ImmunoOncology
 NeedsCompilation: no
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 URL: https://peterblattmann.github.io/SWATH2stats/
 BugReports: https://github.com/peterblattmann/SWATH2stats
